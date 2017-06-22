@@ -1,3 +1,9 @@
+# Node.js
 node_modules/
-.expo/
 npm-debug.*
+
+# Expo app
+.expo/
+
+# OS X
+**/.DS_Store

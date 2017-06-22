@@ -1,25 +1,33 @@
 import React from 'react';
-import { Alert, Button, Image, StyleSheet, View } from 'react-native';
+import { Button, Image, StyleSheet, View } from 'react-native';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Image
-          source={require('./img/lumino.png')}
+/**
+ * Splash screen
+ * @param  {[string]} props [navigation props received from the Home component.
+ * It is used to link SplashScreen to NewGatewayForm.]
+ */
+const SplashScreen = (props) => {
+  const { navigate } = props.navigation;
+
+  return (
+    <View style={styles.container}>
+      <Image
+        source={require('./img/lumino.png')}
+      />
+      <View style={styles.buttonContainer}>
+        <Button
+          onPress={() => navigate('NewGatewayForm')}
+          color="#FEC006"
+          title="Get Started"
         />
-        <View style={styles.buttonContainer}>
-          <Button
-            onPress={() => { Alert.alert('You tapped the button!')}}
-            color="#FEC006"
-            title="Get Started"
-          />
-        </View>
       </View>
-    )
-  }
+    </View>
+  )
 }
 
+/**
+ * SplashScreen styles
+ */
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -34,3 +42,5 @@ const styles = StyleSheet.create({
     paddingTop: 25,
   },
 });
+
+export default SplashScreen;
