@@ -1,8 +1,8 @@
 import React from 'react';
-import { Alert, Button, StyleSheet, TextInput, View } from 'react-native';
+import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 /**
- * Input form component for creating a new gateway.
+ * Input form component for configuring a new gateway.
  */
 export default class NewGatewayForm extends React.Component {
   constructor(props) {
@@ -10,10 +10,11 @@ export default class NewGatewayForm extends React.Component {
     this.state = { text: ''}
   }
 
+
   render() {
     return (
-      <View>
-        <View style={styles.container}>
+      <View style={styles.container}>
+        <View style={styles.formContainer}>
           <TextInput
             style={styles.textInput}
             placeholder="Name"
@@ -37,8 +38,7 @@ export default class NewGatewayForm extends React.Component {
         </View>
         <View>
           <Button
-            onPress={() => { Alert.alert('You tapped the button!')}}
-            color="#FEC006"
+            onPress={() => this.props.navigation.navigate('ControllerSettings')}
             title="Create"
           />
         </View>
@@ -59,13 +59,17 @@ NewGatewayForm.navigationOptions = {
  */
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     flex: 1,
+    padding: 20,
     justifyContent: 'center',
   },
+  formContainer: {
+    alignItems: 'flex-start',
+    flex: 1,
+  },
   textInput: {
-    borderColor: 'gray',
-    borderWidth: 1,
     height: 40,
+    width: 200,
   }
 });

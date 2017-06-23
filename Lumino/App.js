@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import SplashScreen from './js/SplashScreen';
 import NewGatewayForm from './js/NewGatewayForm';
+import ControllerSettings from './js/ControllerSettings';
 import { StackNavigator } from 'react-navigation';
 
 /**
@@ -28,11 +29,12 @@ Home.navigationOptions = {
 
 /**
  * The main App component.
- * It adds all navigable screens to the StackNavigator.
+ * Route configuration.
  */
 const App = StackNavigator({
   Home: {screen: Home},
   NewGatewayForm: {screen: NewGatewayForm},
+  ControllerSettings: {screen: ControllerSettings},
 });
 
 /**
