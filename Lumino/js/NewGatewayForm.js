@@ -10,7 +10,6 @@ export default class NewGatewayForm extends React.Component {
     this.state = { text: ''}
   }
 
-
   render() {
     return (
       <View style={styles.container}>

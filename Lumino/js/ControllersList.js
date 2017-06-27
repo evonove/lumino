@@ -1,13 +1,15 @@
 import React from 'react';
-import { Alert, Button, StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 import ControllerView from './ControllerView';
 
-const ControllersList = () => {
+const ControllersList = ({navigation}) => {
+  const { navigate } = navigation;
+
   return (
     <View style={styles.container}>
       <ControllerView />
       <Button
-        onPress={() => { Alert.alert('Go to the gateways list!')}}
+        onPress={() => navigate('GatewaysList')}
         title="Gateways List"
       />
     </View>

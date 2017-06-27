@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import SplashScreen from './js/SplashScreen';
+import GatewaysList from './js/GatewaysList';
 import NewGatewayForm from './js/NewGatewayForm';
 import ControllerSettings from './js/ControllerSettings';
 import ControllersList from './js/ControllersList';
@@ -34,6 +35,7 @@ Home.navigationOptions = {
  */
 const App = StackNavigator({
   Home: {screen: Home},
+  GatewaysList: {screen: GatewaysList},
   NewGatewayForm: {screen: NewGatewayForm},
   ControllerSettings: {screen: ControllerSettings},
   ControllersList: {screen: ControllersList},
