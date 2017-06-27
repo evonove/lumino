@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import SplashScreen from './js/SplashScreen';
 import NewGatewayForm from './js/NewGatewayForm';
 import ControllerSettings from './js/ControllerSettings';
+import ControllersList from './js/ControllersList';
 import { StackNavigator } from 'react-navigation';
 
 /**
@@ -35,6 +36,7 @@ const App = StackNavigator({
   Home: {screen: Home},
   NewGatewayForm: {screen: NewGatewayForm},
   ControllerSettings: {screen: ControllerSettings},
+  ControllersList: {screen: ControllersList},
 });
 
 /**

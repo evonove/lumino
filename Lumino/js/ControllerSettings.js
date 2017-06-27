@@ -1,16 +1,19 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import ControllerTypeSelector from './ControllerTypeSelector';
-import ControllerSettingsForm from './ControllerSettingsForm.js';
+import ControllerSettingsForm from './ControllerSettingsForm';
 
 /**
  * Controller settings
+ * @param  {[string]} navigation [navigation props received from the Home component.
+ * It is passed down to ControllerSettingsForm.]
  */
-const ControllerSettings = () => {
+const ControllerSettings = ({navigation}) => {
   return (
     <View style={styles.container}>
       <ControllerTypeSelector />
-      <ControllerSettingsForm />
+      <ControllerSettingsForm navigation = {navigation} />
     </View>
   )
 }
