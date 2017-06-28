@@ -7,13 +7,25 @@ import ControllerSettingsForm from './ControllerSettingsForm';
 /**
  * Controller settings
  * @param  {[string]} navigation [navigation props received from the Home component.
- * It is passed down to ControllerSettingsForm.]
+ * It is used to link ControllerSettings to ControllersList]
  */
 const ControllerSettings = ({navigation}) => {
+  const { navigate } = navigation;
+
   return (
     <View style={styles.container}>
-      <ControllerTypeSelector />
-      <ControllerSettingsForm navigation = {navigation} />
+      <View>
+        <ControllerTypeSelector />
+        <View style={styles.formContainer}>
+          <ControllerSettingsForm />
+        </View>
+      </View>
+      <View>
+        <Button
+          onPress={() => navigate('ControllersList')}
+          title="Create"
+        />
+      </View>
     </View>
   )
 }
@@ -30,11 +42,14 @@ ControllerSettings.navigationOptions = {
  */
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'flex-start',
     flex: 1,
-    padding: 20,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 30,
   },
+  formContainer: {
+    marginTop: 30,
+  }
 });
 
 export default ControllerSettings;

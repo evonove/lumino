@@ -22,10 +22,6 @@ export default class ControllerSettingsForm extends React.Component {
           placeholder="Code"
           onChangeText={(text) => this.setState({text})}
         />
-        <Button
-          onPress={() => this.props.navigation.navigate('ControllersList')}
-          title="Create"
-        />
       </View>
     )
   }
@@ -36,11 +32,11 @@ export default class ControllerSettingsForm extends React.Component {
  */
 const styles = StyleSheet.create({
   formContainer: {
-    alignItems: 'flex-start',
+    alignItems: 'stretch',
     flex: 1,
   },
   textInput: {
+    color: '#FFFFFF',
     height: 40,
-    width: 200,
   }
 });

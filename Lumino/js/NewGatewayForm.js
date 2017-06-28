@@ -58,17 +58,17 @@ NewGatewayForm.navigationOptions = {
  */
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'flex-start',
     flex: 1,
-    padding: 20,
     justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 30,
   },
   formContainer: {
-    alignItems: 'flex-start',
+    alignItems: 'stretch',
     flex: 1,
   },
   textInput: {
+    color: '#FFFFFF',
     height: 40,
-    width: 200,
   }
 });

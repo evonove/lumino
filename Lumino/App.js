@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import SplashScreen from './js/SplashScreen';
 import GatewaysList from './js/GatewaysList';
 import NewGatewayForm from './js/NewGatewayForm';
@@ -48,6 +48,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#6639B6',
     flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
   },
 });
 

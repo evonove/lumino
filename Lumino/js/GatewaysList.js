@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ScrollView, Text, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 /**
  * Mock of the gateways list
@@ -8,73 +8,81 @@ import { Button, ScrollView, Text, View } from 'react-native';
 const GatewayList = ({navigation}) => {
   const { navigate } = navigation;
   return (
-    <ScrollView>
-      <View>
-        <Text>Gateway #1</Text>
-        <Button
-          onPress={() => navigate ('NewGatewayForm')}
-          title="Configure"
-        />
-        <View>
-          <View>
-            <Text>Controller #1</Text>
+    <ScrollView style={styles.container}>
+      <View style={styles.gatewaysListContainer}>
+        <View style={styles.gatewayContainer}>
+          <View style={styles.gatewayHeader}>
+            <Text style={styles.headerText}>Gateway #1</Text>
             <Button
-              onPress={() => navigate ('ControllerSettings')}
+              onPress={() => navigate ('NewGatewayForm')}
               title="Configure"
             />
           </View>
-          <View>
-            <Text>Controller #2</Text>
-            <Button
-              onPress={() => navigate ('ControllerSettings')}
-              title="Configure"
-            />
-          </View>
-        </View>
-      </View>
-      <View>
-        <Text>Gateway #2</Text>
-        <Button
-          onPress={() => navigate ('NewGatewayForm')}
-          title="Configure"
-        />
-        <View>
-          <View>
-            <Text>Controller #1</Text>
-            <Button
-              onPress={() => navigate ('ControllerSettings')}
-              title="Configure"
-            />
+          <View style={styles.controllersContainer}>
+            <View style={styles.controllerContainer}>
+              <Text>Controller #1</Text>
+              <Button
+                onPress={() => navigate ('ControllerSettings')}
+                title="Configure"
+              />
+            </View>
+            <View style={styles.controllerContainer}>
+              <Text>Controller #2</Text>
+              <Button
+                onPress={() => navigate ('ControllerSettings')}
+                title="Configure"
+              />
+            </View>
           </View>
         </View>
-      </View>
-      <View>
-        <Text>Gateway #3</Text>
-        <Button
-          onPress={() => navigate ('NewGatewayForm')}
-          title="Configure"
-        />
-        <View>
-          <View>
-            <Text>Controller #1</Text>
+        <View style={styles.gatewayContainer}>
+          <View style={styles.gatewayHeader}>
+            <Text style={styles.headerText}>Gateway #2</Text>
             <Button
-              onPress={() => navigate ('ControllerSettings')}
+              onPress={() => navigate ('NewGatewayForm')}
               title="Configure"
             />
           </View>
-          <View>
-            <Text>Controller #2</Text>
+          <View style={styles.controllersContainer}>
+            <View style={styles.controllerContainer}>
+              <Text>Controller #1</Text>
+              <Button
+                onPress={() => navigate ('ControllerSettings')}
+                title="Configure"
+              />
+            </View>
+          </View>
+        </View>
+        <View style={styles.gatewayContainer}>
+          <View style={styles.gatewayHeader}>
+            <Text style={styles.headerText}>Gateway #3</Text>
             <Button
-              onPress={() => navigate ('ControllerSettings')}
+              onPress={() => navigate ('NewGatewayForm')}
               title="Configure"
             />
           </View>
-          <View>
-            <Text>Controller #3</Text>
-            <Button
-              onPress={() => navigate ('ControllerSettings')}
-              title="Configure"
-            />
+          <View style={styles.controllersContainer}>
+            <View style={styles.controllerContainer}>
+              <Text>Controller #1</Text>
+              <Button
+                onPress={() => navigate ('ControllerSettings')}
+                title="Configure"
+              />
+            </View>
+            <View style={styles.controllerContainer}>
+              <Text>Controller #2</Text>
+              <Button
+                onPress={() => navigate ('ControllerSettings')}
+                title="Configure"
+              />
+            </View>
+            <View style={styles.controllerContainer}>
+              <Text>Controller #3</Text>
+              <Button
+                onPress={() => navigate ('ControllerSettings')}
+                title="Configure"
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -92,5 +100,35 @@ const GatewayList = ({navigation}) => {
 GatewayList.navigationOptions = {
   title: 'Gateways',
 }
+
+/**
+ * Home styles
+ */
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+  gatewaysListContainer: {
+    paddingBottom: 30,
+  },
+  gatewayContainer: {
+    paddingBottom: 20,
+  },
+  gatewayHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  headerText: {
+    fontSize: 20,
+  },
+  controllersContainer: {
+    paddingLeft: 20,
+  },
+  controllerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+});
 
 export default GatewayList;

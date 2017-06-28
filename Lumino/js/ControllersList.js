@@ -22,7 +22,6 @@ ControllersList.navigationOptions = {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'flex-start',
     flex: 1,
     padding: 20,
     justifyContent: 'center',
