@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import SplashScreen from './js/SplashScreen';
 import GatewaysList from './js/GatewaysList';
 import NewGatewayForm from './js/NewGatewayForm';
