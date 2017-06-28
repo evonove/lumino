@@ -1,10 +1,14 @@
 import React from 'react';
-import { Alert, Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, StyleSheet, TextInput, View } from 'react-native';
 
 /**
- * Input form component for configuring a new gateway.
+ * Input form component for configuring a gateway.
  */
 export default class NewGatewayForm extends React.Component {
+  static navigationOptions = {
+    title: 'New Gateway',
+  };
+
   constructor(props) {
     super(props);
     this.state = { text: ''}
@@ -32,12 +36,13 @@ export default class NewGatewayForm extends React.Component {
           <TextInput
             style={styles.textInput}
             placeholder="Password"
+            secureTextEntry
             onChangeText={(text) => this.setState({text})}
           />
         </View>
         <View>
           <Button
-            onPress={() => this.props.navigation.navigate('ControllerSettings')}
+            onPress={() => this.props.navigation.goBack()}
             title="Create"
           />
         </View>
@@ -45,13 +50,6 @@ export default class NewGatewayForm extends React.Component {
     )
   }
 }
-
-/**
- * StackNavigation options for NewGatewayForm component
- */
-NewGatewayForm.navigationOptions = {
-  title: 'New Gateway',
-};
 
 /**
  * NewGatewayForm styles
@@ -68,7 +66,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   textInput: {
-    color: '#FFFFFF',
     height: 40,
   }
 });

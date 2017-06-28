@@ -1,31 +1,31 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, ScrollView } from 'react-native';
 import ControllerView from './ControllerView';
 
-const ControllersList = ({navigation}) => {
-  const { navigate } = navigation;
+/**
+ * Mock of the controllers list
+ */
+export default class ControllersList extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Controllers',
+    headerRight: <Button
+                   onPress={() => navigation.navigate('ControllerSettings')}
+                   title="+"
+                 />,
+  });
 
-  return (
-    <View style={styles.container}>
-      <ControllerView />
-      <Button
-        onPress={() => navigate('GatewaysList')}
-        title="Gateways List"
-      />
-    </View>
-  )
-}
-
-ControllersList.navigationOptions = {
-  title: 'Controllers',
+  render() {
+    return (
+      <ScrollView style={styles.container}>
+        <ControllerView />
+      </ScrollView>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    justifyContent: 'center',
   }
 });
-
-export default ControllersList;

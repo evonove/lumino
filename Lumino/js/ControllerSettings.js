@@ -10,7 +10,7 @@ import ControllerSettingsForm from './ControllerSettingsForm';
  * It is used to link ControllerSettings to ControllersList]
  */
 const ControllerSettings = ({navigation}) => {
-  const { navigate } = navigation;
+  const { goBack } = navigation;
 
   return (
     <View style={styles.container}>
@@ -22,7 +22,7 @@ const ControllerSettings = ({navigation}) => {
       </View>
       <View>
         <Button
-          onPress={() => navigate('ControllersList')}
+          onPress={() => goBack()}
           title="Create"
         />
       </View>
