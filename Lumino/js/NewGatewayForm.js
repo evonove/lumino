@@ -5,9 +5,16 @@ import { Button, StyleSheet, TextInput, View } from 'react-native';
  * Input form component for configuring a gateway.
  */
 export default class NewGatewayForm extends React.Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     title: 'New Gateway',
-  };
+    headerTintColor: '#5856D6',
+    headerTitleStyle: { color: 'black' },
+    headerRight: <Button
+                   onPress={() => navigation.goBack()}
+                   title="Save"
+                   color="#5856D6"
+                 />
+  });
 
   constructor(props) {
     super(props);
@@ -17,35 +24,27 @@ export default class NewGatewayForm extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.formContainer}>
-          <TextInput
-            style={styles.textInput}
-            placeholder="Name"
-            onChangeText={(text) => this.setState({text})}
-          />
-          <TextInput
-            style={styles.textInput}
-            placeholder="IP Address"
-            onChangeText={(text) => this.setState({text})}
-          />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Port"
-            onChangeText={(text) => this.setState({text})}
-          />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Password"
-            secureTextEntry
-            onChangeText={(text) => this.setState({text})}
-          />
-        </View>
-        <View>
-          <Button
-            onPress={() => this.props.navigation.goBack()}
-            title="Create"
-          />
-        </View>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Name"
+          onChangeText={(text) => this.setState({text})}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="IP Address"
+          onChangeText={(text) => this.setState({text})}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Port"
+          onChangeText={(text) => this.setState({text})}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Password"
+          secureTextEntry={true}
+          onChangeText={(text) => this.setState({text})}
+        />
       </View>
     )
   }
@@ -57,13 +56,7 @@ export default class NewGatewayForm extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 30,
-  },
-  formContainer: {
-    alignItems: 'stretch',
-    flex: 1,
   },
   textInput: {
     height: 40,

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import ControllerView from './ControllerView';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 /**
  * Mock of the controllers list
@@ -8,10 +9,23 @@ import ControllerView from './ControllerView';
 export default class ControllersList extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Controllers',
-    headerRight: <Button
+    headerRight: <TouchableOpacity
                    onPress={() => navigation.navigate('ControllerSettings')}
-                   title="+"
-                 />,
+                 >
+                   <Icon
+                     name={'ios-add'}
+                     size={34}
+                     color={'#5856D6'}
+                     style={styles.headerIconButton}
+                   />
+                 </TouchableOpacity>,
+    tabBarIcon: ({ tintColor }) => (
+      <Icon
+        name={'ios-options-outline'}
+        size={26}
+        color={tintColor}
+      />
+    ),
   });
 
   render() {
@@ -24,8 +38,10 @@ export default class ControllersList extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  headerIconButton: {
+    marginRight: 20,
+  },
   container: {
     flex: 1,
-    padding: 20,
   }
 });

@@ -13,16 +13,7 @@ export default class ControllerSettingsForm extends React.Component {
 
   render() {
     return (
-      <View style={styles.formContainer}>
-        <View>
-          <Picker
-            selectedValue={this.state.gateway}
-            onValueChange={(itemValue, itemIndex) => this.setState({gateway: itemValue})}>
-            <Picker.Item label="Gateway #1" value="Gateway #1" />
-            <Picker.Item label="Gateway #2" value="Gateway #2" />
-            <Picker.Item label="Gateway #3" value="Gateway #3" />
-          </Picker>
-        </View>
+      <View>
         <View>
           <TextInput
             style={styles.textInput}
@@ -35,6 +26,16 @@ export default class ControllerSettingsForm extends React.Component {
             onChangeText={(text) => this.setState({text})}
           />
         </View>
+        <View>
+          <Picker
+            mode="dropdown"
+            selectedValue={this.state.gateway}
+            onValueChange={(itemValue, itemIndex) => this.setState({gateway: itemValue})}>
+            <Picker.Item label="Gateway #1" value="Gateway #1" />
+            <Picker.Item label="Gateway #2" value="Gateway #2" />
+            <Picker.Item label="Gateway #3" value="Gateway #3" />
+          </Picker>
+        </View>
       </View>
     )
   }
@@ -44,12 +45,7 @@ export default class ControllerSettingsForm extends React.Component {
  * ControllerSettingsForm styles
  */
 const styles = StyleSheet.create({
-  formContainer: {
-    alignItems: 'stretch',
-    flex: 1,
-  },
   textInput: {
-    color: '#FFFFFF',
     height: 40,
   }
 });

@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import SplashScreen from './js/SplashScreen';
+import Icon from 'react-native-vector-icons/Ionicons';
 import GatewaysList from './js/GatewaysList';
 import NewGatewayForm from './js/NewGatewayForm';
 import ControllerSettings from './js/ControllerSettings';
@@ -9,30 +8,24 @@ import { StackNavigator } from 'react-navigation';
 import { TabNavigator } from 'react-navigation';
 
 /**
- * Route configuration.
+ * Tab navigation configuration.
  */
-const App = StackNavigator({
-  Home: {
-    screen: TabNavigator({
-      GatewaysList: {screen: GatewaysList},
-      ControllersList: {screen: ControllersList},
-    })
-  },
+const HomeScreen = TabNavigator({
   GatewaysList: {screen: GatewaysList},
-  NewGatewayForm: {screen: NewGatewayForm},
-  ControllerSettings: {screen: ControllerSettings},
   ControllersList: {screen: ControllersList},
+}, {
+  tabBarOptions: {
+    activeTintColor: '#5856D6',
+  }
 });
 
 /**
- * Home styles
+ * Stack navigation configuration.
  */
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-  },
+const App = StackNavigator({
+  Home: { screen: HomeScreen },
+  NewGatewayForm: {screen: NewGatewayForm},
+  ControllerSettings: {screen: ControllerSettings},
 });
 
 export default App;

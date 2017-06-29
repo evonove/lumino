@@ -14,17 +14,9 @@ const ControllerSettings = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <ControllerTypeSelector />
-        <View style={styles.formContainer}>
-          <ControllerSettingsForm />
-        </View>
-      </View>
-      <View>
-        <Button
-          onPress={() => goBack()}
-          title="Create"
-        />
+      <ControllerTypeSelector />
+      <View style={styles.formContainer}>
+        <ControllerSettingsForm />
       </View>
     </View>
   )
@@ -33,9 +25,16 @@ const ControllerSettings = ({navigation}) => {
 /**
  * StackNavigation options for ControllerSettings component
  */
-ControllerSettings.navigationOptions = {
-  title: 'Controller Settings'
-}
+ControllerSettings.navigationOptions = ({ navigation }) => ({
+  title: 'New Controller',
+  headerTintColor: '#5856D6',
+  headerTitleStyle: { color: 'black' },
+  headerRight: <Button
+                 onPress={() => navigation.goBack()}
+                 title="Save"
+                 color="#5856D6"
+               />
+});
 
 /**
  * ControllerSettings styles
@@ -43,7 +42,6 @@ ControllerSettings.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'space-between',
     paddingHorizontal: 20,
     paddingVertical: 30,
   },
