@@ -4,9 +4,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 /**
  * View of a single gateway.
- * @param  {string} name. The gateway's name.
- * @param  {string} icon_name. The type of icon showed.
- * @param  {string} icon_color. The icon's color.
+ * @param  {string} [name]. The gateway's name.
+ * @param  {string} [icon_name]. The type of icon showed.
+ * @param  {string} [icon_color]. The icon's color.
  */
 const GatewayView = ({name, icon_name, icon_color}) => {
   return (

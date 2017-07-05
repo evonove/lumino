@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Alert,
-  Button,
   StyleSheet,
   Switch,
   Text,
@@ -11,13 +10,14 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 /**
- * Mock of single controller view
+ * View of a single controller
+ * @param {string} [name]. The controller's name.
  */
-const ControllerView = () => {
+const ControllerView = ({ name }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.controllerHeading}>Controller #1</Text>
+        <Text style={styles.controllerHeading}>{name}</Text>
         <TouchableWithoutFeedback
            onPress={() => { Alert.alert('You open Settings')}}
           >

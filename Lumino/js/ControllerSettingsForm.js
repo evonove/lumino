@@ -1,5 +1,5 @@
 import React from 'react';
-import { Picker, StyleSheet, TextInput, View } from 'react-native';
+import { Picker, TextInput, View } from 'react-native';
 
 /**
  * Input form component for configuring a controller.
@@ -16,12 +16,12 @@ export default class ControllerSettingsForm extends React.Component {
       <View>
         <View>
           <TextInput
-            style={styles.textInput}
+            style={{height: 40}}
             placeholder="Name"
             onChangeText={(text) => this.setState({text})}
           />
           <TextInput
-            style={styles.textInput}
+            style={{height: 40}}
             placeholder="Code"
             onChangeText={(text) => this.setState({text})}
           />
@@ -40,12 +40,3 @@ export default class ControllerSettingsForm extends React.Component {
     )
   }
 }
-
-/**
- * ControllerSettingsForm styles
- */
-const styles = StyleSheet.create({
-  textInput: {
-    height: 40,
-  }
-});

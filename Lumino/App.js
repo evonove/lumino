@@ -8,7 +8,8 @@ import ControllersList from './js/ControllersList';
 import { StackNavigator } from 'react-navigation';
 import { TabNavigator } from 'react-navigation';
 
-/*
+
+/**
  * Gateways mocked data
  */
 const gateways = [
@@ -29,7 +30,26 @@ const gateways = [
   },
 ];
 
-/*
+/**
+ * Controllers mocked data
+ */
+const controllers = [
+  {
+    name: 'Controller #1',
+    type: 'dimmable',
+    code: '80930',
+    gateway: 'Gateway #1',
+  },
+  {
+    name: 'Controller #2',
+    type: 'switch',
+    code: '34987',
+    gateway: 'Gateway #3',
+  },
+];
+
+
+/**
  * The screen which contains the gateways list.
  * It passes down the gateways mocked data.
  */
@@ -60,11 +80,42 @@ GatewaysScreen.navigationOptions = ({ navigation }) => ({
 });
 
 /**
+ * The screen which contains the controllers list.
+ * It passes down the gateways mocked data.
+ */
+const ControllersScreen = () => {
+  return (
+    <ControllersList controllers={controllers} />
+  )
+}
+ControllersScreen.navigationOptions = ({ navigation }) => ({
+  title: 'Controllers',
+  headerRight: <TouchableOpacity
+                 onPress={() => navigation.navigate('ControllerSettings')}
+               >
+                 <Icon
+                   name={'ios-add'}
+                   size={34}
+                   color={'#5856D6'}
+                   style={{marginRight: 20}}
+                 />
+               </TouchableOpacity>,
+  tabBarIcon: ({ tintColor }) => (
+    <Icon
+      name={'ios-options-outline'}
+      size={26}
+      color={tintColor}
+    />
+  ),
+});
+
+
+/**
  * Tab navigation configuration.
  */
 const HomeScreen = TabNavigator({
   GatewaysScreen: {screen: GatewaysScreen},
-  ControllersList: {screen: ControllersList},
+  ControllersScreen: {screen: ControllersScreen},
 }, {
   tabBarOptions: {
     activeTintColor: '#5856D6',
