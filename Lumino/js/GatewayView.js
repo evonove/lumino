@@ -22,6 +22,12 @@ const GatewayView = ({name, icon_name, icon_color}) => {
   )
 }
 
+GatewayView.propTypes = {
+  name: React.PropTypes.string,
+  icon_name: React.PropTypes.string,
+  icon_color: React.PropTypes.string,
+};
+
 /**
  * GatewayView styles
  */

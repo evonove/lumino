@@ -61,6 +61,10 @@ const ControllerView = ({ name }) => {
   )
 }
 
+ControllerView.propTypes = {
+  name: React.PropTypes.string,
+};
+
 /**
  * ControllerView styles
  */

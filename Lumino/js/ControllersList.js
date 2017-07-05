@@ -25,4 +25,14 @@ const ControllersList = ({ controllers }) => {
   )
 }
 
+ControllersList.propTypes = {
+  controllers: React.PropTypes.arrayOf(React.PropTypes.shape({
+    index: React.PropTypes.number,
+    name: React.PropTypes.string,
+    type: React.PropTypes.string,
+    code: React.PropTypes.string,
+    gateway: React.PropTypes.string,
+  })),
+};
+
 export default ControllersList;

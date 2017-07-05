@@ -24,4 +24,13 @@ const GatewaysList = ({ gateways }) => {
   )
 }
 
+GatewaysList.propTypes = {
+  gateways: React.PropTypes.arrayOf(React.PropTypes.shape({
+    index: React.PropTypes.number,
+    name: React.PropTypes.string,
+    icon_name: React.PropTypes.string,
+    icon_color: React.PropTypes.string,
+  })),
+};
+
 export default GatewaysList;
