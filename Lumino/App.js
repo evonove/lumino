@@ -14,19 +14,16 @@ import { TabNavigator } from 'react-navigation';
  */
 const gateways = [
   {
-    name: 'Gateway #1',
-    icon_name: 'ios-checkmark',
-    icon_color: '#4CD964',
+    name: 'Office',
+    status: 'Connected',
   },
   {
-    name: 'Gateway #2',
-    icon_name: 'ios-close',
-    icon_color: '#FF3B30',
+    name: 'Home',
+    status: '',
   },
   {
-    name: 'Gateway #3',
-    icon_name: 'ios-close',
-    icon_color: '#FF3B30',
+    name: 'Vacation Home',
+    status: '',
   },
 ];
 

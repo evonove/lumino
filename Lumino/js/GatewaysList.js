@@ -12,8 +12,7 @@ const GatewaysList = ({ gateways }) => {
     <GatewayView
       key={index}
       name={gateway.name}
-      icon_name={gateway.icon_name}
-      icon_color={gateway.icon_color}
+      status={gateway.status}
     />,
   );
 
@@ -28,8 +27,7 @@ GatewaysList.propTypes = {
   gateways: React.PropTypes.arrayOf(React.PropTypes.shape({
     index: React.PropTypes.number,
     name: React.PropTypes.string,
-    icon_name: React.PropTypes.string,
-    icon_color: React.PropTypes.string,
+    status: React.PropTypes.string,
   })),
 };
 
