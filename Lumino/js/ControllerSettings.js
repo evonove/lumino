@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, ScrollView } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import ControllerTypeSelector from './ControllerTypeSelector';
 import ControllerSettingsForm from './ControllerSettingsForm';
@@ -13,12 +13,10 @@ const ControllerSettings = ({navigation}) => {
   const { goBack } = navigation;
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <ControllerTypeSelector />
-      <View style={styles.formContainer}>
-        <ControllerSettingsForm />
-      </View>
-    </View>
+      <ControllerSettingsForm />
+    </ScrollView>
   )
 }
 
@@ -42,12 +40,7 @@ ControllerSettings.navigationOptions = ({ navigation }) => ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
   },
-  formContainer: {
-    marginTop: 30,
-  }
 });
 
 export default ControllerSettings;
