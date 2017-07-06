@@ -32,13 +32,13 @@ const gateways = [
  */
 const controllers = [
   {
-    name: 'Controller #1',
+    name: 'Meeting Room',
     type: 'dimmable',
     code: '80930',
     gateway: 'Gateway #1',
   },
   {
-    name: 'Controller #2',
+    name: 'Developer Room',
     type: 'switch',
     code: '34987',
     gateway: 'Gateway #3',

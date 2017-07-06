@@ -9,26 +9,28 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const ControllerView = ({ name }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.controllerHeader}>
-        <Text style={styles.controllerName}>{name}</Text>
+      <View style={styles.controllerName}>
+        <Text style={styles.controllerNameText}>{name.toUpperCase()}</Text>
       </View>
-      <View style={styles.controllerHeader}>
-        <Text style={styles.label}>Switch</Text>
+      <View style={styles.controllerSwitch}>
+        <Text style={styles.switchLabel}>Switch</Text>
         <Switch />
       </View>
-      <View style={styles.dimmerContainer}>
+      <View style={styles.fieldDivider}></View>
+      <View style={styles.controllerDimmer}>
         <Icon
           name={'ios-sunny'}
           size={20}
-          color={'grey'}
+          color={'silver'}
         />
         <Slider
           style={styles.slider}
+          minimumTrackTintColor="#42275A"
         />
         <Icon
           name={'ios-sunny'}
           size={34}
-          color={'grey'}
+          color={'silver'}
         />
       </View>
     </View>
@@ -46,31 +48,44 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     borderBottomWidth: 0.5,
-    borderColor: 'lightgray',
+    borderColor: 'silver',
+    borderTopWidth: 0.5,
     flex: 1,
-    marginTop: 0.5,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-  controllerHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingTop: 5,
-    paddingBottom: 10,
+    marginTop: 14,
   },
   controllerName: {
-    fontSize: 17,
-    fontWeight: "600",
+    borderBottomWidth: 0.5,
+    borderColor: 'silver',
+    height: 50,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
   },
-  label: {
+  controllerNameText: {
+    fontWeight: '600',
+  },
+  controllerSwitch: {
+    alignItems: 'center',
+    height: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+  },
+  switchLabel: {
+    color: 'silver',
     fontSize: 17,
   },
-  dimmerContainer: {
+  fieldDivider: {
+    backgroundColor: 'silver',
+    height: 0.5,
+    marginLeft: 20,
+  },
+  controllerDimmer: {
     alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
+    height: 50,
     justifyContent: 'space-between',
+    paddingHorizontal: 20,
   },
   slider: {
     flex: 2,
