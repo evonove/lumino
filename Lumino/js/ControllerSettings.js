@@ -27,12 +27,12 @@ const ControllerSettings = ({navigation}) => {
  */
 ControllerSettings.navigationOptions = ({ navigation }) => ({
   title: 'New Controller',
-  headerTintColor: '#5856D6',
-  headerTitleStyle: { color: 'black' },
+  headerStyle: {backgroundColor: '#42275A'},
+    headerTintColor: 'white',
   headerRight: <Button
                  onPress={() => navigation.goBack()}
                  title="Save"
-                 color="#5856D6"
+                 color="white"
                />
 });
 

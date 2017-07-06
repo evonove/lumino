@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Button, StatusBar, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import GatewaysList from './js/GatewaysList';
 import NewGatewayForm from './js/NewGatewayForm';
@@ -55,21 +55,21 @@ const controllers = [
  */
 const GatewaysScreen = () => {
   return (
-    <GatewaysList gateways={gateways} />
+    <View style={{flex: 1}}>
+      <StatusBar barStyle='light-content' />
+      <GatewaysList gateways={gateways} />
+    </View>
   )
 }
 GatewaysScreen.navigationOptions = ({ navigation }) => ({
   title: 'Gateways',
-  headerRight: <TouchableOpacity
+  headerStyle: {backgroundColor: '#42275A'},
+  headerTintColor: 'white',
+  headerRight: <Button
+                 title="Add"
+                 color="white"
                  onPress={() => navigation.navigate('NewGatewayForm')}
-               >
-                 <Icon
-                   name={'ios-add'}
-                   size={34}
-                   color={'#5856D6'}
-                   style={{marginRight: 20}}
-                 />
-               </TouchableOpacity>,
+               />,
   tabBarIcon: ({ tintColor }) => (
     <Icon
       name={'ios-expand'}
@@ -85,21 +85,21 @@ GatewaysScreen.navigationOptions = ({ navigation }) => ({
  */
 const ControllersScreen = () => {
   return (
-    <ControllersList controllers={controllers} />
+    <View style={{flex: 1}}>
+      <StatusBar barStyle='light-content' />
+      <ControllersList controllers={controllers} />
+    </View>
   )
 }
 ControllersScreen.navigationOptions = ({ navigation }) => ({
   title: 'Controllers',
-  headerRight: <TouchableOpacity
+  headerStyle: {backgroundColor: '#42275A'},
+  headerTintColor: 'white',
+  headerRight: <Button
+                 title="Add"
+                 color="white"
                  onPress={() => navigation.navigate('ControllerSettings')}
-               >
-                 <Icon
-                   name={'ios-add'}
-                   size={34}
-                   color={'#5856D6'}
-                   style={{marginRight: 20}}
-                 />
-               </TouchableOpacity>,
+               />,
   tabBarIcon: ({ tintColor }) => (
     <Icon
       name={'ios-options-outline'}
@@ -118,7 +118,7 @@ const HomeScreen = TabNavigator({
   ControllersScreen: {screen: ControllersScreen},
 }, {
   tabBarOptions: {
-    activeTintColor: '#5856D6',
+    activeTintColor: '#42275A',
   }
 });
 
