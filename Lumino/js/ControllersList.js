@@ -1,6 +1,5 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import ControllerView from './ControllerView';
 
 /**
@@ -24,15 +23,5 @@ const ControllersList = ({ controllers }) => {
     </ScrollView>
   )
 }
-
-ControllersList.propTypes = {
-  controllers: React.PropTypes.arrayOf(React.PropTypes.shape({
-    index: React.PropTypes.number,
-    name: React.PropTypes.string,
-    type: React.PropTypes.string,
-    code: React.PropTypes.string,
-    gateway: React.PropTypes.string,
-  })),
-};
 
 export default ControllersList;
