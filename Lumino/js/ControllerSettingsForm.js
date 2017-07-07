@@ -55,7 +55,7 @@ export default class ControllerSettingsForm extends React.Component {
             <Icon
               style={styles.iconSelectItem}
               name={'ios-arrow-forward'}
-              color={'silver'}
+              color={'#CECED2'}
               size={24}
             />
           </TouchableOpacity>
@@ -68,43 +68,56 @@ export default class ControllerSettingsForm extends React.Component {
 /**
  * ControllerSettingsForm styles
  */
+const palette = {
+  background: '#FFF',
+  settings: '#8E8E93',
+  lines: '#CECED2',
+}
+
+const sizes = {
+  primaryFontSize: 17,
+  headingFontSize: 13,
+  fieldHeight: 44,
+}
+
 const styles = StyleSheet.create({
   blockHeading: {
-    paddingBottom: 8,
+    top: 20,
     paddingHorizontal: 20,
-    paddingTop: 18,
+    height: sizes.fieldHeight,
   },
   textHeading: {
-    color: 'grey',
+    color: palette.settings,
+    fontSize: sizes.headingFontSize,
   },
   blockFields: {
-    backgroundColor: 'white',
+    backgroundColor: palette.background,
     borderBottomWidth: 0.5,
-    borderColor: 'lightgrey',
+    borderColor: palette.lines,
     borderTopWidth: 0.5,
   },
   textInput: {
-    height: 46,
+    height: sizes.fieldHeight,
     paddingHorizontal: 20,
   },
   fieldDivider: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: palette.lines,
     height: 0.5,
     marginLeft: 20,
   },
   blockSelect: {
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: palette.background,
     borderBottomWidth: 0.5,
-    borderColor: 'lightgrey',
+    borderColor: palette.lines,
     borderTopWidth: 0.5,
     flexDirection: 'row',
-    height: 46,
+    height: sizes.fieldHeight,
     justifyContent: 'space-between',
     paddingHorizontal: 20,
   },
   textSelect: {
-    fontSize: 17,
+    fontSize: sizes.primaryFontSize,
   },
   buttonSelectItem: {
     alignItems: 'center',
@@ -115,7 +128,7 @@ const styles = StyleSheet.create({
     top: 2,
   },
   textItemSelected: {
-    color: 'silver',
-    fontSize: 17,
+    color: palette.settings,
+    fontSize: sizes.primaryFontSize,
   },
 });

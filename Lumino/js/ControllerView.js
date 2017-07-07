@@ -20,8 +20,8 @@ const ControllerView = ({ name }) => {
       <View style={styles.controllerDimmer}>
         <Icon
           name={'ios-sunny'}
-          size={20}
-          color={'silver'}
+          size={18}
+          color={'#8e8e93'}
         />
         <Slider
           style={styles.slider}
@@ -29,8 +29,8 @@ const ControllerView = ({ name }) => {
         />
         <Icon
           name={'ios-sunny'}
-          size={34}
-          color={'silver'}
+          size={28}
+          color={'#8e8e93'}
         />
       </View>
     </View>
@@ -44,19 +44,30 @@ ControllerView.propTypes = {
 /**
  * ControllerView styles
  */
+const palette = {
+  background: '#FFF',
+  settings: '#8E8E93',
+  lines: '#CECED2',
+}
+
+const sizes = {
+  primaryFontSize: 17,
+  fieldHeight: 44,
+}
+
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: palette.background,
     borderBottomWidth: 0.5,
-    borderColor: 'silver',
+    borderColor: palette.lines,
     borderTopWidth: 0.5,
     flex: 1,
-    marginTop: 14,
+    marginTop: 10,
   },
   controllerName: {
     borderBottomWidth: 0.5,
     borderColor: 'silver',
-    height: 50,
+    height: sizes.fieldHeight,
     justifyContent: 'center',
     paddingHorizontal: 20,
   },
@@ -65,17 +76,16 @@ const styles = StyleSheet.create({
   },
   controllerSwitch: {
     alignItems: 'center',
-    height: 50,
+    height: sizes.fieldHeight,
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
   },
   switchLabel: {
-    color: 'silver',
-    fontSize: 17,
+    fontSize: sizes.primaryFontSize,
   },
   fieldDivider: {
-    backgroundColor: 'silver',
+    backgroundColor: palette.lines,
     height: 0.5,
     marginLeft: 20,
   },
@@ -83,7 +93,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
-    height: 50,
+    height: sizes.fieldHeight,
     justifyContent: 'space-between',
     paddingHorizontal: 20,
   },

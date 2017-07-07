@@ -24,24 +24,38 @@ GatewayView.propTypes = {
 /**
  * GatewayView styles
  */
+const palette = {
+  background: '#FFF',
+  lines: '#CECED2',
+  success: '#4CD964',
+}
+
+const sizes = {
+  primaryFontSize: 17,
+  secondaryFontSize: 15,
+  fieldHeight: 44,
+}
+
 const styles = StyleSheet.create({
   gatewayContainer: {
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: palette.background,
     borderBottomWidth: 0.5,
-    borderColor: 'lightgray',
+    borderColor: palette.lines,
     flex: 1,
     flexDirection: 'row',
+    height: sizes.fieldHeight,
     justifyContent: 'space-between',
     marginTop: 0.5,
     paddingHorizontal: 20,
     paddingVertical: 14,
   },
   gatewayName: {
-    fontSize: 17,
+    fontSize: sizes.primaryFontSize,
   },
   gatewayConnection: {
-    color: '#4CD964',
+    color: palette.success,
+    fontSize: sizes.secondaryFontSize,
   },
 });
 

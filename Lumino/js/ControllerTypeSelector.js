@@ -45,19 +45,32 @@ const ControllerTypeSelector = () => {
 /**
  * ControllerTypeSelector styles
  */
+const palette = {
+  primary: '#42275A',
+  background: '#FFF',
+  settings: '#8E8E93',
+  lines: '#CECED2',
+}
+
+const sizes = {
+  headingFontSize: 13,
+  fieldHeight: 44,
+}
+
 const styles = StyleSheet.create({
   blockHeading: {
-    paddingBottom: 8,
+    top: 20,
     paddingHorizontal: 20,
-    paddingTop: 18,
+    height: sizes.fieldHeight,
   },
   textHeading: {
-    color: 'grey',
+    color: palette.settings,
+    fontSize: sizes.headingFontSize,
   },
   blockFields: {
-    backgroundColor: 'white',
+    backgroundColor: palette.background,
     borderBottomWidth: 0.5,
-    borderColor: 'lightgrey',
+    borderColor: palette.lines,
     borderTopWidth: 0.5,
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -66,7 +79,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderColor: 'silver',
+    borderColor: palette.lines,
     borderRadius: 5,
     borderWidth: 0.5,
     height: 100,
@@ -75,7 +88,7 @@ const styles = StyleSheet.create({
     width: 100,
   },
   buttonText: {
-    color: '#42275A',
+    color: palette.primary,
   },
 });
 

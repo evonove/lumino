@@ -37,7 +37,6 @@ export default class NewGatewayForm extends React.Component {
           <View style={styles.blockFields}>
             <TextInput
               style={styles.textInput}
-              tintColor="red"
               placeholder="Name"
               onChangeText={(text) => this.setState({text})}
             />
@@ -76,30 +75,42 @@ export default class NewGatewayForm extends React.Component {
 /**
  * NewGatewayForm styles
  */
+const palette = {
+  background: '#FFF',
+  settings: '#8E8E93',
+  lines: '#CECED2',
+}
+
+const sizes = {
+  headingFontSize: 13,
+  fieldHeight: 44,
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   blockHeading: {
-    paddingBottom: 8,
+    top: 20,
     paddingHorizontal: 20,
-    paddingTop: 18,
+    height: sizes.fieldHeight,
   },
   textHeading: {
-    color: 'grey',
+    color: palette.settings,
+    fontSize: sizes.headingFontSize,
   },
   blockFields: {
-    backgroundColor: 'white',
+    backgroundColor: palette.background,
     borderBottomWidth: 0.5,
-    borderColor: 'lightgrey',
+    borderColor: palette.lines,
     borderTopWidth: 0.5,
   },
   textInput: {
-    height: 46,
+    height: sizes.fieldHeight,
     paddingHorizontal: 20,
   },
   fieldDivider: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: palette.lines,
     height: 0.5,
     marginLeft: 20,
   },
