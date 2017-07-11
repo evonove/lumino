@@ -1,12 +1,12 @@
 import React from 'react';
 import { Button, StatusBar, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import GradientHeader from './js/GradientHeader';
 import GatewaysList from './js/GatewaysList';
 import NewGatewayForm from './js/NewGatewayForm';
 import ControllerSettings from './js/ControllerSettings';
 import ControllersList from './js/ControllersList';
-import { StackNavigator } from 'react-navigation';
-import { TabNavigator } from 'react-navigation';
+import { Header, StackNavigator, TabNavigator } from 'react-navigation';
 
 
 /**
@@ -60,7 +60,7 @@ const GatewaysScreen = () => {
 }
 GatewaysScreen.navigationOptions = ({ navigation }) => ({
   title: 'Gateways',
-  headerStyle: {backgroundColor: '#42275A'},
+  header: (props) => <GradientHeader {...props} />,
   headerTintColor: 'white',
   headerRight: <Button
                  title="Add"
@@ -90,7 +90,7 @@ const ControllersScreen = () => {
 }
 ControllersScreen.navigationOptions = ({ navigation }) => ({
   title: 'Controllers',
-  headerStyle: {backgroundColor: '#42275A'},
+  header: (props) => <GradientHeader {...props} />,
   headerTintColor: 'white',
   headerRight: <Button
                  title="Add"

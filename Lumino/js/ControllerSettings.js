@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, StyleSheet, ScrollView } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import GradientHeader from './GradientHeader';
 import ControllerTypeSelector from './ControllerTypeSelector';
 import ControllerSettingsForm from './ControllerSettingsForm';
 
@@ -25,8 +26,8 @@ const ControllerSettings = ({navigation}) => {
  */
 ControllerSettings.navigationOptions = ({ navigation }) => ({
   title: 'New Controller',
-  headerStyle: {backgroundColor: '#42275A'},
-    headerTintColor: 'white',
+  header: (props) => <GradientHeader {...props} />,
+  headerTintColor: 'white',
   headerRight: <Button
                  onPress={() => navigation.goBack()}
                  title="Save"

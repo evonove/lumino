@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import GradientHeader from './GradientHeader';
 
 /**
  * Input form component for configuring a gateway.
@@ -7,7 +8,7 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 export default class NewGatewayForm extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'New Gateway',
-    headerStyle: {backgroundColor: '#42275A'},
+    header: (props) => <GradientHeader {...props} />,
     headerTintColor: 'white',
     headerRight: <Button
                    onPress={() => navigation.goBack()}
