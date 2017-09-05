@@ -9,7 +9,7 @@ const GradientHeader = props => (
   <View>
     <Image
       style={styles.gradient}
-      source={require('./img/header-gradient.png')}
+      source={require('../img/header-gradient.png')}
       resizeMode="cover"
     />
     <Header {...props} style={{ backgroundColor: 'transparent' }} />

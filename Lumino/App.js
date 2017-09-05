@@ -1,24 +1,20 @@
 import React from 'react';
-import { StackNavigator } from 'react-navigation';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-import HomeScreen from './js/HomeScreen';
-import NewGatewayForm from './js/NewGatewayForm';
-import ControllerSettings from './js/ControllerSettings';
+import AppReducer from './js/reducers';
+import App from './js/navigators/AppNavigator';
 
+const store = createStore(AppReducer);
 
-/**
- * Stack navigation configuration.
- */
-const App = StackNavigator({
-  Home: {
-    screen: HomeScreen
-  },
-  NewGatewayForm: {
-    screen: NewGatewayForm
-  },
-  ControllerSettings: {
-    screen: ControllerSettings
-  },
-});
+class Root extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
+  }
+}
 
-export default App;
+export default Root;
