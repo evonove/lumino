@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Button, StatusBar, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import GradientHeader from './GradientHeader';
@@ -6,28 +7,11 @@ import GatewaysList from './GatewaysList';
 import NewGatewayForm from './NewGatewayForm';
 
 /**
- * Gateways mocked data
- */
-const gateways = [
-  {
-    name: 'Office',
-    status: 'Connected',
-  },
-  {
-    name: 'Home',
-    status: '',
-  },
-  {
-    name: 'Vacation Home',
-    status: '',
-  },
-];
-
-/**
  * The screen which contains the gateways list.
  * It passes down the gateways mocked data.
  */
-const GatewaysScreen = () => {
+const GatewaysScreen = (props) => {
+  const gateways = props.gateways || [];
   return (
     <View style={{flex: 1}}>
       <StatusBar barStyle='light-content' />
@@ -35,7 +19,7 @@ const GatewaysScreen = () => {
     </View>
   )
 }
-GatewaysScreen.navigationOptions = ({ navigation }) => ({
+GatewaysScreen.navigationOptions = ({ navigation, screenProps }) => ({
   title: 'Gateways',
   header: (props) => <GradientHeader {...props} />,
   headerTintColor: 'white',
@@ -53,4 +37,9 @@ GatewaysScreen.navigationOptions = ({ navigation }) => ({
   ),
 });
 
-export default GatewaysScreen;
+
+const mapStateToProps = state => ({
+  gateways: state.gateways
+});
+
+export default connect(mapStateToProps)(GatewaysScreen);

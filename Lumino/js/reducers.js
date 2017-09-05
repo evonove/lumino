@@ -14,12 +14,20 @@ const nav = (state = initialState, action) => {
 };
 
 
-const gateways = (state = [], action) => {
+const mock_gateways = [{name: "My shiny gateway", status: "Connected"}];
+
+const gateways = (state = mock_gateways, action) => {
   return state;
 }
 
 
-const controllers = (state = [], action) => {
+
+const mock_controllers = [
+  { name: 'Meeting Room', type: 'dimmable', code: '80930', gateway: 'Gateway #1', },
+  { name: 'Developer Room', type: 'switch', code: '34987', gateway: 'Gateway #3', },
+];
+
+const controllers = (state = mock_controllers, action) => {
   return state;
 }
 

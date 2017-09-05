@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import { Button, StatusBar, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -7,30 +9,11 @@ import ControllerSettings from './ControllerSettings';
 import ControllersList from './ControllersList';
 
 /**
- * Controllers mocked data
- */
-const controllers = [
-  {
-    name: 'Meeting Room',
-    type: 'dimmable',
-    code: '80930',
-    gateway: 'Gateway #1',
-  },
-  {
-    name: 'Developer Room',
-    type: 'switch',
-    code: '34987',
-    gateway: 'Gateway #3',
-  },
-];
-
-
-
-/**
  * The screen which contains the controllers list.
  * It passes down the gateways mocked data.
  */
-const ControllersScreen = () => {
+const ControllersScreen = (props) => {
+  const controllers = props.controllers || []
   return (
     <View style={{flex: 1}}>
       <StatusBar barStyle='light-content' />
@@ -57,4 +40,9 @@ ControllersScreen.navigationOptions = ({ navigation }) => ({
 });
 
 
-export default ControllersScreen;
+const mapStateToProps = state => ({
+  controllers: state.controllers
+});
+
+
+export default connect(mapStateToProps)(ControllersScreen);

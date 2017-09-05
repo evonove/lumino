@@ -33,7 +33,9 @@ AppWithNavigationState.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  nav: state.nav
+  nav: state.nav,
+  gateways: state.gateways,
+  controllers: state.controllers,
 });
 
 
