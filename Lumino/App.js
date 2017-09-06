@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 
 import AppReducer from './js/reducers';
-import App from './js/navigators/AppNavigator';
+import AppNavigator from './js/navigators/AppNavigator';
 
 // Middleware applied to the store to make it possible to reducers
 // to access the global state
@@ -13,14 +13,14 @@ const middleware = store => next => action => {
 
 const store = createStore(AppReducer, applyMiddleware(middleware));
 
-class Root extends React.Component {
+class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <App />
+        <AppNavigator />
       </Provider>
     );
   }
 }
 
-export default Root;
+export default App;

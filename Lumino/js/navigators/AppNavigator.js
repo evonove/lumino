@@ -37,11 +37,6 @@ AppWithNavigationState.propTypes = {
 
 const mapStateToProps = (state) => ({
   nav: state.nav,
-  gateways: state.gateways,
-  controllers: state.controllers,
-  form: state.form,
 });
-
-
 
 export default connect(mapStateToProps)(AppWithNavigationState);

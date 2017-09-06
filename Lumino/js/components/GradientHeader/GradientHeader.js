@@ -1,24 +1,8 @@
 import React from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, View } from 'react-native';
 import { Header } from 'react-navigation';
 
-/**
- * GatewayView styles
- */
-const palette = {
-  primary: '#42275A',
-}
-
-const styles = StyleSheet.create({
-  gradient: {
-    backgroundColor: palette.primary,
-    height: 100 + '%',
-    left: 0,
-    position: 'absolute',
-    top: 0,
-    width: 100 + '%',
-  }
-})
+import styles from './style';
 
 
 /**

@@ -27,7 +27,7 @@ GatewaysScreen.navigationOptions = ({ navigation, screenProps }) => ({
   headerRight: <Button
                  title="Add"
                  color="white"
-                 onPress={() => navigation.navigate('NewGatewayForm')}
+                 onPress={() => navigation.navigate('GatewayForm')}
                />,
   tabBarIcon: ({ tintColor }) => (
     <Icon
