@@ -1,14 +1,14 @@
 import React from 'react';
 import { TabNavigator } from 'react-navigation';
 
-import GatewaysScreen from './GatewaysScreen';
-import ControllersScreen from './ControllersScreen';
+import GatewaysScreen from '../screens/GatewaysScreen';
+import ControllersScreen from '../screens/ControllersScreen';
 
 
 /**
  * Tab navigation configuration.
  */
-const HomeScreen = TabNavigator(
+const HomeNavigator = TabNavigator(
   {
     GatewaysScreen: {
       screen: GatewaysScreen
@@ -24,4 +24,4 @@ const HomeScreen = TabNavigator(
   }
 );
 
-export default HomeScreen;
+export default HomeNavigator;

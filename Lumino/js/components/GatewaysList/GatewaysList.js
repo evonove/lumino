@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 import GatewayView from './GatewayView';
 
 /**

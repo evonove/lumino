@@ -3,20 +3,6 @@ import { Image, StyleSheet, View } from 'react-native';
 import { Header } from 'react-navigation';
 
 /**
- * Custom Header with gradient as background image.
- */
-const GradientHeader = props => (
-  <View>
-    <Image
-      style={styles.gradient}
-      source={require('../img/header-gradient.png')}
-      resizeMode="cover"
-    />
-    <Header {...props} style={{ backgroundColor: 'transparent' }} />
-  </View>
-);
-
-/**
  * GatewayView styles
  */
 const palette = {
@@ -33,5 +19,20 @@ const styles = StyleSheet.create({
     width: 100 + '%',
   }
 })
+
+
+/**
+ * Custom Header with gradient as background image.
+ */
+const GradientHeader = props => (
+  <View>
+    <Image
+      style={styles.gradient}
+      source={require('./header-gradient.png')}
+      resizeMode="cover"
+    />
+    <Header {...props} style={{ backgroundColor: 'transparent' }} />
+  </View>
+);
 
 export default GradientHeader;

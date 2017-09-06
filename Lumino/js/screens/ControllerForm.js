@@ -1,16 +1,17 @@
 import React from 'react';
 import { Button, StyleSheet, ScrollView } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import GradientHeader from './GradientHeader';
-import ControllerTypeSelector from './ControllerTypeSelector';
-import ControllerSettingsForm from './ControllerSettingsForm';
+
+import GradientHeader from '../components/GradientHeader/GradientHeader';
+import ControllerTypeSelector from '../components/ControllerTypeSelector/ControllerTypeSelector';
+import ControllerSettingsForm from '../components/ControllerForm/ControllerForm';
 
 /**
  * Controller settings
  * @param  {[string]} navigation [navigation props received from the Home component.
- * It is used to link ControllerSettings to ControllersList]
+ * It is used to link ControllerForm to ControllersList]
  */
-const ControllerSettings = ({navigation}) => {
+const ControllerForm = ({navigation}) => {
   const { goBack } = navigation;
 
   return (
@@ -22,9 +23,9 @@ const ControllerSettings = ({navigation}) => {
 }
 
 /**
- * StackNavigation options for ControllerSettings component
+ * StackNavigation options for ControllerForm component
  */
-ControllerSettings.navigationOptions = ({ navigation }) => ({
+ControllerForm.navigationOptions = ({ navigation }) => ({
   title: 'New Controller',
   header: (props) => <GradientHeader {...props} />,
   headerTintColor: 'white',
@@ -36,7 +37,7 @@ ControllerSettings.navigationOptions = ({ navigation }) => ({
 });
 
 /**
- * ControllerSettings styles
+ * ControllerForm styles
  */
 const styles = StyleSheet.create({
   container: {
@@ -44,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ControllerSettings;
+export default ControllerForm;

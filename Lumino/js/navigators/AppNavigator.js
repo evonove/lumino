@@ -3,28 +3,31 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addNavigationHelpers, StackNavigator } from 'react-navigation';
 
-import HomeScreen from '../components/HomeScreen';
-import NewGatewayForm from '../components/NewGatewayForm';
-import ControllerSettings from '../components/ControllerSettings';
+import HomeNavigator from './HomeNavigator';
+import GatewayForm from '../screens/GatewayForm';
+import ControllerForm from '../screens/ControllerForm';
+
 
 /**
  * Stack navigation configuration.
  */
 export const AppNavigator = StackNavigator({
   Home: {
-    screen: HomeScreen
+    screen: HomeNavigator
   },
-  NewGatewayForm: {
-    screen: NewGatewayForm
+  GatewayForm: {
+    screen: GatewayForm
   },
-  ControllerSettings: {
-    screen: ControllerSettings
+  ControllerForm: {
+    screen: ControllerForm
   },
 });
 
 
 const AppWithNavigationState = ({ dispatch, nav }) => (
-  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
+  <AppNavigator
+    navigation={addNavigationHelpers({ dispatch, state: nav })}
+  />
 );
 
 AppWithNavigationState.propTypes = {

@@ -1,13 +1,13 @@
 import React from 'react';
-import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form'
+import { NavigationActions } from 'react-navigation';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
-import GradientHeader from './GradientHeader';
+import GradientHeader from '../GradientHeader/GradientHeader';
 
 /**
- * NewGatewayForm styles
+ * GatewayForm styles
  */
 const palette = {
   background: '#FFF',
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   },
 });
 
+
 /**
  * Wrapper around textinput to work with redux
  */
@@ -69,7 +70,7 @@ const MyTextInput = (props) => {
 /**
  * Input form component for configuring a gateway.
  */
-let NewGatewayForm = (props) => (
+let GatewayForm = (props) => (
   <View style={styles.container}>
     <View>
       <View style={styles.blockHeading}>
@@ -116,26 +117,11 @@ let NewGatewayForm = (props) => (
   </View>
 );
 
-const mapStateToProps = state => ({
-  form: state.form
-});
-
-const mapDispatchToProps = dispatch => ({
-  onPress: (props) => {
-    props.dispatch({type: 'ADD_GATEWAY', data: props });
-    props.navigation.goBack()
-  }
-});
-
-
-// Connect to redux store
-NewGatewayForm = connect(mapStateToProps, mapDispatchToProps)(NewGatewayForm);
-
 // Wrap into reduxForm for form handling
-NewGatewayForm = reduxForm({form: 'gateway'})(NewGatewayForm)
+GatewayForm = reduxForm({form: 'gateway'})(GatewayForm)
 
 // Add navigationOptions only after wrapping in reduxForm, otherwise they would be overwritten
-NewGatewayForm.navigationOptions = props => {
+GatewayForm.navigationOptions = props => {
   const { navigation } = props;
   const { state, setParams } = navigation;
   const { params } = state;
@@ -151,4 +137,4 @@ NewGatewayForm.navigationOptions = props => {
   };
 };
 
-export default NewGatewayForm;
+export default GatewayForm;
