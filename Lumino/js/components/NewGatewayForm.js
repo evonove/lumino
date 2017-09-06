@@ -66,10 +66,6 @@ const MyTextInput = (props) => {
   );
 }
 
-const submit = values => {
-  console.log('submitting form', values)
-}
-
 /**
  * Input form component for configuring a gateway.
  */
@@ -83,7 +79,7 @@ let NewGatewayForm = (props) => (
         <Field
           placeholder="Name"
           name="name"
-          component={TextInput}
+          component={MyTextInput}
           style={styles.textInput}
         />
       </View>
@@ -94,27 +90,26 @@ let NewGatewayForm = (props) => (
       </View>
       <View style={styles.blockFields}>
         <Field
-          component={TextInput}
+          component={MyTextInput}
           style={styles.textInput}
           placeholder="IP Address"
           name="ip_address"
         />
         <View style={styles.fieldDivider}></View>
         <Field
-          component={TextInput}
+          component={MyTextInput}
           style={styles.textInput}
           placeholder="Port"
           name="port"
         />
         <View style={styles.fieldDivider}></View>
         <Field
-          component={TextInput}
+          component={MyTextInput}
           style={styles.textInput}
           placeholder="Password"
           name="password"
           secureTextEntry={true}
         />
-        <Button onPress={() => props.onPress(props)} title="Save" />
       </View>
 
     </View>
@@ -127,7 +122,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onPress: (props) => {
-    console.log(props);
     props.dispatch({type: 'ADD_GATEWAY', data: props });
     props.navigation.goBack()
   }
@@ -149,7 +143,11 @@ NewGatewayForm.navigationOptions = props => {
     title: 'New Gateway',
     header: (props) => <GradientHeader {...props} />,
     headerTintColor: 'white',
-    headerRight: <Button onPress={() => console.log(props)} title="Save" color="white" />,
+    headerRight: <Button onPress={() => {
+      navigation.dispatch({type: "ADD_GATEWAY"});
+      navigation.goBack()
+    }
+    } title="Save" color="white" />,
   };
 };
 

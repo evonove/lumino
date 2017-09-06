@@ -19,10 +19,9 @@ const mock_gateways = [{name: "My shiny gateway", status: "Connected"}];
 const gateways = (state = mock_gateways, action) => {
   switch (action.type) {
     case 'ADD_GATEWAY':
-      return [...state, action.data];
-    case 'SUBMIT_GATEWAY':
-      console.log(action.getState());
-      return state;
+      let values = action.getState().form.gateway.values;
+      console.log(values);
+      return [...state, values];
     default:
       return state;
   }
