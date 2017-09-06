@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form'
-import { NavigationActions } from 'react-navigation';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import styles from './style';
@@ -73,8 +72,7 @@ GatewayForm.navigationOptions = props => {
     headerTintColor: 'white',
     headerRight: <Button onPress={() => {
       navigation.dispatch({type: "ADD_GATEWAY"});
-      navigation.goBack()
-    }
+      navigation.goBack()}
     } title="Save" color="white" />,
   };
 };
