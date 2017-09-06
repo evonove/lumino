@@ -1,77 +1,10 @@
 import React from 'react';
+import { NavigationActions } from 'react-navigation';
+import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form'
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+
 import GradientHeader from './GradientHeader';
-
-/**
- * Input form component for configuring a gateway.
- */
-export default class NewGatewayForm extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: 'New Gateway',
-    header: (props) => <GradientHeader {...props} />,
-    headerTintColor: 'white',
-    headerRight: <Button
-                   onPress={() => navigation.goBack()}
-                   title="Save"
-                   color="white"
-                 />
-  });
-
-  constructor(props) {
-    super(props);
-    this.state = { text: ''}
-  }
-
-  render() {
-    // Form block headings
-    const headings = {
-      info: 'info',
-      settings: 'settings',
-    }
-
-    return (
-      <View style={styles.container}>
-        <View>
-          <View style={styles.blockHeading}>
-            <Text style={styles.textHeading}>{headings.info.toUpperCase()}</Text>
-          </View>
-          <View style={styles.blockFields}>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Name"
-              onChangeText={(text) => this.setState({text})}
-            />
-          </View>
-        </View>
-        <View>
-          <View style={styles.blockHeading}>
-            <Text style={styles.textHeading}>{headings.settings.toUpperCase()}</Text>
-          </View>
-          <View style={styles.blockFields}>
-            <TextInput
-              style={styles.textInput}
-              placeholder="IP Address"
-              onChangeText={(text) => this.setState({text})}
-            />
-            <View style={styles.fieldDivider}></View>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Port"
-              onChangeText={(text) => this.setState({text})}
-            />
-            <View style={styles.fieldDivider}></View>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Password"
-              secureTextEntry={true}
-              onChangeText={(text) => this.setState({text})}
-            />
-          </View>
-        </View>
-      </View>
-    )
-  }
-}
 
 /**
  * NewGatewayForm styles
@@ -116,3 +49,108 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
 });
+
+/**
+ * Wrapper around textinput to work with redux
+ */
+const MyTextInput = (props) => {
+  const { input, ...inputProps } = props;
+  return (
+    <TextInput
+      {...inputProps}
+      onChangeText={input.onChange}
+      onBlur={input.onBlur}
+      onFocus={input.onFocus}
+      value={input.value}
+    />
+  );
+}
+
+const submit = values => {
+  console.log('submitting form', values)
+}
+
+/**
+ * Input form component for configuring a gateway.
+ */
+let NewGatewayForm = (props) => (
+  <View style={styles.container}>
+    <View>
+      <View style={styles.blockHeading}>
+        <Text style={styles.textHeading}>INFO</Text>
+      </View>
+      <View style={styles.blockFields}>
+        <Field
+          placeholder="Name"
+          name="name"
+          component={TextInput}
+          style={styles.textInput}
+        />
+      </View>
+    </View>
+    <View>
+      <View style={styles.blockHeading}>
+        <Text style={styles.textHeading}>SETTINGS</Text>
+      </View>
+      <View style={styles.blockFields}>
+        <Field
+          component={TextInput}
+          style={styles.textInput}
+          placeholder="IP Address"
+          name="ip_address"
+        />
+        <View style={styles.fieldDivider}></View>
+        <Field
+          component={TextInput}
+          style={styles.textInput}
+          placeholder="Port"
+          name="port"
+        />
+        <View style={styles.fieldDivider}></View>
+        <Field
+          component={TextInput}
+          style={styles.textInput}
+          placeholder="Password"
+          name="password"
+          secureTextEntry={true}
+        />
+        <Button onPress={() => props.onPress(props)} title="Save" />
+      </View>
+
+    </View>
+  </View>
+);
+
+const mapStateToProps = state => ({
+  form: state.form
+});
+
+const mapDispatchToProps = dispatch => ({
+  onPress: (props) => {
+    console.log(props);
+    props.dispatch({type: 'ADD_GATEWAY', data: props });
+    props.navigation.goBack()
+  }
+});
+
+
+// Connect to redux store
+NewGatewayForm = connect(mapStateToProps, mapDispatchToProps)(NewGatewayForm);
+
+// Wrap into reduxForm for form handling
+NewGatewayForm = reduxForm({form: 'gateway'})(NewGatewayForm)
+
+// Add navigationOptions only after wrapping in reduxForm, otherwise they would be overwritten
+NewGatewayForm.navigationOptions = props => {
+  const { navigation } = props;
+  const { state, setParams } = navigation;
+  const { params } = state;
+  return {
+    title: 'New Gateway',
+    header: (props) => <GradientHeader {...props} />,
+    headerTintColor: 'white',
+    headerRight: <Button onPress={() => console.log(props)} title="Save" color="white" />,
+  };
+};
+
+export default NewGatewayForm;

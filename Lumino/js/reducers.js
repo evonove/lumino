@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { NavigationActions } from 'react-navigation';
+import { reducer as formReducer } from 'redux-form'
 
 import { AppNavigator } from './navigators/AppNavigator';
 
@@ -17,13 +17,21 @@ const nav = (state = initialState, action) => {
 const mock_gateways = [{name: "My shiny gateway", status: "Connected"}];
 
 const gateways = (state = mock_gateways, action) => {
-  return state;
+  switch (action.type) {
+    case 'ADD_GATEWAY':
+      return [...state, action.data];
+    case 'SUBMIT_GATEWAY':
+      console.log(action.getState());
+      return state;
+    default:
+      return state;
+  }
 }
 
 
 
 const mock_controllers = [
-  { name: 'Meeting Room', type: 'dimmable', code: '80930', gateway: 'Gateway #1', },
+  { name: 'Meeting Ruoom', type: 'dimmable', code: '80930', gateway: 'Gateway #1', },
   { name: 'Developer Room', type: 'switch', code: '34987', gateway: 'Gateway #3', },
 ];
 
@@ -37,6 +45,7 @@ const AppReducer = combineReducers({
   nav,
   gateways,
   controllers,
+  form: formReducer,
 });
 
 export default AppReducer;
