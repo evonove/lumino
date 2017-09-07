@@ -1,4 +1,22 @@
-const gateways = (state = [], action) => {
+// Gateways reducer
+
+
+// Some mock gateways used for development
+const initialGateways = [
+  {
+    id: 1,
+    name: "Prova 1",
+    status: "Connected"
+  },
+  {
+    id: 2,
+    name: "Provaa 2",
+    status: "",
+  }
+]
+
+
+const gateways = (state = initialGateways, action) => {
   switch (action.type) {
     case 'ADD_GATEWAY':
       // Take form values from global state as we won't have that

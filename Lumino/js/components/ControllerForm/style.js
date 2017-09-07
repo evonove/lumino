@@ -35,6 +35,9 @@ const styles = StyleSheet.create({
     height: sizes.fieldHeight,
     paddingHorizontal: 20,
   },
+  picker: {
+    height: sizes.fieldHeight,
+  },
   fieldDivider: {
     backgroundColor: palette.lines,
     height: 0.5,

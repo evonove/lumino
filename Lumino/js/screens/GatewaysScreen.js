@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import GradientHeader from '../components/GradientHeader/GradientHeader';
 import GatewaysList from '../components/GatewaysList/GatewaysList';
-import GatewayForm from '../components/GatewayForm/GatewayForm';
 
 /**
  * The screen which contains the gateways list.

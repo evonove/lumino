@@ -5,7 +5,6 @@ import { Button, StatusBar, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import GradientHeader from '../components/GradientHeader/GradientHeader';
-import ControllerForm from '../components/ControllerForm/ControllerForm';
 import ControllersList from '../components/ControllersList/ControllersList';
 
 /**

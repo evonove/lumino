@@ -32,7 +32,7 @@ const ControllerView = props => {
   return (
     <View style={styles.container}>
       <View style={styles.controllerName}>
-        <Text style={styles.controllerNameText}>{props.name.toUpperCase()}</Text>
+        <Text style={styles.controllerNameText}>{props.name.toUpperCase()} - {props.gateway}</Text>
       </View>
       {child}
     </View>
