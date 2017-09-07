@@ -7,3 +7,5 @@ npm-debug.*
 
 # OS X
 **/.DS_Store
+
+ios/build/
