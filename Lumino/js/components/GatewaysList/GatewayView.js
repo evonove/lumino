@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Text, View } from 'react-native';
 
 import styles from './style';
@@ -19,8 +20,8 @@ const GatewayView = ({name, status}) => {
 }
 
 GatewayView.propTypes = {
-  name: React.PropTypes.string,
-  status: React.PropTypes.string,
+  name: PropTypes.string,
+  status: PropTypes.string,
 };
 
 export default GatewayView;

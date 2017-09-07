@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -25,9 +26,9 @@ const GatewaysList = ({ gateways }) => {
 }
 
 GatewaysList.propTypes = {
-  gateways: React.PropTypes.arrayOf(React.PropTypes.shape({
-    name: React.PropTypes.string,
-    status: React.PropTypes.string,
+  gateways: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    status: PropTypes.string,
   })),
 };
 

@@ -7,7 +7,7 @@ import ControllerView from './ControllerView';
  * Shows the list of controllers
  * @param {array} [controllers]. Array of controllers data.
  */
-const ControllersList = ({ controllers }) => {
+const ControllersList = ({ controllers, onDimmerChange, onSwitchChange }) => {
   const controllersList = controllers.map((controller, index) =>
     <ControllerView
       key={index}
@@ -15,6 +15,9 @@ const ControllersList = ({ controllers }) => {
       type={controller.type}
       code={controller.code}
       gateway={controller.gateway}
+      value={controller.value}
+      onDimmerChange={(value) => onDimmerChange(value, controller.id)}
+      onSwitchChange={(value) => onSwitchChange(value, controller.id)}
     />
   );
 

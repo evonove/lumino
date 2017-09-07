@@ -13,10 +13,16 @@ import ControllersList from '../components/ControllersList/ControllersList';
  */
 const ControllersScreen = (props) => {
   const controllers = props.controllers || []
+  const onDimmerChange = (value, id) => props.dispatch({type: 'DIMMER_CHANGE', value, id});
+  const onSwitchChange = (value, id) => props.dispatch({type: 'SWITCH_TOGGLE', value, id});
   return (
     <View style={{flex: 1}}>
       <StatusBar barStyle='light-content' />
-      <ControllersList controllers={controllers} />
+      <ControllersList
+        controllers={controllers}
+        onDimmerChange={onDimmerChange}
+        onSwitchChange={onSwitchChange}
+      />
     </View>
   )
 }
