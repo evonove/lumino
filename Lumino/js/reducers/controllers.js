@@ -1,4 +1,5 @@
 // Contollers reducer
+var net = require('net');
 
 // Some mock controllers used for development
 const mockControllers = [
@@ -35,6 +36,18 @@ const controllers = (state = mockControllers, action) => {
         if (controller.id == action.id) {
           controller.value = action.value;
         };
+        let string = '';
+        console.warn(controller.value);
+        if (controller.value == true) {
+          string = '*1*1*22##';
+        } else {
+          string = '*1*0*22##';
+        }
+        let client = net.createConnection(20000, "192.168.247.35", () => {
+          client.write(string);
+        });
+
+
         return controller;
       });
       return newState;
