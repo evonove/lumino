@@ -1,16 +1,16 @@
 const net = require('net');
 
-export const switch_light_on = (gateway, port, zone, id) => {
-  const command_string = '*' + zone + '*1*' + id + '##';
-  let client = net.createConnection(port, gateway, () => {
-    client.write(command_string);
-    client.end();
-  });
-}
-
-export const switch_light_off = (gateway, port, zone, id) => {
-  const command_string = '*' + zone + '*0*' + id + '##';
-  let client = net.createConnection(port, gateway, () => {
+export const change_light = (gateway, controller) => {
+  let value = 0;
+  if (controller.value == true) {
+    value = 1;
+  } else if (controller.value == false) {
+    value = 0;
+  } else {
+    value = controller.value;
+  }
+  const command_string = '*' + controller.zone_code + '*' + value + '*' + controller.id_code + '##'
+  let client = net.createConnection(gateway.port, gateway.ip_address, () => {
     client.write(command_string);
     client.end();
   });

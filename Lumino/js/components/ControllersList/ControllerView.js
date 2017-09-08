@@ -24,6 +24,8 @@ const DimmerComponent = (props) => (
       minimumTrackTintColor="#42275A"
       onValueChange={props.onValueChange}
       value={props.value}
+      step={1}
+      maximumValue={10}
     />
     <Icon name={'ios-sunny'} size={28} color={'#8e8e93'} />
   </View>
@@ -36,9 +38,9 @@ const DimmerComponent = (props) => (
 const ControllerView = props => {
   let child;
   if (props.type == "switch") {
-    child = <SwitchComponent onValueChange={props.onSwitchChange} value={props.value} />
+    child = <SwitchComponent onValueChange={props.onControllerChange} value={props.value} />
   } else {
-    child = <DimmerComponent onValueChange={props.onDimmerChange} value={props.value} />
+    child = <DimmerComponent onValueChange={props.onControllerChange} value={props.value} />
   };
   return (
     <View style={styles.container}>
@@ -58,8 +60,7 @@ ControllerView.propTypes = {
     PropTypes.number
   ]),
   gateway: PropTypes.number,
-  onSwitchChange: PropTypes.func.isRequired,
-  onDimmerChange: PropTypes.func.isRequired,
+  onControllerChange: PropTypes.func.isRequired,
 };
 
 

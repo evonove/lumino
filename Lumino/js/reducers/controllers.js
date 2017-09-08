@@ -1,4 +1,4 @@
-import { switch_light_on, switch_light_off } from '../openwebnet';
+import { change_light } from '../openwebnet';
 var net = require('net');
 // Contollers reducer
 
@@ -6,48 +6,53 @@ var net = require('net');
 // Some mock controllers used for development
 const mockControllers = [
   {
-    id: 1,
-    name: "Controller 1",
-    gateway: 1,
+    id: 0,
+    name: "Meeting Room lights",
+    gateway: 0,
     type: "switch",
-    code: "123454",
+    zone_code: "1",
+    id_code: "22",
     value: true,
 
   },
   {
-    id: 2,
+    id: 1,
     name: "Controller 2",
-    gateway: 2,
+    gateway: 0,
     type: "dimmer",
-    code: "9999",
-    value: 0.5,
+    zone_code: "1",
+    id_code: "22",
+    value: 0,
   },
 ]
 
 
 const controllers = (state = mockControllers, action) => {
+
   switch (action.type) {
     case 'ADD_CONTROLLER':
       // Take form values from global state as we won't have that
       // in the navigationOptions (where the button is)
       let values = action.getState().form.controller.values;
+      values.id = state.len();
       return [...state, values];
-    case 'SWITCH_TOGGLE':
-      // Update toggle value
+    case 'CONTROLLER_CHANGE':
+      // Retrieve state's gateways
+      let gateways = action.getState().gateways;
+
+      // Create new state with a fixed controller value
+      // Also send the command
       let newState = state.map((controller) => {
         if (controller.id == action.id) {
+          // Find the controller's gateway
+          let gateway = gateways.filter((g) => g.id == controller.gateway)[0]
+          // Update toggle value
           controller.value = action.value;
-          if (controller.value == true) {
-            switch_light_on("192.168.247.35", 20000, 1, 22);
-          } else {
-            switch_light_off("192.168.247.35", 20000, 1, 22);
-          }
+          change_light(gateway, controller);
         };
         return controller;
       });
       return newState;
-    case 'DIMMER_CHANGE':
-      return state;
     default:
       return state;
   }
