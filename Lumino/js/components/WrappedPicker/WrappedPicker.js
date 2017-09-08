@@ -1,17 +1,17 @@
 import React from 'react';
 import { Picker } from 'react-native';
 
+
 export default function WrappedPicker(props) {
-  const { input: { onChange, value, ...inputProps }, children, ...pickerProps } = props;
+  const { input, label, children, ...custom } = props;
 
   return (
     <Picker
-      selectedValue={ value }
-      onValueChange={ value => onChange(value) }
-      { ...inputProps }
-      { ...pickerProps }
-    >
-      { children }
-    </Picker>
+      {...input}
+      selectedValue={ input.value }
+      onValueChange={ (value, index) => input.onChange(value) }
+      children={children}
+      {...custom}
+    />
   );
 }

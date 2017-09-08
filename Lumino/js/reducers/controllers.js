@@ -27,25 +27,26 @@ const mockControllers = [
 ]
 
 
-const controllers = (state = mockControllers, action) => {
+const controllers = (state = [], action) => {
 
   switch (action.type) {
     case 'ADD_CONTROLLER':
       // Take form values from global state as we won't have that
       // in the navigationOptions (where the button is)
       let values = action.getState().form.controller.values;
-      values.id = state.len();
+      values.id = state.length;
       return [...state, values];
     case 'CONTROLLER_CHANGE':
       // Retrieve state's gateways
-      let gateways = action.getState().gateways;
+      const gateways = action.getState().gateways;
 
       // Create new state with a fixed controller value
       // Also send the command
-      let newState = state.map((controller) => {
+      const newState = state.map((controller) => {
         if (controller.id == action.id) {
           // Find the controller's gateway
-          let gateway = gateways.filter((g) => g.id == controller.gateway)[0]
+          console.warn(controller.gateway);
+          const gateway = gateways.filter((g) => g.id == controller.gateway)[0]
           // Update toggle value
           controller.value = action.value;
           change_light(gateway, controller);

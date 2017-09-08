@@ -19,8 +19,8 @@ let GatewayForm = (props) => (
       </View>
       <View style={styles.blockFields}>
         <Field
-          placeholder="Name"
           name="name"
+          placeholder="Name"
           component={WrappedTextInput}
           style={styles.textInput}
         />
@@ -32,24 +32,24 @@ let GatewayForm = (props) => (
       </View>
       <View style={styles.blockFields}>
         <Field
-          component={WrappedTextInput}
-          style={styles.textInput}
-          placeholder="IP Address"
           name="ip_address"
+          placeholder="IP Address"
+          component={WrappedTextInput}
+          style={styles.textInput}
         />
         <View style={styles.fieldDivider}></View>
         <Field
-          component={WrappedTextInput}
-          style={styles.textInput}
-          placeholder="Port"
           name="port"
+          placeholder="Port"
+          component={WrappedTextInput}
+          style={styles.textInput}
         />
         <View style={styles.fieldDivider}></View>
         <Field
+          name="password"
+          placeholder="Password"
           component={WrappedTextInput}
           style={styles.textInput}
-          placeholder="Password"
-          name="password"
           secureTextEntry={true}
         />
       </View>

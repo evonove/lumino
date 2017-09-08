@@ -22,17 +22,23 @@ let ControllerSettingsForm = props => (
     </View>
     <View style={styles.blockFields}>
       <Field
+        name="name"
+        placeholder="Name"
         component={WrappedTextInput}
         style={styles.textInput}
-        placeholder="Name"
-        name="name"
       />
       <View style={styles.fieldDivider}></View>
       <Field
+        name="zone_code"
+        placeholder="Zone Code"
         component={WrappedTextInput}
         style={styles.textInput}
-        placeholder="Code"
-        name="code"
+      />
+      <Field
+        name="id_code"
+        placeholder="ID Code"
+        component={WrappedTextInput}
+        style={styles.textInput}
       />
     </View>
     <View style={styles.blockHeading}>
