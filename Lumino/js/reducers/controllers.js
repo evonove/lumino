@@ -1,4 +1,7 @@
+import { switch_light_on, switch_light_off } from '../openwebnet';
+var net = require('net');
 // Contollers reducer
+
 
 // Some mock controllers used for development
 const mockControllers = [
@@ -34,6 +37,11 @@ const controllers = (state = mockControllers, action) => {
       let newState = state.map((controller) => {
         if (controller.id == action.id) {
           controller.value = action.value;
+          if (controller.value == true) {
+            switch_light_on("192.168.247.35", 20000, 1, 22);
+          } else {
+            switch_light_off("192.168.247.35", 20000, 1, 22);
+          }
         };
         return controller;
       });

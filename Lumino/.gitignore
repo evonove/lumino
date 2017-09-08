@@ -7,3 +7,7 @@ npm-debug.*
 
 # OS X
 **/.DS_Store
+
+ios/build
+android/app/build
+android/.gradle
