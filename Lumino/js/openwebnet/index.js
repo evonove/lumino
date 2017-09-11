@@ -1,4 +1,4 @@
-const net = require('net');
+import net from 'net';
 
 export const change_light = (gateway, controller) => {
   let value = 0;

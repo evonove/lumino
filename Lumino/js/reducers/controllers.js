@@ -1,5 +1,5 @@
 import { change_light } from '../openwebnet';
-var net = require('net');
+
 // Contollers reducer
 
 
