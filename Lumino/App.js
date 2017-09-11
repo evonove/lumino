@@ -1,6 +1,8 @@
 import React from 'react';
+import { AsyncStorage } from 'react-native'
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { compose, createStore, applyMiddleware } from 'redux';
+import { persistStore, autoRehydrate } from 'redux-persist';
 
 import AppReducer from './js/reducers';
 import AppNavigator from './js/navigators/AppNavigator';
@@ -11,7 +13,16 @@ const middleware = store => next => action => {
   next({ ...action, getState: store.getState });
 }
 
-const store = createStore(AppReducer, applyMiddleware(middleware));
+const store = createStore(
+  AppReducer,
+  undefined,
+  compose(
+    applyMiddleware(middleware),
+    autoRehydrate()
+  )
+)
+
+persistStore(store, { storage: AsyncStorage });
 
 class App extends React.Component {
   render() {

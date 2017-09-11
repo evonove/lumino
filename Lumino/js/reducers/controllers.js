@@ -1,32 +1,6 @@
 import { change_light } from '../openwebnet';
 
 // Contollers reducer
-
-
-// Some mock controllers used for development
-const mockControllers = [
-  {
-    id: 0,
-    name: "Meeting Room lights",
-    gateway: 0,
-    type: "switch",
-    zone_code: "1",
-    id_code: "22",
-    value: true,
-
-  },
-  {
-    id: 1,
-    name: "Controller 2",
-    gateway: 0,
-    type: "dimmer",
-    zone_code: "1",
-    id_code: "22",
-    value: 0,
-  },
-]
-
-
 const controllers = (state = [], action) => {
 
   switch (action.type) {
