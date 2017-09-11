@@ -45,7 +45,6 @@ const controllers = (state = [], action) => {
       const newState = state.map((controller) => {
         if (controller.id == action.id) {
           // Find the controller's gateway
-          console.warn(controller.gateway);
           const gateway = gateways.filter((g) => g.id == controller.gateway)[0]
           // Update toggle value
           controller.value = action.value;

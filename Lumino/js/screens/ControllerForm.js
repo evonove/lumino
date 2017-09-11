@@ -22,25 +22,32 @@ const styles = StyleSheet.create({
  * It is used to link ControllerForm to ControllersList]
  */
 let ControllerForm = (props) => {
-  const gatewaysItems = props.gateways.map((gateway, index) => <Picker.Item key={index} label={gateway.name} value={gateway.id} />)
+  const gatewaysItems = props.gateways.map(
+    (gateway, index) => <Picker.Item key={ index } label={ gateway.name } value={ gateway.id } />);
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={ styles.container }>
       <ControllerTypeSelector
-        onPress={(controllerType) => props.navigation.dispatch(change('controller', 'type', controllerType))}/>
-      <ControllerSettingsForm gateways={gatewaysItems} />
+        onPress={ (controllerType) => props.navigation.dispatch(change('controller', 'type', controllerType)) }
+      />
+      <ControllerSettingsForm gateways={ gatewaysItems } />
     </ScrollView>
   )
 };
 
 
 const mapStateToProps = state => ({
-  gateways: state.gateways
+  gateways: state.gateways,
+  initialValues: { gateway: state.gateways[0].id }
 });
 
-ControllerForm = connect(mapStateToProps)(ControllerForm)
 
 // Wrap into reduxForm for form handling
-ControllerForm = reduxForm({form: 'controller'})(ControllerForm)
+ControllerForm = reduxForm({
+  form: 'controller',
+  enableReinitialize: true,
+})(ControllerForm)
+
+ControllerForm = connect(mapStateToProps)(ControllerForm)
 
 /**
  * StackNavigation options for ControllerForm component
