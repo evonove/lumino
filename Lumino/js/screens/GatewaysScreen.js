@@ -15,7 +15,9 @@ const GatewaysScreen = (props) => {
   return (
     <View style={{flex: 1}}>
       <StatusBar barStyle='light-content' />
-      <GatewaysList gateways={gateways} />
+      <GatewaysList
+        gateways={gateways}
+        onPress={(gateway) => { props.navigation.navigate('GatewayForm', {initialValues: gateway})}} />
     </View>
   )
 }

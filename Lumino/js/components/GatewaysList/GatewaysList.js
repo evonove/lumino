@@ -9,12 +9,13 @@ import GatewayView from './GatewayView';
  * Shows the list of gateways.
  * @param {array} [gateways]. Array of gateways data.
  */
-const GatewaysList = ({ gateways }) => {
+const GatewaysList = ({ gateways, onPress }) => {
   const gatewaysList = gateways.map((gateway, index) =>
     <GatewayView
       key={index}
       name={gateway.name}
       status={gateway.status}
+      onPress={() => onPress(gateway)}
     />,
   );
 
