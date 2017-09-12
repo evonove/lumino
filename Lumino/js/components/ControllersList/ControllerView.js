@@ -35,7 +35,7 @@ const DimmerComponent = (props) => (
       style={styles.slider}
       minimumTrackTintColor="#42275A"
       onValueChange={props.onValueChange}
-      value={props.value == false ? 0 : props.value == true ? 1 : props.value}
+      value={props.value === false ? 0 : props.value === true ? 1 : props.value}
       step={1}
       minimumValue={2}
       maximumValue={10}
@@ -54,7 +54,7 @@ const DimmerComponent = (props) => (
  */
 const ControllerView = props => {
   let child;
-  if (props.type == "switch") {
+  if (props.type === "switch") {
     child = <SwitchComponent
       onValueChange={props.onControllerChange}
       value={props.value == 0 ? false : true}

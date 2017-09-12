@@ -1,7 +1,6 @@
 import uuid from 'react-native-uuid';
 
 // Gateways reducer
-
 const gateways = (state = [], action) => {
   let values = {};
 
@@ -14,7 +13,7 @@ const gateways = (state = [], action) => {
       values.id = uuid.v4();
       return [...state, values];
 
-    case 'DELETE_CONTROLLER':
+    case 'DELETE_GATEWAY':
       return state.filter((g) => g.id !== action.gateway);
 
     case 'EDIT_GATEWAY':

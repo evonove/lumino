@@ -21,41 +21,52 @@ const styles = StyleSheet.create({
  * @param  {[string]} navigation [navigation props received from the Home component.
  * It is used to link ControllerForm to ControllersList]
  */
-let ControllerForm = (props) => {
-  const gatewaysItems = props.gateways.map(
-    (gateway, index) => (
-      <Picker.Item
-        key={ index }
-        label={ gateway.name }
-        value={ gateway.id }
-      />
-    )
-  );
+class ControllerForm extends React.Component {
+  componentDidMount() {
+    if (!this.props.initialValues) {
+      this.props.navigation.dispatch(change('controller', 'gateway', this.props.gateways[0].id));
+    }
+  }
 
-  const deleteViewable = props.initialValues === undefined ? {display: 'none'} : {};
+  render() {
+    const gatewaysItems = this.props.gateways.map(
+      (gateway, index) => (
+        <Picker.Item
+          key={ index }
+          label={ gateway.name }
+          value={ gateway.id }
+        />
+      )
+    );
 
-  return (
-    <ScrollView style={ styles.container }>
-      <ControllerTypeSelector
-        onPress={ (controllerType) => props.navigation.dispatch(
-          change('controller', 'type', controllerType))
-        }/>
+    const deleteViewable = this.props.initialValues === undefined ? {display: 'none'} : {};
 
-      <ControllerSettingsForm gateways={ gatewaysItems } />
+    return (
+      <ScrollView style={ styles.container }>
+        <ControllerTypeSelector
+          onPress={ (controllerType) => this.props.navigation.dispatch(
+            change('controller', 'type', controllerType))
+          }/>
+
+        <ControllerSettingsForm
+          gateways={ gatewaysItems }
+          defaultGateway={ this.props.gateways[0].id }
+        />
 
       <View style={deleteViewable}>
         <Button
           title={'DELETE'}
           onPress={(controller) => {
-            props.navigation.dispatch( { type: 'DELETE_CONTROLLER', controller: props.initialValues.id });
-            props.navigation.goBack();
+            this.props.navigation.dispatch( { type: 'DELETE_CONTROLLER', controller: this.props.initialValues.id });
+            this.props.navigation.goBack();
           }}
         />
       </View>
 
     </ScrollView>
-  )
-};
+    )
+  }
+}
 
 
 const mapStateToProps = (state, props) => ({

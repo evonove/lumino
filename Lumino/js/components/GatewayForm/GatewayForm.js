@@ -70,9 +70,9 @@ let GatewayForm = (props) => {
       <View style={deleteViewable}>
         <Button
           title={'DELETE'}
-          onPress={(controller) => {
+          onPress={() => {
             props.navigation.dispatch({
-              type: 'DELETE_CONTROLLER',
+              type: 'DELETE_GATEWAY',
               gateway: props.initialValues.id
             });
             props.navigation.goBack();
