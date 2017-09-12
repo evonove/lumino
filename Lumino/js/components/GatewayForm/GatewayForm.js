@@ -12,59 +12,77 @@ import WrappedSwitch from '../WrappedSwitch/WrappedSwith';
 /**
  * Input form component for configuring a gateway.
  */
-let GatewayForm = (props) => (
-  <View style={styles.container}>
+let GatewayForm = (props) => {
+  const deleteViewable = props.initialValues === undefined ? {display: 'none'} : {};
 
-    <View style={styles.blockFields}>
-      <Text>ACTIVE</Text>
-      <Field name="status" component={WrappedSwitch} />
-    </View>
+  return (
+    <View style={styles.container}>
 
-    <View>
-      <View style={styles.blockHeading}>
-        <Text style={styles.textHeading}>INFO</Text>
-      </View>
       <View style={styles.blockFields}>
-        <Field
-          name="name"
-          placeholder="Name"
-          component={WrappedTextInput}
-          style={styles.textInput}
-        />
-      </View>
-    </View>
-
-    <View>
-      <View style={styles.blockHeading}>
-        <Text style={styles.textHeading}>SETTINGS</Text>
-      </View>
-      <View style={styles.blockFields}>
-        <Field
-          name="ip_address"
-          placeholder="IP Address"
-          component={WrappedTextInput}
-          style={styles.textInput}
-        />
-        <View style={styles.fieldDivider}></View>
-        <Field
-          name="port"
-          placeholder="Port"
-          component={WrappedTextInput}
-          style={styles.textInput}
-        />
-        <View style={styles.fieldDivider}></View>
-        <Field
-          name="password"
-          placeholder="Password"
-          component={WrappedTextInput}
-          style={styles.textInput}
-          secureTextEntry={true}
-        />
+        <Text>ACTIVE</Text>
+        <Field name="status" component={WrappedSwitch} />
       </View>
 
+      <View>
+        <View style={styles.blockHeading}>
+          <Text style={styles.textHeading}>INFO</Text>
+        </View>
+        <View style={styles.blockFields}>
+          <Field
+            name="name"
+            placeholder="Name"
+            component={WrappedTextInput}
+            style={styles.textInput}
+          />
+        </View>
+      </View>
+
+      <View>
+        <View style={styles.blockHeading}>
+          <Text style={styles.textHeading}>SETTINGS</Text>
+        </View>
+        <View style={styles.blockFields}>
+          <Field
+            name="ip_address"
+            placeholder="IP Address"
+            component={WrappedTextInput}
+            style={styles.textInput}
+          />
+          <View style={styles.fieldDivider}></View>
+          <Field
+            name="port"
+            placeholder="Port"
+            component={WrappedTextInput}
+            style={styles.textInput}
+          />
+          <View style={styles.fieldDivider}></View>
+          <Field
+            name="password"
+            placeholder="Password"
+            component={WrappedTextInput}
+            style={styles.textInput}
+            secureTextEntry={true}
+          />
+        </View>
+
+      </View>
+
+      <View style={deleteViewable}>
+        <Button
+          title={'DELETE'}
+          onPress={(controller) => {
+            props.navigation.dispatch({
+              type: 'DELETE_CONTROLLER',
+              gateway: props.initialValues.id
+            });
+            props.navigation.goBack();
+          }}
+        />
+      </View>
+
     </View>
-  </View>
-);
+  )
+}
 
 
 const mapStateToProps = (state, props) => ({

@@ -14,6 +14,9 @@ const gateways = (state = [], action) => {
       values.id = uuid.v4();
       return [...state, values];
 
+    case 'DELETE_CONTROLLER':
+      return state.filter((g) => g.id !== action.gateway);
+
     case 'EDIT_GATEWAY':
       values = action.getState().form.gateway.values;
       let filteredState = state.filter((g) => g.id != values.id);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, change } from 'redux-form'
-import { Button, StyleSheet, ScrollView, Picker } from 'react-native';
+import { View, Button, StyleSheet, ScrollView, Picker } from 'react-native';
 
 import GradientHeader from '../components/GradientHeader/GradientHeader';
 import ControllerTypeSelector from '../components/ControllerTypeSelector/ControllerTypeSelector';
@@ -23,19 +23,36 @@ const styles = StyleSheet.create({
  */
 let ControllerForm = (props) => {
   const gatewaysItems = props.gateways.map(
-    (gateway, index) => <Picker.Item
-      key={ index }
-      label={ gateway.name }
-      value={ gateway.id }
-    />);
+    (gateway, index) => (
+      <Picker.Item
+        key={ index }
+        label={ gateway.name }
+        value={ gateway.id }
+      />
+    )
+  );
+
+  const deleteViewable = props.initialValues === undefined ? {display: 'none'} : {};
+
   return (
     <ScrollView style={ styles.container }>
       <ControllerTypeSelector
         onPress={ (controllerType) => props.navigation.dispatch(
           change('controller', 'type', controllerType))
-        }
-      />
+        }/>
+
       <ControllerSettingsForm gateways={ gatewaysItems } />
+
+      <View style={deleteViewable}>
+        <Button
+          title={'DELETE'}
+          onPress={(controller) => {
+            props.navigation.dispatch( { type: 'DELETE_CONTROLLER', controller: props.initialValues.id });
+            props.navigation.goBack();
+          }}
+        />
+      </View>
+
     </ScrollView>
   )
 };

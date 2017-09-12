@@ -22,6 +22,9 @@ const controllers = (state = [], action) => {
       let filteredState = state.filter((g) => g.id != values.id);
       return [...filteredState, values];
 
+    case 'DELETE_CONTROLLER':
+      return state.filter((c) => c.id !== action.controller);
+
     case 'CONTROLLER_CHANGE':
       // Retrieve state's gateways
       const gateways = action.getState().gateways;
