@@ -23,11 +23,17 @@ const styles = StyleSheet.create({
  */
 let ControllerForm = (props) => {
   const gatewaysItems = props.gateways.map(
-    (gateway, index) => <Picker.Item key={ index } label={ gateway.name } value={ gateway.id } />);
+    (gateway, index) => <Picker.Item
+      key={ index }
+      label={ gateway.name }
+      value={ gateway.id }
+    />);
   return (
     <ScrollView style={ styles.container }>
       <ControllerTypeSelector
-        onPress={ (controllerType) => props.navigation.dispatch(change('controller', 'type', controllerType)) }
+        onPress={ (controllerType) => props.navigation.dispatch(
+          change('controller', 'type', controllerType))
+        }
       />
       <ControllerSettingsForm gateways={ gatewaysItems } />
     </ScrollView>
@@ -35,9 +41,9 @@ let ControllerForm = (props) => {
 };
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
   gateways: state.gateways,
-  initialValues: { gateway: state.gateways[0].id }
+  ...props.navigation.state.params
 });
 
 
@@ -52,18 +58,29 @@ ControllerForm = connect(mapStateToProps)(ControllerForm)
 /**
  * StackNavigation options for ControllerForm component
  */
-ControllerForm.navigationOptions = ({ navigation }) => ({
-  title: 'New Controller',
-  header: (props) => <GradientHeader {...props} />,
-  headerTintColor: 'white',
-  headerRight: <Button
-    onPress={() => {
-      navigation.dispatch({type: "ADD_CONTROLLER"});
-      navigation.goBack()}
-    }
-    title="Save"
-    color="white"
-  />
-});
+ControllerForm.navigationOptions = ({ navigation }) => {
+  const { state, setParams } = navigation;
+  const { params } = state;
+  let action = {}
+  if (params && params.initialValues && params.initialValues.id) {
+    action = {type: 'EDIT_CONTROLLER', controller: params.initialValues.id}
+  } else {
+    action = { type: 'ADD_CONTROLLER' }
+  }
+
+  return {
+    title: 'New Controller',
+    header: (props) => <GradientHeader {...props} />,
+    headerTintColor: 'white',
+    headerRight: <Button
+      onPress={() => {
+        navigation.dispatch(action);
+        navigation.goBack()}
+      }
+      title="Save"
+      color="white"
+    />
+  }
+};
 
 export default ControllerForm;

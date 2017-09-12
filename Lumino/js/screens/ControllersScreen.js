@@ -20,6 +20,12 @@ const ControllersScreen = (props) => {
       <ControllersList
         controllers={controllers}
         onControllerChange={onControllerChange}
+        onPress={
+          (controller) => { props.navigation.navigate(
+            'ControllerForm', 
+            { initialValues: controller }
+          )}
+        }
       />
     </View>
   )

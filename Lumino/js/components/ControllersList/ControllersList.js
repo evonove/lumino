@@ -7,7 +7,7 @@ import ControllerView from './ControllerView';
  * Shows the list of controllers
  * @param {array} [controllers]. Array of controllers data.
  */
-const ControllersList = ({ controllers, onControllerChange }) => {
+const ControllersList = ({ controllers, onControllerChange, onPress }) => {
   const controllersList = controllers.map((controller, index) =>
     <ControllerView
       key={index}
@@ -17,6 +17,7 @@ const ControllersList = ({ controllers, onControllerChange }) => {
       gateway={controller.gateway}
       value={controller.value}
       onControllerChange={(value) => onControllerChange(value, controller.id)}
+      onPress={() => onPress(controller)}
     />
   );
 

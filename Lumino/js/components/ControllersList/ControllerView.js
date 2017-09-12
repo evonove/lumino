@@ -1,9 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Slider, StyleSheet, Switch, Text, View } from 'react-native';
+import {
+  Slider,
+  StyleSheet,
+  Switch,
+  Text,
+  View,
+  TouchableOpacity
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import styles from './style';
+
 
 const SwitchComponent = (props) => (
   <View style={styles.controllerSwitch}>
@@ -18,13 +26,22 @@ const SwitchComponent = (props) => (
 
 const DimmerComponent = (props) => (
   <View style={styles.controllerDimmer}>
-    <Icon name={'ios-sunny'} size={18} color={'#8e8e93'} />
+    <Icon
+      name={'ios-sunny'}
+      size={18}
+      color={'#8e8e93'}
+    />
+    <Switch
+      onValueChange={props.onValueChange}
+      value={props.value == 0 ? false : true}
+    />
     <Slider
       style={styles.slider}
       minimumTrackTintColor="#42275A"
       onValueChange={props.onValueChange}
-      value={props.value}
+      value={props.value == false ? 0 : props.value == true ? 1 : props.value}
       step={1}
+      minimumValue={2}
       maximumValue={10}
     />
     <Icon name={'ios-sunny'} size={28} color={'#8e8e93'} />
@@ -38,15 +55,26 @@ const DimmerComponent = (props) => (
 const ControllerView = props => {
   let child;
   if (props.type == "switch") {
-    child = <SwitchComponent onValueChange={props.onControllerChange} value={props.value} />
+    child = <SwitchComponent
+      onValueChange={props.onControllerChange}
+      value={props.value == 0 ? false : true}
+    />
   } else {
-    child = <DimmerComponent onValueChange={props.onControllerChange} value={props.value} />
+    child = <DimmerComponent
+      onValueChange={props.onControllerChange}
+      value={props.value}
+    />
   };
   return (
     <View style={styles.container}>
-      <View style={styles.controllerName}>
-        <Text style={styles.controllerNameText}>{props.name.toUpperCase()} (gateway #{props.gateway})</Text>
-      </View>
+      <TouchableOpacity
+        style={ styles.controllerName }
+        onPress={ props.onPress }
+      >
+        <Text style={styles.controllerNameText}>
+          {props.name.toUpperCase()}
+        </Text>
+      </TouchableOpacity>
       {child}
     </View>
   )
@@ -61,6 +89,7 @@ ControllerView.propTypes = {
   ]),
   gateway: PropTypes.number,
   onControllerChange: PropTypes.func.isRequired,
+  onPress: PropTypes.func.isRequired,
 };
 
 
