@@ -29,7 +29,7 @@ const GatewaysList = ({ gateways, onPress }) => {
 GatewaysList.propTypes = {
   gateways: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
-    status: PropTypes.string,
+    status: PropTypes.bool,
   })),
 };
 

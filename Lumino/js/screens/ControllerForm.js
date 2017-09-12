@@ -62,14 +62,17 @@ ControllerForm.navigationOptions = ({ navigation }) => {
   const { state, setParams } = navigation;
   const { params } = state;
   let action = {}
+  let title = '';
   if (params && params.initialValues && params.initialValues.id) {
-    action = {type: 'EDIT_CONTROLLER', controller: params.initialValues.id}
+    action = {type: 'EDIT_CONTROLLER', controller: params.initialValues.id};
+    title = 'Edit controller';
   } else {
-    action = { type: 'ADD_CONTROLLER' }
+    action = { type: 'ADD_CONTROLLER' };
+    title = 'New controller';
   }
 
   return {
-    title: 'New Controller',
+    title,
     header: (props) => <GradientHeader {...props} />,
     headerTintColor: 'white',
     headerRight: <Button

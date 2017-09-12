@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form'
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, Switch } from 'react-native';
 
 import styles from './style';
 import GradientHeader from '../GradientHeader/GradientHeader';
 import WrappedTextInput from '../WrappedTextInput/WrappedTextInput';
+import WrappedSwitch from '../WrappedSwitch/WrappedSwith';
 
 
 /**
@@ -13,6 +14,12 @@ import WrappedTextInput from '../WrappedTextInput/WrappedTextInput';
  */
 let GatewayForm = (props) => (
   <View style={styles.container}>
+
+    <View style={styles.blockFields}>
+      <Text>ACTIVE</Text>
+      <Field name="status" component={WrappedSwitch} />
+    </View>
+
     <View>
       <View style={styles.blockHeading}>
         <Text style={styles.textHeading}>INFO</Text>
@@ -26,6 +33,7 @@ let GatewayForm = (props) => (
         />
       </View>
     </View>
+
     <View>
       <View style={styles.blockHeading}>
         <Text style={styles.textHeading}>SETTINGS</Text>
@@ -77,23 +85,28 @@ GatewayForm.navigationOptions = props => {
   const { navigation } = props;
   const { state, setParams } = navigation;
   const { params } = state;
-  let action = {}
+
+  let action = {};
+  let title = '';
+
   if (params && params.initialValues && params.initialValues.id) {
-    action = {type: 'EDIT_GATEWAY', gateway: params.initialValues.id}
+    action = {type: 'EDIT_GATEWAY', gateway: params.initialValues.id};
+    title = 'Edit gateway';
   } else {
     action = {type: 'ADD_GATEWAY'}
+    title = 'New gateway';
   }
   return {
-    title: 'New Gateway',
+    title,
     header: (props) => <GradientHeader {...props} />,
     headerTintColor: 'white',
-    headerRight: <Button 
+    headerRight: <Button
       onPress={() => {
         navigation.dispatch(action);
         navigation.goBack()}
-      } 
-      title="Save" 
-      color="white" 
+      }
+      title="Save"
+      color="white"
     />,
   };
 };

@@ -31,10 +31,6 @@ const DimmerComponent = (props) => (
       size={18}
       color={'#8e8e93'}
     />
-    <Switch
-      onValueChange={props.onValueChange}
-      value={props.value == 0 ? false : true}
-    />
     <Slider
       style={styles.slider}
       minimumTrackTintColor="#42275A"
@@ -45,6 +41,10 @@ const DimmerComponent = (props) => (
       maximumValue={10}
     />
     <Icon name={'ios-sunny'} size={28} color={'#8e8e93'} />
+    <Switch
+      onValueChange={props.onValueChange}
+      value={props.value == 0 ? false : true}
+    />
   </View>
 )
 
@@ -67,13 +67,9 @@ const ControllerView = props => {
   };
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={ styles.controllerName }
-        onPress={ props.onPress }
-      >
-        <Text style={styles.controllerNameText}>
-          {props.name.toUpperCase()}
-        </Text>
+      <TouchableOpacity style={ styles.controllerName } onPress={ props.onPress } >
+        <Text style={styles.controllerNameText}> {props.name.toUpperCase()} </Text>
+        <Text style={styles.gatewayNameText}> {props.gateway_name} </Text>
       </TouchableOpacity>
       {child}
     </View>
@@ -87,7 +83,7 @@ ControllerView.propTypes = {
     PropTypes.bool,
     PropTypes.number
   ]),
-  gateway: PropTypes.number,
+  gateway: PropTypes.string,
   onControllerChange: PropTypes.func.isRequired,
   onPress: PropTypes.func.isRequired,
 };

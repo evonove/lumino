@@ -15,6 +15,7 @@ const ControllersList = ({ controllers, onControllerChange, onPress }) => {
       type={controller.type}
       code={controller.code}
       gateway={controller.gateway}
+      gateway_name={controller.gateway_name}
       value={controller.value}
       onControllerChange={(value) => onControllerChange(value, controller.id)}
       onPress={() => onPress(controller)}

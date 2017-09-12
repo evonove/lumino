@@ -8,9 +8,6 @@ import WrappedTextInput from '../WrappedTextInput/WrappedTextInput';
 import WrappedPicker from '../WrappedPicker/WrappedPicker';
 
 
-const formatTerm = value => value.toString();
-const parseTerm = value => parseInt(value);
-
 /**
  * Input form component for configuring a controller.
  * Picker component contains mocked values.
@@ -54,7 +51,5 @@ let ControllerSettingsForm = props => (
     </View>
   </View>
 )
-
-// TODO: SEE HERE: https://github.com/erikras/redux-form/issues/3243
 
 export default ControllerSettingsForm;

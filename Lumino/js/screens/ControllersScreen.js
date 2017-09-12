@@ -12,8 +12,16 @@ import ControllersList from '../components/ControllersList/ControllersList';
  * It passes down the gateways mocked data.
  */
 const ControllersScreen = (props) => {
-  const controllers = props.controllers || []
+  // Filter out controllers that are associated to an inactive gateway
+  const activeGatewaysIds = props.gateways.filter((g) => g.status).map((g) => g.id);
+  let controllers = props.controllers.filter((c) => activeGatewaysIds.indexOf(c.gateway) !== -1) || []
+  controllers = controllers.map((c) => {
+    c.gateway_name = props.gateways.filter((g) => g.id === c.gateway)[0].name;
+    return c;
+  });
+
   const onControllerChange = (value, id) => props.dispatch({type: 'CONTROLLER_CHANGE', value, id});
+
   return (
     <View style={{flex: 1}}>
       <StatusBar barStyle='light-content' />
@@ -22,7 +30,7 @@ const ControllersScreen = (props) => {
         onControllerChange={onControllerChange}
         onPress={
           (controller) => { props.navigation.navigate(
-            'ControllerForm', 
+            'ControllerForm',
             { initialValues: controller }
           )}
         }
@@ -50,7 +58,8 @@ ControllersScreen.navigationOptions = ({ navigation }) => ({
 
 
 const mapStateToProps = state => ({
-  controllers: state.controllers
+  controllers: state.controllers,
+  gateways: state.gateways
 });
 
 

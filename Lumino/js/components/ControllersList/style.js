@@ -12,6 +12,7 @@ const palette = {
 const sizes = {
   primaryFontSize: 17,
   fieldHeight: 44,
+  secondaryFontSize: 15,
 }
 
 const styles = StyleSheet.create({
@@ -32,6 +33,10 @@ const styles = StyleSheet.create({
   },
   controllerNameText: {
     fontWeight: '600',
+  },
+  gatewayNameText: {
+    textAlign: 'right',
+    fontSize: sizes.secondaryFontSize,
   },
   controllerSwitch: {
     alignItems: 'center',
