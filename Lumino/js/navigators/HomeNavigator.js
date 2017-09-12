@@ -10,11 +10,11 @@ import ControllersScreen from '../screens/ControllersScreen';
  */
 const HomeNavigator = TabNavigator(
   {
-    GatewaysScreen: {
-      screen: GatewaysScreen
-    },
     ControllersScreen: {
       screen: ControllersScreen
+    },
+    GatewaysScreen: {
+      screen: GatewaysScreen
     },
   },
   {

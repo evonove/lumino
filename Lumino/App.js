@@ -22,7 +22,7 @@ const store = createStore(
   )
 )
 
-persistStore(store, { storage: AsyncStorage });
+persistStore(store, { storage: AsyncStorage, blacklist: ['nav', 'form']});
 
 class App extends React.Component {
   render() {
