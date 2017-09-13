@@ -11,8 +11,8 @@ import styles from './style';
 const GradientHeader = props => (
   <View>
     <Image
-      style={styles.gradient}
-      source={require('./header-gradient.png')}
+      style={ styles.gradient }
+      source={ require('./header-gradient.png') }
       resizeMode="cover"
     />
     <Header {...props} style={{ backgroundColor: 'transparent' }} />

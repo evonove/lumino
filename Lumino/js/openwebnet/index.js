@@ -16,13 +16,18 @@ export const change_light = (gateway, controller) => {
   });
 }
 
-export const read_light = (gateway, controller) => {
-  const command_string = '*#' + controller.zone_code + '*' + controller.id_code + '*0##';
+export const read_light = (gateway, controller, callback) => {
+  const command_string = '*#' +
+    controller.zone_code +
+    '*' +
+    controller.id_code +
+    '*0##';
+
   let client = net.createConnection(gateway.port, gateway.ip_address, () => {
     client.write(command_string);
   });
+
   client.on('data', (data) => {
-    client.end();
-    return parseInt(data.toString().replace(/\D/g,''));
+    callback(parseInt(data.toString().replace(/\D/g,'')));
   });
 }

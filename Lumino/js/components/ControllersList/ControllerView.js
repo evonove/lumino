@@ -1,18 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Slider,
-  StyleSheet,
-  Switch,
-  Text,
-  View,
-  TouchableOpacity
-} from 'react-native';
+import { Slider, Switch, Text, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import styles from './style';
 
 
+/*
+ * Switch component, presenting only a switch
+ */
 const SwitchComponent = (props) => (
   <View style={styles.controllerSwitch}>
     <Text style={styles.switchLabel}>Switch</Text>
@@ -24,6 +20,9 @@ const SwitchComponent = (props) => (
 )
 
 
+/*
+ * Dimmer component, presenting both a switch and a dimmer
+ */
 const DimmerComponent = (props) => (
   <View style={styles.controllerDimmer}>
     <Icon
@@ -50,9 +49,9 @@ const DimmerComponent = (props) => (
 
 /**
  * View of a single controller
- * @param {string} [name]. The controller's name.
  */
 const ControllerView = props => {
+  // Set Switch or Dimmer component
   let child;
   if (props.type === "switch") {
     child = <SwitchComponent

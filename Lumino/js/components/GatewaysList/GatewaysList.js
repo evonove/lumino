@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ScrollView } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 import GatewayView from './GatewayView';
 
@@ -10,7 +9,17 @@ import GatewayView from './GatewayView';
  * @param {array} [gateways]. Array of gateways data.
  */
 const GatewaysList = ({ gateways, onPress }) => {
-  const gatewaysList = gateways.map((gateway, index) =>
+  const gatewaysList = gateways
+    .sort((a, b) => {
+      if (a.name.toUpperCase() < b.name.toUpperCase()) {
+        return -1;
+      }
+      if (a.name.toUpperCase() > b.name.toUpperCase()) {
+        return 1;
+      }
+      return 0;
+    })
+    .map((gateway, index) =>
     <GatewayView
       key={index}
       name={gateway.name}
@@ -31,6 +40,7 @@ GatewaysList.propTypes = {
     name: PropTypes.string,
     status: PropTypes.bool,
   })),
+  onPress: PropTypes.func.isRequired,
 };
 
 export default GatewaysList;

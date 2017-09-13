@@ -1,14 +1,15 @@
-import { change_light, read_light } from '../openwebnet';
 import uuid from 'react-native-uuid';
 
+import { change_light, read_light } from '../openwebnet';
 
 
 // Contollers reducer
 const controllers = (state = [], action) => {
 
-  let values = {}
-  let gateways = []
-  const getGateway = (c, gateways) => gateways.filter((g) => g.id === c.gateway)[0]
+  let values = {};
+  let gateways = [];
+  let newState = [];
+  const getGateway = (c, gateways) => gateways.filter((g) => g.id === c.gateway)[0];
 
   switch (action.type) {
 
@@ -32,16 +33,16 @@ const controllers = (state = [], action) => {
     case 'DELETE_CONTROLLER':
       return state.filter((c) => c.id !== action.controller);
 
-    // case 'READ_CONTROLLER':
-    //   gateways = action.getState().gateways;
-    //   const newState = state.map((c) => {
-    //     if (c.id === action.id) {
-    //       c.value = read_light(getGateway(c, gateways), c);
-    //     }
-    //   });
-    //   return newState
+    case 'READ_CONTROLLERS':
+      console.warn("READ!");
+      // Get active gateways
+      gateways = action.getState().gateways.filter((g) => g.status);
+      state.forEach((c) => read_light(getGateway(c, gateways), c, (val) => console.warn(val)));
 
-    case 'CONTROLLER_CHANGE':
+      // Read value from gateway and set it into the state
+      return state
+
+    case 'CHANGE_CONTROLLER':
       gateways = action.getState().gateways;
       // Create new state with a fixed controller value
       // Also send the command

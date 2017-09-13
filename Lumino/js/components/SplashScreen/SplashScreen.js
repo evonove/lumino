@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, Image, StyleSheet, View } from 'react-native';
+import { Button, Image, View } from 'react-native';
+
+import styles from './style';
 
 /**
  * Splash screen
@@ -16,7 +18,7 @@ const SplashScreen = (props) => {
       />
       <View style={styles.buttonContainer}>
         <Button
-          onPress={() => navigate('NewGatewayForm')}
+          onPress={() => navigate('GatewayForm')}
           color="#FEC006"
           title="Get Started"
         />
@@ -24,23 +26,5 @@ const SplashScreen = (props) => {
     </View>
   )
 }
-
-/**
- * SplashScreen styles
- */
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  imageContainer: {
-    height: 200,
-    width: 200
-  },
-  buttonContainer: {
-    paddingTop: 25,
-  },
-});
 
 export default SplashScreen;

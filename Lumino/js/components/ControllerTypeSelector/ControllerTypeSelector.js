@@ -1,11 +1,15 @@
 import React from 'react';
-import { Alert, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import IconIonic from 'react-native-vector-icons/Ionicons';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import styles from './style';
 
 
+/*
+ * Component to make the user choose between two
+ * controller types
+ */
 const ControllerTypeSelector = (props) => (
   <View>
     <View style={styles.blockHeading}>

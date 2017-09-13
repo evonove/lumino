@@ -8,19 +8,31 @@ import ControllerView from './ControllerView';
  * @param {array} [controllers]. Array of controllers data.
  */
 const ControllersList = ({ controllers, onControllerChange, onPress }) => {
-  const controllersList = controllers.map((controller, index) =>
-    <ControllerView
-      key={index}
-      name={controller.name}
-      type={controller.type}
-      code={controller.code}
-      gateway={controller.gateway}
-      gateway_name={controller.gateway_name}
-      value={controller.value}
-      onControllerChange={(value) => onControllerChange(value, controller.id)}
-      onPress={() => onPress(controller)}
-    />
-  );
+  // Sort controllers alphabetically by name and then map the elements
+  // to ControllerView components
+  const controllersList = controllers
+    .sort((a, b) => {
+      if (a.name.toUpperCase() < b.name.toUpperCase()) {
+        return -1;
+      }
+      if (a.name.toUpperCase() > b.name.toUpperCase()) {
+        return 1;
+      }
+      return 0;
+    })
+    .map((controller, index) =>
+      <ControllerView
+        key={index}
+        name={controller.name}
+        type={controller.type}
+        code={controller.code}
+        gateway={controller.gateway}
+        gateway_name={controller.gateway_name}
+        value={controller.value}
+        onControllerChange={(value) => onControllerChange(value, controller.id)}
+        onPress={() => onPress(controller)}
+      />
+    );
 
   return (
     <ScrollView style={{flex: 1}}>
