@@ -15,7 +15,7 @@ const ControllersList = ({ controllers, disabledControllers, viewDisabled, onCon
     .sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
     .map((controller, index) =>
       <ControllerView
-        key={index}
+        key={controller.id}
         name={controller.name}
         type={controller.type}
         code={controller.code}
@@ -30,11 +30,8 @@ const ControllersList = ({ controllers, disabledControllers, viewDisabled, onCon
   const disabledControllersList = disabledControllers
     .sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
     .map((controller, index) =>
-      <View key={index + 1000} >
-        <View style={styles.blockHeading}>
-          <Text style={styles.textHeading}>DISABLED CONTROLLERS</Text>
-        </View>
         <ControllerView
+          key={controller.id}
           name={controller.name}
           type={controller.type}
           code={controller.code}
@@ -43,13 +40,17 @@ const ControllersList = ({ controllers, disabledControllers, viewDisabled, onCon
           value={0}
           onPress={() => onPress(controller)}
         />
-      </View>
     );
 
   return (
     <ScrollView style={{flex: 1}}>
       {controllersList}
-      { viewDisabled ? disabledControllersList : null }
+      <View style={viewDisabled ? {} : { display: 'none'}}>
+        <View style={styles.blockHeading}>
+          <Text style={styles.textHeading}>DISABLED CONTROLLERS</Text>
+        </View>
+        { viewDisabled ? disabledControllersList : null }
+      </View>
     </ScrollView>
   )
 }

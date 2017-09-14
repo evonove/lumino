@@ -21,7 +21,7 @@ class ControllersScreen extends React.Component {
           lightStatus(this.props.navigation.dispatch, c, gateway)
         }
       ),
-      1000
+      3000
     );
   }
 
