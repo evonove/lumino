@@ -2,16 +2,18 @@ import net from 'net';
 
 
 // Method called on network errors
-const onError = (err) => console.warn(err);
+const onError = (err) => console.log(err);
 
 // Method to build a 'Command/Status Message'
 const commandStatusMessage = (zone_code, id_code, value) => `*${zone_code}*${value}*${id_code}##`;
 
 // Method to build a 'Request/Read/Write Dimension Message'
-const requestMessage = (zone_code, id_code, dimension) => `*#${zone_code}*${id_code}*${dimension}##`;
+const requestMessage = (zone_code, id_code) => `*#${zone_code}*${id_code}##`;
+
+const ack = '*#*1##';
 
 // Converts an ACK message into a boolean
-const isOn = (ack) => ack.toString() === '*#*1##' ? true : false;
+const isOn = (ack) => ack.toString() === ack ? true : false;
 
 
 export const changeLight = (gateway, controller) => {
@@ -38,13 +40,20 @@ export const gatewayStatus = (dispatch, gateway) => {
 }
 
 
-export const readLight = (gateway, controller, callback) => {
+export const lightStatus = (dispatch, controller, gateway) => {
   const { ip_address, port } = gateway;
+  const { zone_code, id_code } = controller;
+
   let client = net.connect(port, ip_address, () => {
-    client.write(requestMessage(zone_code, id_code, 0));
+    client.write(requestMessage(zone_code, id_code));
   });
 
   client.on('data', (data) => {
-    callback(isOn(data));
+    data = data.toString();
+    if (data !== ack) {
+      const value = parseInt(data.split("*")[2]);
+      dispatch({ type: 'READ_CONTROLLER', id: controller.id, value });
+    }
   });
+  client.on('error', onError);
 }

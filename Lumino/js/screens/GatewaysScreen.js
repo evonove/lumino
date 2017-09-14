@@ -14,7 +14,7 @@ import GatewaysList from '../components/GatewaysList/GatewaysList';
 class GatewaysScreen extends React.Component {
   componentDidMount() {
     // Add a timer that will poll gateways status
-    this.readLights = setInterval(
+    this.checkGateways = setInterval(
       () => this.props.gateways.map(
         (g) => {
           if (g.status) {
@@ -27,7 +27,7 @@ class GatewaysScreen extends React.Component {
   }
 
   componetWillUnmount() {
-    clearInterval(this.readLights);
+    clearInterval(this.checkGateways);
   }
 
   render() {

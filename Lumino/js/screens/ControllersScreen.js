@@ -5,27 +5,49 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import GradientHeader from '../components/GradientHeader/GradientHeader';
 import ControllersList from '../components/ControllersList/ControllersList';
+import { lightStatus } from '../openwebnet';
 
 
 /**
  * Controllers list screen
  */
-const ControllersScreen = (props) => (
-  <View style={{flex: 1}}>
-    <StatusBar barStyle='light-content' />
-    <ControllersList
-      controllers={props.controllers}
-      disabledControllers={props.disabledControllers}
-      onControllerChange={props.onControllerChange}
-      onPress={props.controllerDetail}
-      viewDisabled={props.viewDisabled}
-    />
-    <Button
-      title={'Disabled controllers'}
-      onPress={() => props.navigation.dispatch({ type: 'TOGGLE_DISABLED_CONTROLLERS' })}
-    />
-  </View>
-)
+class ControllersScreen extends React.Component {
+  componentDidMount() {
+    // Add a timer that will poll lights statuses
+    this.readLights = setInterval(
+      () => this.props.controllers.map(
+        (c) => {
+          const gateway = this.props.gateways.filter((g) => g.id === c.gateway)[0];
+          lightStatus(this.props.navigation.dispatch, c, gateway)
+        }
+      ),
+      1000
+    );
+  }
+
+  componetWillUnmount() {
+    clearInterval(this.readLights);
+  }
+
+  render() {
+    return (
+      <View style={{flex: 1}}>
+        <StatusBar barStyle='light-content' />
+        <ControllersList
+          controllers={this.props.controllers}
+          disabledControllers={this.props.disabledControllers}
+          onControllerChange={this.props.onControllerChange}
+          onPress={this.props.controllerDetail}
+          viewDisabled={this.props.viewDisabled}
+        />
+        <Button
+          title={'Disabled controllers'}
+          onPress={this.props.onToggleDisabled}
+        />
+      </View>
+    )
+  }
+}
 
 
 ControllersScreen.navigationOptions = ({ navigation }) => ({
@@ -57,6 +79,7 @@ const mapStateToProps = (state, props) => {
   const viewDisabled = state.config.viewDisabled;
 
   return {
+    gateways: state.gateways,
     controllers,
     disabledControllers,
     viewDisabled,
@@ -66,8 +89,9 @@ const mapStateToProps = (state, props) => {
 
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onControllerChange: (value, id) => dispatch({type: 'CHANGE_CONTROLLER', value, id}),
-  controllerDetail: (controller) => ownProps.navigation.navigate('ControllerForm', { initialValues: controller })
+  onControllerChange: (value, id) => dispatch({type: 'WRITE_CONTROLLER', value, id}),
+  controllerDetail: (controller) => ownProps.navigation.navigate('ControllerForm', { initialValues: controller }),
+  onToggleDisabled: () => dispatch({ type: 'TOGGLE_DISABLED_CONTROLLERS' })
 })
 
 

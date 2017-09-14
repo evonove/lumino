@@ -31,13 +31,15 @@ const controllers = (state = [], action) => {
     case 'DELETE_CONTROLLER':
       return state.filter((c) => c.id !== action.controller);
 
-    case 'READ_CONTROLLERS':
-      // Get active gateways
-      // state.forEach((c) => readLight(getGateway(c, action.getState), c, (val) => console.warn(val)));
-      console.warn("READ!");
-      return state
+    case 'READ_CONTROLLER':
+      return state.map((c) => {
+        if (c.id === action.id) {
+          c.value = action.value;
+        };
+        return c;
+      });
 
-    case 'CHANGE_CONTROLLER':
+    case 'WRITE_CONTROLLER':
       // Create new state with a fixed controller value
       // Also send the command
       return state.map((c) => {
