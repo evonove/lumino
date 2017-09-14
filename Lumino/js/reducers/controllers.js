@@ -20,7 +20,7 @@ const controllers = (state = [], action) => {
       return [...state, newController];
 
     case 'EDIT_CONTROLLER':
-      const filteredState = state.filter((g) => g.id != values.id);
+      const filteredState = state.filter((g) => g.id != action.values.id);
 
       const editedController = {
         ...action.values,
