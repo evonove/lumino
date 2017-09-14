@@ -1,6 +1,7 @@
 import React from 'react';
+import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux';
-import { Field, reduxForm, reset, change } from 'redux-form'
+import { Field, SubmissionError, reduxForm, reset, change, submit } from 'redux-form'
 import { Button, Text, View } from 'react-native';
 
 import styles from './style';
@@ -101,9 +102,48 @@ const mapStateToProps = (state, { navigation }) => ({
 });
 
 
+
+const onSubmit = (values, dispatch) => {
+  let errors = {};
+  if (!values.name) {
+    errors.name = 'Required';
+  } else if (values.name.length > 15) {
+    // Avoid too long names that would mess with the layout
+    errors.name = 'Name should be less than 15 characters';
+  }
+
+  if (!values.ip_address) {
+    errors.ip_address = 'Required';
+  }
+
+  if (!values.port) {
+    errors.port = 'Required';
+  } else {
+    const portNumber = parseInt(values.port);
+    if (!Number.isInteger(portNumber) || 65535 < portNumber < 0) {
+      errors.port = 'Port should be a number between 0 and 65535';
+    }
+  }
+
+  if (Object.keys(errors).length !== 0) {
+    throw new SubmissionError({...errors, _error: 'Gateway creation/update failed'})
+  }
+
+  if (values.id) {
+    dispatch({ type: 'EDIT_GATEWAY', values });
+  } else {
+    dispatch({ type: 'ADD_GATEWAY', values });
+  }
+
+  dispatch(NavigationActions.back());
+}
+
+
+
 let GatewayForm = reduxForm({
   form: 'gateway',
   enableReinitialize: true,
+  onSubmit,
 })(GatewayFormComponent)
 
 
@@ -113,23 +153,21 @@ GatewayForm = connect(mapStateToProps)(GatewayForm)
 // Add navigationOptions only after wrapping in reduxForm, otherwise they would be overwritten
 GatewayForm.navigationOptions = (props) => {
   const { navigation } = props;
-  const { state, setParams, dispatch, navigate } = navigation;
+  const { state, dispatch } = navigation;
   const { params } = state;
 
-  let action = {};
-  let title = '';
+  // Custom submit function
+  const onPress = () => { dispatch(submit('gateway')) };
+
+  let title = 'New gateway';
   if (params && params.initialValues && params.initialValues.id) {
-    action = { type: 'EDIT_GATEWAY', gateway: params.initialValues.id };
     title = 'Edit gateway';
-  } else {
-    action = { type: 'ADD_GATEWAY' };
-    title = 'New gateway';
   }
   return {
     title,
     header: (props) => <GradientHeader {...props} />,
     headerTintColor: 'white',
-    headerRight: <Button onPress={ () => { dispatch(action); navigate('GatewaysScreen'); } } title="Save" color="white" />,
+    headerRight: <Button onPress={onPress} title="Save" color="white" />,
   };
 };
 

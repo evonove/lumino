@@ -11,15 +11,7 @@ const ControllersList = ({ controllers, onControllerChange, onPress }) => {
   // Sort controllers alphabetically by name and then map the elements
   // to ControllerView components
   const controllersList = controllers
-    .sort((a, b) => {
-      if (a.name.toUpperCase() < b.name.toUpperCase()) {
-        return -1;
-      }
-      if (a.name.toUpperCase() > b.name.toUpperCase()) {
-        return 1;
-      }
-      return 0;
-    })
+    .sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
     .map((controller, index) =>
       <ControllerView
         key={index}

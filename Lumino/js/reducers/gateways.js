@@ -2,24 +2,17 @@ import uuid from 'react-native-uuid';
 
 // Gateways reducer
 const gateways = (state = [], action) => {
-  let values = {};
-
   switch (action.type) {
 
     case 'ADD_GATEWAY':
-      // Take form values from global state as we won't have that
-      // in the navigationOptions (where the button is)
-      values = action.getState().form.gateway.values;
-      values.id = uuid.v4();
-      return [...state, values];
+      return [...state, {...action.values, id: uuid.v4()}];
 
     case 'DELETE_GATEWAY':
       return state.filter((g) => g.id !== action.gateway);
 
     case 'EDIT_GATEWAY':
-      values = action.getState().form.gateway.values;
-      let filteredState = state.filter((g) => g.id != values.id);
-      return [...filteredState, values];
+      let filteredState = state.filter((g) => g.id != action.values.id);
+      return [...filteredState, action.values];
 
     default:
       return state;

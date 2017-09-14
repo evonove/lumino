@@ -10,15 +10,7 @@ import GatewayView from './GatewayView';
  */
 const GatewaysList = ({ gateways, onPress }) => {
   const gatewaysList = gateways
-    .sort((a, b) => {
-      if (a.name.toUpperCase() < b.name.toUpperCase()) {
-        return -1;
-      }
-      if (a.name.toUpperCase() > b.name.toUpperCase()) {
-        return 1;
-      }
-      return 0;
-    })
+    .sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
     .map((gateway, index) =>
     <GatewayView
       key={index}
