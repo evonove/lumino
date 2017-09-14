@@ -9,13 +9,13 @@ const palette = {
   success: '#4CD964',
   wait: '#DDD964',
   fail: '#DD3924',
-}
+};
 
 const sizes = {
   primaryFontSize: 17,
   secondaryFontSize: 15,
   fieldHeight: 44,
-}
+};
 
 const styles = StyleSheet.create({
   gatewayContainer: {

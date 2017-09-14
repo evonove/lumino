@@ -11,28 +11,28 @@ import GatewayView from './GatewayView';
 const GatewaysList = ({ gateways, onPress }) => {
   const gatewaysList = gateways
     .sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
-    .map((gateway, index) =>
-    <GatewayView
-      key={index}
-      name={gateway.name}
-      status={gateway.status}
-      networkStatus={gateway.networkStatus}
-      onPress={() => onPress(gateway)}
-    />,
-  );
+    .map(gateway => (
+      <GatewayView
+        key={gateway.id}
+        name={gateway.name}
+        status={gateway.status}
+        networkStatus={gateway.networkStatus}
+        onPress={() => onPress(gateway)}
+      />
+    ));
 
   return (
-    <ScrollView style={{flex: 1}}>
+    <ScrollView style={{ flex: 1 }}>
       {gatewaysList}
     </ScrollView>
-  )
-}
+  );
+};
 
 GatewaysList.propTypes = {
   gateways: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     status: PropTypes.bool,
-  })),
+  })).isRequired,
   onPress: PropTypes.func.isRequired,
 };
 

@@ -13,13 +13,13 @@ import ControllerForm from '../screens/ControllerForm';
  */
 export const AppNavigator = StackNavigator({
   Home: {
-    screen: HomeNavigator
+    screen: HomeNavigator,
   },
   GatewayForm: {
-    screen: GatewayForm
+    screen: GatewayForm,
   },
   ControllerForm: {
-    screen: ControllerForm
+    screen: ControllerForm,
   },
 });
 
@@ -33,7 +33,7 @@ AppWithNavigationState.propTypes = {
   nav: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   nav: state.nav,
 });
 

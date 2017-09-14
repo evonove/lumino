@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { reduxForm, change, submit } from 'redux-form'
+import { reduxForm, change, submit } from 'redux-form';
 import { View, Button, ScrollView, Picker, Alert } from 'react-native';
 
 import { onControllerSubmit } from './validation';
@@ -24,56 +25,63 @@ class ControllerFormComponent extends React.Component {
       // We call redux-form `change` action to trigger the first selection
       // if we are in a new controller form
       this.props.navigation.dispatch(
-        change('controller', 'gateway', this.props.gateways[0].id)
+        change('controller', 'gateway', this.props.gateways[0].id),
       );
     }
   }
 
   render() {
-
     // Map list of gateways to Picker.Item components
     const gatewaysItems = this.props.gateways.map(
       (gateway, index) => (
         <Picker.Item
-          key={ index }
-          label={ gateway.name }
-          value={ gateway.id }
+          key={index}
+          label={gateway.name}
+          value={gateway.id}
         />
-      )
+      ),
     );
 
     // If there is no initialValues it means we are creating a new controller,
     // so no need to show the delete button (we hide it with css)
-    const deleteViewable = !this.props.initialValues ? {display: 'none'} : {};
+    const deleteViewable = !this.props.initialValues ? { display: 'none' } : {};
 
     return (
       <ScrollView style={{ flex: 1 }}>
-        <ControllerTypeSelector onPress={ this.props.onControllerTypePress } />
-        <ControllerSettingsForm gateways={ gatewaysItems } />
+        <ControllerTypeSelector onPress={this.props.onControllerTypePress} />
+        <ControllerSettingsForm gateways={gatewaysItems} />
         <View style={deleteViewable}>
-          <Button title={'DELETE'} onPress={ this.props.onDelete } />
+          <Button title={'DELETE'} onPress={this.props.onDelete} />
         </View>
       </ScrollView>
-    )
+    );
   }
 }
+
+ControllerFormComponent.propTypes = {
+  gateways: PropTypes.arrayOf(PropTypes.object).isRequired,
+  navigation: PropTypes.object.isRequired,
+  initialValues: PropTypes.object,
+  onControllerTypePress: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
 
 
 const mapStateToProps = (state, { navigation }) => ({
   gateways: state.gateways,
   onControllerTypePress: (controllerType) => {
-    navigation.dispatch(change('controller', 'type', controllerType))
+    navigation.dispatch(change('controller', 'type', controllerType));
   },
   onDelete: (controller) => {
     const deleteAction = {
       type: 'DELETE_CONTROLLER',
-      controller: navigation.state.params.initialValues.id
+      controller: controller.id,
     };
     navigation.dispatch(deleteAction);
     navigation.goBack();
   },
-  ...navigation.state.params
-})
+  ...navigation.state.params,
+});
 
 
 // Wrap into reduxForm for form handling
@@ -81,9 +89,9 @@ let ControllerForm = reduxForm({
   form: 'controller',
   enableReinitialize: true,
   onSubmit: onControllerSubmit,
-})(ControllerFormComponent)
+})(ControllerFormComponent);
 
-ControllerForm = connect(mapStateToProps)(ControllerForm)
+ControllerForm = connect(mapStateToProps)(ControllerForm);
 
 /**
  * StackNavigation options for ControllerForm component
@@ -93,7 +101,7 @@ ControllerForm.navigationOptions = ({ navigation }) => {
   const { params } = state;
 
   // Custom submit function
-  const onPress = () => { dispatch(submit('controller')) };
+  const onPress = () => dispatch(submit('controller'));
 
   // If there are initialValues, we set the title to 'EDIT' and send the edit action
   // otherwise we create a new controller
@@ -104,10 +112,11 @@ ControllerForm.navigationOptions = ({ navigation }) => {
 
   return {
     title,
-    header: (props) => <GradientHeader {...props} />,
+    header: props => <GradientHeader {...props} />,
     headerTintColor: 'white',
-    headerRight: <Button onPress={onPress} title="Save" color="white" />
-  }
-}
+    headerRight: <Button onPress={onPress} title="Save" color="white" />,
+  };
+};
+
 
 export default ControllerForm;

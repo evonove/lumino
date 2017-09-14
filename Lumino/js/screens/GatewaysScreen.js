@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, StatusBar, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -18,11 +19,12 @@ class GatewaysScreen extends React.Component {
       () => this.props.gateways.map(
         (g) => {
           if (g.status) {
-            gatewayStatus(this.props.dispatch, g)
+            gatewayStatus(this.props.dispatch, g);
           }
-        }
+          return g;
+        },
       ),
-      10000
+      10000,
     );
   }
 
@@ -32,20 +34,27 @@ class GatewaysScreen extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1}}>
-        <StatusBar
-          barStyle='light-content' />
+      <View style={{ flex: 1 }}>
+        <StatusBar barStyle="light-content" />
         <GatewaysList
           gateways={this.props.gateways}
-          onPress={this.props.gatewayDetail} />
+          onPress={this.props.gatewayDetail}
+        />
       </View>
-    )
+    );
   }
 }
 
-GatewaysScreen.navigationOptions = ({ navigation, screenProps }) => ({
+
+GatewaysScreen.propTypes = {
+  gateways: PropTypes.arrayOf(PropTypes.object).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  gatewayDetail: PropTypes.func.isRequired,
+};
+
+GatewaysScreen.navigationOptions = ({ navigation }) => ({
   title: 'Gateways',
-  header: (props) => <GradientHeader {...props} />,
+  header: props => <GradientHeader {...props} />,
   headerTintColor: 'white',
   headerRight: <Button
     title="Add"
@@ -64,7 +73,7 @@ GatewaysScreen.navigationOptions = ({ navigation, screenProps }) => ({
 
 const mapStateToProps = (state, props) => ({
   gateways: state.gateways || [],
-  gatewayDetail: (gateway) => props.navigation.navigate('GatewayForm', {initialValues: gateway})
+  gatewayDetail: gateway => props.navigation.navigate('GatewayForm', { initialValues: gateway }),
 });
 
 export default connect(mapStateToProps)(GatewaysScreen);

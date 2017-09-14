@@ -5,6 +5,6 @@ const config = (state = { viewDisabled: false }, action) => {
     default:
       return state;
   }
-}
+};
 
 export default config;

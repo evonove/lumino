@@ -4,8 +4,6 @@ import { AppNavigator } from '../navigators/AppNavigator';
 const initialState = AppNavigator.router.getStateForAction('home');
 
 // nav reducer
-const nav = (state = initialState, action) => {
-  return AppNavigator.router.getStateForAction(action, state);
-};
+const nav = (state = initialState, action) => AppNavigator.router.getStateForAction(action, state);
 
 export default nav;

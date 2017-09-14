@@ -7,12 +7,12 @@ const palette = {
   background: '#FFF',
   settings: '#8E8E93',
   lines: '#CECED2',
-}
+};
 
 const sizes = {
   headingFontSize: 13,
   fieldHeight: 44,
-}
+};
 
 const styles = StyleSheet.create({
   container: {

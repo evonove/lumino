@@ -1,5 +1,6 @@
 import React from 'react';
-import { Field } from 'redux-form'
+import PropTypes from 'prop-types';
+import { Field } from 'redux-form';
 import { Text, View } from 'react-native';
 
 import styles from './style';
@@ -23,15 +24,15 @@ const ControllerSettingsForm = props => (
         component={TextInput}
         style={styles.textInput}
       />
-      <View style={styles.fieldDivider}></View>
+      <View style={styles.fieldDivider} />
       <Field
-        name="zone_code"
+        name="zoneCode"
         placeholder="Zone Code"
         component={TextInput}
         style={styles.textInput}
       />
       <Field
-        name="id_code"
+        name="idCode"
         placeholder="ID Code"
         component={TextInput}
         style={styles.textInput}
@@ -45,12 +46,18 @@ const ControllerSettingsForm = props => (
     <View style={styles.blockFields}>
       <Field
         name="gateway"
-        component={ Picker }
+        component={Picker}
         mode="dropdown"
-        children={props.gateways}
-      />
+      >
+        {props.gateways}
+      </Field>
     </View>
   </View>
-)
+);
+
+
+ControllerSettingsForm.propTypes = {
+  gateways: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default ControllerSettingsForm;

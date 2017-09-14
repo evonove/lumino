@@ -1,4 +1,3 @@
-import React from 'react';
 import { TabNavigator } from 'react-navigation';
 
 import GatewaysScreen from '../screens/GatewaysScreen';
@@ -11,17 +10,17 @@ import ControllersScreen from '../screens/ControllersScreen';
 const HomeNavigator = TabNavigator(
   {
     ControllersScreen: {
-      screen: ControllersScreen
+      screen: ControllersScreen,
     },
     GatewaysScreen: {
-      screen: GatewaysScreen
+      screen: GatewaysScreen,
     },
   },
   {
     tabBarOptions: {
       activeTintColor: '#42275A',
-    }
-  }
+    },
+  },
 );
 
 export default HomeNavigator;

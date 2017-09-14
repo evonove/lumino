@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     height: 200,
-    width: 200
+    width: 200,
   },
   buttonContainer: {
     paddingTop: 25,

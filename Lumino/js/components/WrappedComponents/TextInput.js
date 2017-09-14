@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { TextInput as NativeTextInput, Text, View } from 'react-native';
 
 /**
  * Wrapper around textinput to work with redux
  */
-export default TextInput = (props) => {
+const TextInput = (props) => {
   const { input, meta: { touched, error }, ...inputProps } = props;
   return (
     <View>
@@ -18,4 +19,12 @@ export default TextInput = (props) => {
       {touched && error && <Text> {error} </Text>}
     </View>
   );
-}
+};
+
+
+TextInput.propTypes = {
+  input: PropTypes.object.isRequired,
+  meta: PropTypes.object.isRequired,
+};
+
+export default TextInput;

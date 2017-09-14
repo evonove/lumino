@@ -17,26 +17,27 @@ const GatewayView = ({ name, status, networkStatus, onPress }) => {
     text = 'Disabled';
   } else if (networkStatus === 'Unreachable') {
     text = networkStatus;
-    style = styles.gatewayConnectionError
+    style = styles.gatewayConnectionError;
   } else if (networkStatus === 'Reachable') {
     text = networkStatus;
-    style = styles.gatewayConnection
+    style = styles.gatewayConnection;
   } else {
     text = 'Connecting';
-    style = style.gatewayConnecting
+    style = style.gatewayConnecting;
   }
 
   return (
-    <TouchableOpacity style={ styles.gatewayContainer } onPress={ onPress } >
-      <Text style={ styles.gatewayName } >{ name }</Text>
-      <Text style={ style }>{text}</Text>
+    <TouchableOpacity style={styles.gatewayContainer} onPress={onPress} >
+      <Text style={styles.gatewayName} >{name}</Text>
+      <Text style={style}>{text}</Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 GatewayView.propTypes = {
-  name: PropTypes.string,
-  status: PropTypes.bool,
+  networkStatus: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  status: PropTypes.bool.isRequired,
   onPress: PropTypes.func.isRequired,
 };
 

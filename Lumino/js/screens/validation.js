@@ -1,9 +1,9 @@
-import { SubmissionError } from 'redux-form'
+import { SubmissionError } from 'redux-form';
 import { NavigationActions } from 'react-navigation';
 
 
 export const onGatewaySubmit = (values, dispatch) => {
-  let errors = {};
+  const errors = {};
   if (!values.name) {
     errors.name = 'Required';
   } else if (values.name.length > 15) {
@@ -18,14 +18,14 @@ export const onGatewaySubmit = (values, dispatch) => {
   if (!values.port) {
     errors.port = 'Required';
   } else {
-    const portNumber = parseInt(values.port);
-    if (!Number.isInteger(portNumber) || 65535 < portNumber < 0) {
+    const portNumber = parseInt(values.port, 10);
+    if (!Number.isInteger(portNumber) || portNumber < 0 || portNumber > 65535) {
       errors.port = 'Port should be a number between 0 and 65535';
     }
   }
 
   if (Object.keys(errors).length !== 0) {
-    throw new SubmissionError({...errors, _error: 'Gateway creation/update failed'})
+    throw new SubmissionError({ ...errors, _error: 'Gateway creation/update failed' });
   }
 
   if (values.id) {
@@ -35,11 +35,11 @@ export const onGatewaySubmit = (values, dispatch) => {
   }
 
   dispatch(NavigationActions.back());
-}
+};
 
 
 export const onControllerSubmit = (values, dispatch) => {
-  let errors = {};
+  const errors = {};
   if (!values.name) {
     errors.name = 'Required';
   } else if (values.name.length > 15) {
@@ -51,16 +51,16 @@ export const onControllerSubmit = (values, dispatch) => {
     errors.type = 'Required';
   }
 
-  if (!values.id_code) {
-    errors.id_code = 'Required';
+  if (!values.idCode) {
+    errors.idCode = 'Required';
   }
 
-  if (!values.zone_code) {
-    errors.zone_code = 'Required';
+  if (!values.zoneCode) {
+    errors.zoneCode = 'Required';
   } else {
-    const who = parseInt(values.zone_code);
+    const who = parseInt(values.zoneCode, 10);
     if (!Number.isInteger(who) || who < 0) {
-      errors.zone_code = 'Zone code should be a positive number';
+      errors.zoneCode = 'Zone code should be a positive number';
     }
   }
 
@@ -69,7 +69,7 @@ export const onControllerSubmit = (values, dispatch) => {
   }
 
   if (Object.keys(errors).length !== 0) {
-    throw new SubmissionError({...errors, _error: 'Controller creation/update failed'})
+    throw new SubmissionError({ ...errors, _error: 'Controller creation/update failed' });
   }
 
   if (values.id) {
@@ -79,4 +79,4 @@ export const onControllerSubmit = (values, dispatch) => {
   }
 
   dispatch(NavigationActions.back());
-}
+};

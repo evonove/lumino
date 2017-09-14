@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, StatusBar, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -17,11 +18,11 @@ class ControllersScreen extends React.Component {
     this.readLights = setInterval(
       () => this.props.controllers.map(
         (c) => {
-          const gateway = this.props.gateways.filter((g) => g.id === c.gateway)[0];
-          lightStatus(this.props.navigation.dispatch, c, gateway)
-        }
+          const gateway = this.props.gateways.filter(g => g.id === c.gateway)[0];
+          return lightStatus(this.props.navigation.dispatch, c, gateway);
+        },
       ),
-      3000
+      3000,
     );
   }
 
@@ -31,8 +32,8 @@ class ControllersScreen extends React.Component {
 
   render() {
     return (
-      <View style={{flex: 1}}>
-        <StatusBar barStyle='light-content' />
+      <View style={{ flex: 1 }}>
+        <StatusBar barStyle="light-content" />
         <ControllersList
           controllers={this.props.controllers}
           disabledControllers={this.props.disabledControllers}
@@ -45,14 +46,25 @@ class ControllersScreen extends React.Component {
           onPress={this.props.onToggleDisabled}
         />
       </View>
-    )
+    );
   }
 }
+
+ControllersScreen.propTypes = {
+  controllers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  gateways: PropTypes.arrayOf(PropTypes.object).isRequired,
+  navigation: PropTypes.object.isRequired,
+  disabledControllers: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onControllerChange: PropTypes.func.isRequired,
+  controllerDetail: PropTypes.func.isRequired,
+  viewDisabled: PropTypes.bool.isRequired,
+  onToggleDisabled: PropTypes.func.isRequired,
+};
 
 
 ControllersScreen.navigationOptions = ({ navigation }) => ({
   title: 'Controllers',
-  header: (props) => <GradientHeader {...props} />,
+  header: props => <GradientHeader {...props} />,
   headerTintColor: 'white',
   headerRight: <Button
     title="Add"
@@ -69,30 +81,31 @@ ControllersScreen.navigationOptions = ({ navigation }) => ({
 });
 
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
   // Filter out inactive gateways
-  const activeGatewaysIds = state.gateways.filter((g) => g.status && g.networkStatus === 'Reachable').map((g) => g.id);
+  const activeGatewaysIds = state.gateways.filter(g => g.status && g.networkStatus === 'Reachable').map(g => g.id);
   // Filter out controllers associated to an inactive gateway
-  const controllers = state.controllers.filter((c) => activeGatewaysIds.indexOf(c.gateway) !== -1) || []
-  const disabledControllers = state.controllers.filter((c) => activeGatewaysIds.indexOf(c.gateway) === -1) || []
+  const controllers = state.controllers
+    .filter(c => activeGatewaysIds.indexOf(c.gateway) !== -1) || [];
+  const disabledControllers = state.controllers
+    .filter(c => activeGatewaysIds.indexOf(c.gateway) === -1) || [];
 
   const viewDisabled = state.config.viewDisabled;
 
   return {
-    gateways: state.gateways,
     controllers,
     disabledControllers,
     viewDisabled,
-    gateways: state.gateways
-  }
+    gateways: state.gateways,
+  };
 };
 
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onControllerChange: (value, id) => dispatch({type: 'WRITE_CONTROLLER', value, id}),
-  controllerDetail: (controller) => ownProps.navigation.navigate('ControllerForm', { initialValues: controller }),
-  onToggleDisabled: () => dispatch({ type: 'TOGGLE_DISABLED_CONTROLLERS' })
-})
+  onControllerChange: (value, id) => dispatch({ type: 'WRITE_CONTROLLER', value, id }),
+  controllerDetail: controller => ownProps.navigation.navigate('ControllerForm', { initialValues: controller }),
+  onToggleDisabled: () => dispatch({ type: 'TOGGLE_DISABLED_CONTROLLERS' }),
+});
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(ControllersScreen);

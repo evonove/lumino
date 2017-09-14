@@ -9,7 +9,7 @@ import styles from './style';
 /*
  * Switch component, presenting only a switch
  */
-const SwitchComponent = (props) => (
+const SwitchComponent = props => (
   <View style={styles.controllerSwitch}>
     <Text style={styles.switchLabel}>Switch</Text>
     <Switch
@@ -17,74 +17,105 @@ const SwitchComponent = (props) => (
       value={props.value}
     />
   </View>
-)
+);
+
+SwitchComponent.propTypes = {
+  value: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.number,
+  ]).isRequired,
+  onValueChange: PropTypes.func.isRequired,
+};
 
 
 /*
  * Dimmer component, presenting both a switch and a dimmer
  */
-const DimmerComponent = (props) => (
-  <View style={styles.controllerDimmer}>
-    <Icon
-      name={'ios-sunny'}
-      size={18}
-      color={'#8e8e93'}
-    />
-    <Slider
-      style={styles.slider}
-      minimumTrackTintColor="#42275A"
-      onValueChange={props.onValueChange}
-      value={props.value === false ? 0 : props.value === true ? 1 : props.value}
-      step={1}
-      minimumValue={2}
-      maximumValue={10}
-    />
-    <Icon name={'ios-sunny'} size={28} color={'#8e8e93'} />
-    <Switch
-      onValueChange={props.onValueChange}
-      value={props.value == 0 ? false : true}
-    />
-  </View>
-)
+const DimmerComponent = (props) => {
+  // Adjust value for switch component
+  let value = props.value;
+  if (props.value === false) {
+    value = 0;
+  } else if (props.value === true) {
+    value = 1;
+  }
+
+  return (
+    <View style={styles.controllerDimmer}>
+      <Icon
+        name={'ios-sunny'}
+        size={18}
+        color={'#8e8e93'}
+      />
+      <Slider
+        style={styles.slider}
+        minimumTrackTintColor="#42275A"
+        onValueChange={props.onValueChange}
+        value={value}
+        step={1}
+        minimumValue={2}
+        maximumValue={10}
+      />
+      <Icon name={'ios-sunny'} size={28} color={'#8e8e93'} />
+      <Switch
+        onValueChange={props.onValueChange}
+        value={parseInt(props.value, 10) === 0}
+      />
+    </View>
+  );
+};
+
+DimmerComponent.propTypes = {
+  value: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.number,
+  ]).isRequired,
+  onValueChange: PropTypes.func.isRequired,
+};
 
 /**
  * View of a single controller
  */
-const ControllerView = props => {
+const ControllerView = (props) => {
   // Set Switch or Dimmer component
   let child;
-  if (props.type === "switch") {
-    child = <SwitchComponent
-      onValueChange={props.onControllerChange}
-      value={props.value == 0 ? false : true}
-    />
+  if (props.type === 'switch') {
+    child = (
+      <SwitchComponent
+        onValueChange={props.onControllerChange}
+        value={parseInt(props.value, 10) === 0}
+      />
+    );
   } else {
-    child = <DimmerComponent
-      onValueChange={props.onControllerChange}
-      value={props.value}
-    />
-  };
+    child = (
+      <DimmerComponent
+        onValueChange={props.onControllerChange}
+        value={props.value}
+      />
+    );
+  }
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={ styles.controllerName } onPress={ props.onPress } >
+      <TouchableOpacity style={styles.controllerName} onPress={props.onPress} >
         <Text style={styles.controllerNameText}> {props.name.toUpperCase()} </Text>
         <Text style={styles.gatewayNameText}> {props.gateway_name} </Text>
       </TouchableOpacity>
       {child}
     </View>
-  )
-}
+  );
+};
 
 ControllerView.propTypes = {
-  name: PropTypes.string,
-  type: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([
     PropTypes.bool,
-    PropTypes.number
-  ]),
-  gateway: PropTypes.string,
-  onControllerChange: PropTypes.func,
+    PropTypes.number,
+  ]).isRequired,
+  onControllerChange: PropTypes.func.isRequired,
   onPress: PropTypes.func.isRequired,
+  gateway_name: PropTypes.string.isRequired,
 };
 
 

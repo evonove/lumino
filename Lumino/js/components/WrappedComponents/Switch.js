@@ -1,18 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Switch as NativeSwitch } from 'react-native';
 
-export default Switch = ({ input: { onChange, value }, ...custom }) => {
-  // Default value from react would be '', we use true instead
-  // Use true as default value
-  if (value === '') {
-    value = true
-  }
+const Switch = ({ input: { onChange, value }, ...custom }) => (
+  <NativeSwitch
+    value={value === '' ? true : value}
+    onValueChange={onChange}
+    {...custom}
+  />
+);
 
-  return (
-    <NativeSwitch
-      value={value}
-      onValueChange={onChange}
-      { ...custom }
-    />
-  )
-}
+
+Switch.propTypes = {
+  input: PropTypes.object.isRequired,
+};
+
+export default Switch;

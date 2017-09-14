@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { reduxForm, change, submit } from 'redux-form'
+import { reduxForm, change, submit } from 'redux-form';
 import { Button } from 'react-native';
 
 import { onGatewaySubmit } from './validation';
@@ -16,10 +17,11 @@ class GatewayFormComponent extends React.Component {
     if (!this.props.initialValues) {
       // Set default true value to the switch
       this.props.navigation.dispatch(
-        change('gateway', 'status', true)
+        change('gateway', 'status', true),
       );
     }
   }
+
   render() {
     // Do not show the delete button if we are creating a new Gateway
     const deleteViewable = !this.props.initialValues ? { display: 'none' } : {};
@@ -29,9 +31,16 @@ class GatewayFormComponent extends React.Component {
         onDelete={this.props.onDelete}
         deleteViewable={deleteViewable}
       />
-    )
+    );
   }
 }
+
+
+GatewayFormComponent.propTypes = {
+  initialValues: PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
 
 
 /*
@@ -41,8 +50,8 @@ const mapStateToProps = (state, { navigation }) => ({
   onDelete: () => {
     const deleteAction = {
       type: 'DELETE_GATEWAY',
-      gateway: navigation.state.params.initialValues.id
-    }
+      gateway: navigation.state.params.initialValues.id,
+    };
     navigation.dispatch(deleteAction);
     navigation.goBack();
   },
@@ -56,10 +65,10 @@ let GatewayForm = reduxForm({
   form: 'gateway',
   enableReinitialize: true,
   onSubmit: onGatewaySubmit,
-})(GatewayFormComponent)
+})(GatewayFormComponent);
 
 
-GatewayForm = connect(mapStateToProps)(GatewayForm)
+GatewayForm = connect(mapStateToProps)(GatewayForm);
 
 
 // Add navigationOptions only after wrapping in reduxForm, because
@@ -69,7 +78,7 @@ GatewayForm.navigationOptions = ({ navigation }) => {
   const { params } = state;
 
   // Custom submit function
-  const onPress = () => { dispatch(submit('gateway')) };
+  const onPress = () => dispatch(submit('gateway'));
 
   let title = 'New gateway';
   if (params && params.initialValues && params.initialValues.id) {
@@ -77,7 +86,7 @@ GatewayForm.navigationOptions = ({ navigation }) => {
   }
   return {
     title,
-    header: (props) => <GradientHeader {...props} />,
+    header: props => <GradientHeader {...props} />,
     headerTintColor: 'white',
     headerRight: <Button onPress={onPress} title="Save" color="white" />,
   };
