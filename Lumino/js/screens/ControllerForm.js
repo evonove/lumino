@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { reduxForm, change } from 'redux-form'
+import { reduxForm, change, submit } from 'redux-form'
 import { View, Button, ScrollView, Picker, Alert } from 'react-native';
 
+import { onControllerSubmit } from './validation';
 import GradientHeader from '../components/GradientHeader/GradientHeader';
 import ControllerTypeSelector from '../components/ControllerTypeSelector/ControllerTypeSelector';
 import ControllerSettingsForm from '../components/ControllerForm/ControllerForm';
@@ -41,29 +42,18 @@ class ControllerFormComponent extends React.Component {
       )
     );
 
-    let defaultGateway = undefined;
-    if (this.props.gateways.length > 0) {
-      defaultGateway = this.props.gateways[0].id;
-    }
-
     // If there is no initialValues it means we are creating a new controller,
     // so no need to show the delete button (we hide it with css)
-    const deleteViewable = this.props.initialValues === undefined ? {display: 'none'} : {};
+    const deleteViewable = !this.props.initialValues ? {display: 'none'} : {};
 
     return (
       <ScrollView style={{ flex: 1 }}>
-        <ControllerTypeSelector onPress={ this.props.onControllerTypePress }/>
-
-        <ControllerSettingsForm
-          gateways={ gatewaysItems }
-          defaultGateway={ defaultGateway }
-        />
-
-      <View style={deleteViewable}>
-        <Button title={'DELETE'} onPress={ this.props.onDelete } />
-      </View>
-
-    </ScrollView>
+        <ControllerTypeSelector onPress={ this.props.onControllerTypePress } />
+        <ControllerSettingsForm gateways={ gatewaysItems } />
+        <View style={deleteViewable}>
+          <Button title={'DELETE'} onPress={ this.props.onDelete } />
+        </View>
+      </ScrollView>
     )
   }
 }
@@ -71,19 +61,26 @@ class ControllerFormComponent extends React.Component {
 
 const mapStateToProps = (state, { navigation }) => ({
   gateways: state.gateways,
-  onControllerTypePress: (controllerType) => navigation.dispatch(change('controller', 'type', controllerType)),
+  onControllerTypePress: (controllerType) => {
+    navigation.dispatch(change('controller', 'type', controllerType))
+  },
   onDelete: (controller) => {
-    navigation.dispatch({ type: 'DELETE_CONTROLLER', controller: navigation.state.params.initialValues.id });
-    navigation.navigate('ControllersScreen');
+    const deleteAction = {
+      type: 'DELETE_CONTROLLER',
+      controller: navigation.state.params.initialValues.id
+    };
+    navigation.dispatch(deleteAction);
+    navigation.goBack();
   },
   ...navigation.state.params
-});
+})
 
 
 // Wrap into reduxForm for form handling
 let ControllerForm = reduxForm({
   form: 'controller',
   enableReinitialize: true,
+  onSubmit: onControllerSubmit,
 })(ControllerFormComponent)
 
 ControllerForm = connect(mapStateToProps)(ControllerForm)
@@ -92,34 +89,25 @@ ControllerForm = connect(mapStateToProps)(ControllerForm)
  * StackNavigation options for ControllerForm component
  */
 ControllerForm.navigationOptions = ({ navigation }) => {
-  const { state, setParams } = navigation;
+  const { state, dispatch } = navigation;
   const { params } = state;
+
+  // Custom submit function
+  const onPress = () => { dispatch(submit('controller')) };
 
   // If there are initialValues, we set the title to 'EDIT' and send the edit action
   // otherwise we create a new controller
-  let action = {}
-  let title = '';
+  let title = 'New controller';
   if (params && params.initialValues && params.initialValues.id) {
-    action = { type: 'EDIT_CONTROLLER', controller: params.initialValues.id };
     title = 'Edit controller';
-  } else {
-    action = { type: 'ADD_CONTROLLER' };
-    title = 'New controller';
-  };
+  }
 
   return {
     title,
     header: (props) => <GradientHeader {...props} />,
     headerTintColor: 'white',
-    headerRight: <Button
-      onPress={() => {
-        navigation.dispatch(action);
-        navigation.navigate('ControllersScreen')}
-      }
-      title="Save"
-      color="white"
-    />
+    headerRight: <Button onPress={onPress} title="Save" color="white" />
   }
-};
+}
 
 export default ControllerForm;

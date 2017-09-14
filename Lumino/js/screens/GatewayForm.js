@@ -64,8 +64,7 @@ GatewayForm = connect(mapStateToProps)(GatewayForm)
 
 // Add navigationOptions only after wrapping in reduxForm, because
 // static class fields will be purged otherwise
-GatewayForm.navigationOptions = (props) => {
-  const { navigation } = props;
+GatewayForm.navigationOptions = ({ navigation }) => {
   const { state, dispatch } = navigation;
   const { params } = state;
 

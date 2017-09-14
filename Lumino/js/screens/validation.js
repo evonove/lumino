@@ -36,3 +36,47 @@ export const onGatewaySubmit = (values, dispatch) => {
 
   dispatch(NavigationActions.back());
 }
+
+
+export const onControllerSubmit = (values, dispatch) => {
+  let errors = {};
+  if (!values.name) {
+    errors.name = 'Required';
+  } else if (values.name.length > 15) {
+    // Avoid too long names that would mess with the layout
+    errors.name = 'Name should be less than 15 characters';
+  }
+
+  if (!values.type) {
+    errors.type = 'Required';
+  }
+
+  if (!values.id_code) {
+    errors.id_code = 'Required';
+  }
+
+  if (!values.zone_code) {
+    errors.zone_code = 'Required';
+  } else {
+    const who = parseInt(values.zone_code);
+    if (!Number.isInteger(who) || who < 0) {
+      errors.zone_code = 'Zone code should be a positive number';
+    }
+  }
+
+  if (!values.gateway) {
+    errors.gateway = 'Required';
+  }
+
+  if (Object.keys(errors).length !== 0) {
+    throw new SubmissionError({...errors, _error: 'Controller creation/update failed'})
+  }
+
+  if (values.id) {
+    dispatch({ type: 'EDIT_CONTROLLER', values });
+  } else {
+    dispatch({ type: 'ADD_CONTROLLER', values });
+  }
+
+  dispatch(NavigationActions.back());
+}
