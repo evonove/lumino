@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Button, StatusBar, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import { gatewayStatus } from '../openwebnet';
 import GradientHeader from '../components/GradientHeader/GradientHeader';
 import GatewaysList from '../components/GatewaysList/GatewaysList';
 
@@ -10,15 +11,37 @@ import GatewaysList from '../components/GatewaysList/GatewaysList';
 /**
  * Gateways list screen.
  */
-const GatewaysScreen = (props) => (
-  <View style={{flex: 1}}>
-    <StatusBar
-      barStyle='light-content' />
-    <GatewaysList
-      gateways={props.gateways}
-      onPress={props.gatewayDetail} />
-  </View>
-)
+class GatewaysScreen extends React.Component {
+  componentDidMount() {
+    // Add a timer that will poll gateways status
+    this.readLights = setInterval(
+      () => this.props.gateways.map(
+        (g) => {
+          if (g.status) {
+            gatewayStatus(this.props.dispatch, g)
+          }
+        }
+      ),
+      10000
+    );
+  }
+
+  componetWillUnmount() {
+    clearInterval(this.readLights);
+  }
+
+  render() {
+    return (
+      <View style={{flex: 1}}>
+        <StatusBar
+          barStyle='light-content' />
+        <GatewaysList
+          gateways={this.props.gateways}
+          onPress={this.props.gatewayDetail} />
+      </View>
+    )
+  }
+}
 
 GatewaysScreen.navigationOptions = ({ navigation, screenProps }) => ({
   title: 'Gateways',

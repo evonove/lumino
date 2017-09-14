@@ -31,6 +31,13 @@ export const changeLight = (gateway, controller) => {
 }
 
 
+export const gatewayStatus = (dispatch, gateway) => {
+  const client = net.connect(gateway.port, gateway.ip_address);
+  client.on('error', () => dispatch({ type: 'GATEWAY_UNREACHABLE', gateway}));
+  client.on('connect', () => dispatch({ type: 'GATEWAY_REACHABLE', gateway}));
+}
+
+
 export const readLight = (gateway, controller, callback) => {
   const { ip_address, port } = gateway;
   let client = net.connect(port, ip_address, () => {

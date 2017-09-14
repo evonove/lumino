@@ -13,9 +13,19 @@ const sizes = {
   primaryFontSize: 17,
   fieldHeight: 44,
   secondaryFontSize: 15,
+  headingFontSize: 13,
 }
 
 const styles = StyleSheet.create({
+  blockHeading: {
+    top: 20,
+    paddingHorizontal: 20,
+    height: sizes.fieldHeight,
+  },
+  textHeading: {
+    color: palette.settings,
+    fontSize: sizes.headingFontSize,
+  },
   container: {
     backgroundColor: palette.background,
     borderBottomWidth: 0.5,

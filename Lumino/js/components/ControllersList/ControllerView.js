@@ -83,7 +83,7 @@ ControllerView.propTypes = {
     PropTypes.number
   ]),
   gateway: PropTypes.string,
-  onControllerChange: PropTypes.func.isRequired,
+  onControllerChange: PropTypes.func,
   onPress: PropTypes.func.isRequired,
 };
 

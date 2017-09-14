@@ -1,13 +1,14 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 
 import ControllerView from './ControllerView';
+import styles from './style';
 
 /**
  * Shows the list of controllers
  * @param {array} [controllers]. Array of controllers data.
  */
-const ControllersList = ({ controllers, onControllerChange, onPress }) => {
+const ControllersList = ({ controllers, disabledControllers, viewDisabled, onControllerChange, onPress }) => {
   // Sort controllers alphabetically by name and then map the elements
   // to ControllerView components
   const controllersList = controllers
@@ -26,9 +27,29 @@ const ControllersList = ({ controllers, onControllerChange, onPress }) => {
       />
     );
 
+  const disabledControllersList = disabledControllers
+    .sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
+    .map((controller, index) =>
+      <View key={index + 1000} >
+        <View style={styles.blockHeading}>
+          <Text style={styles.textHeading}>DISABLED CONTROLLERS</Text>
+        </View>
+        <ControllerView
+          name={controller.name}
+          type={controller.type}
+          code={controller.code}
+          gateway={controller.gateway}
+          gateway_name={controller.gateway_name}
+          value={0}
+          onPress={() => onPress(controller)}
+        />
+      </View>
+    );
+
   return (
     <ScrollView style={{flex: 1}}>
       {controllersList}
+      { viewDisabled ? disabledControllersList : null }
     </ScrollView>
   )
 }

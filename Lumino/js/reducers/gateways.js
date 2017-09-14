@@ -2,6 +2,9 @@ import uuid from 'react-native-uuid';
 
 // Gateways reducer
 const gateways = (state = [], action) => {
+  let filteredState = [];
+  let newGateway = {};
+
   switch (action.type) {
 
     case 'ADD_GATEWAY':
@@ -11,8 +14,26 @@ const gateways = (state = [], action) => {
       return state.filter((g) => g.id !== action.gateway);
 
     case 'EDIT_GATEWAY':
-      let filteredState = state.filter((g) => g.id != action.values.id);
+      filteredState = state.filter((g) => g.id != action.values.id);
       return [...filteredState, action.values];
+
+    case 'GATEWAY_UNREACHABLE':
+      filteredState = state.filter((g) => g.id != action.gateway.id);
+      newGateway = {
+        ...action.gateway,
+        networkStatus: 'Unreachable'
+      };
+
+      return [...filteredState, newGateway ];
+
+    case 'GATEWAY_REACHABLE':
+      filteredState = state.filter((g) => g.id != action.gateway.id);
+      newGateway = {
+        ...action.gateway,
+        networkStatus: 'Reachable'
+      };
+      return [...filteredState, newGateway ];
+
 
     default:
       return state;

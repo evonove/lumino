@@ -16,6 +16,7 @@ const GatewaysList = ({ gateways, onPress }) => {
       key={index}
       name={gateway.name}
       status={gateway.status}
+      networkStatus={gateway.networkStatus}
       onPress={() => onPress(gateway)}
     />,
   );

@@ -15,8 +15,14 @@ const ControllersScreen = (props) => (
     <StatusBar barStyle='light-content' />
     <ControllersList
       controllers={props.controllers}
+      disabledControllers={props.disabledControllers}
       onControllerChange={props.onControllerChange}
       onPress={props.controllerDetail}
+      viewDisabled={props.viewDisabled}
+    />
+    <Button
+      title={'Disabled controllers'}
+      onPress={() => props.navigation.dispatch({ type: 'TOGGLE_DISABLED_CONTROLLERS' })}
     />
   </View>
 )
@@ -43,12 +49,17 @@ ControllersScreen.navigationOptions = ({ navigation }) => ({
 
 const mapStateToProps = (state, props) => {
   // Filter out inactive gateways
-  const activeGatewaysIds = state.gateways.filter((g) => g.status).map((g) => g.id);
+  const activeGatewaysIds = state.gateways.filter((g) => g.status && g.networkStatus === 'Reachable').map((g) => g.id);
   // Filter out controllers associated to an inactive gateway
   const controllers = state.controllers.filter((c) => activeGatewaysIds.indexOf(c.gateway) !== -1) || []
+  const disabledControllers = state.controllers.filter((c) => activeGatewaysIds.indexOf(c.gateway) === -1) || []
+
+  const viewDisabled = state.config.viewDisabled;
 
   return {
     controllers,
+    disabledControllers,
+    viewDisabled,
     gateways: state.gateways
   }
 };

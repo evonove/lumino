@@ -7,6 +7,8 @@ const palette = {
   background: '#FFF',
   lines: '#CECED2',
   success: '#4CD964',
+  wait: '#DDD964',
+  fail: '#DD3924',
 }
 
 const sizes = {
@@ -34,6 +36,14 @@ const styles = StyleSheet.create({
   },
   gatewayConnection: {
     color: palette.success,
+    fontSize: sizes.secondaryFontSize,
+  },
+  gatewayConnectionError: {
+    color: palette.fail,
+    fontSize: sizes.secondaryFontSize,
+  },
+  gatewayConnecting: {
+    color: palette.wait,
     fontSize: sizes.secondaryFontSize,
   },
 });
