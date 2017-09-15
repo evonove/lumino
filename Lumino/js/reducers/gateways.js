@@ -1,4 +1,6 @@
 import uuid from 'react-native-uuid';
+import { gatewayStatus } from '../openwebnet';
+
 
 // Gateways reducer
 const gateways = (state = [], action) => {
@@ -7,7 +9,9 @@ const gateways = (state = [], action) => {
 
   switch (action.type) {
     case 'ADD_GATEWAY':
-      return [...state, { ...action.values, id: uuid.v4() }];
+      newGateway = { ...action.values, id: uuid.v4() }
+      gatewayStatus(action.dispatch, newGateway);
+      return [...state, newGateway];
 
     case 'DELETE_GATEWAY':
       return state.filter(g => g.id !== action.gateway);

@@ -30,6 +30,7 @@ export const onGatewaySubmit = (values, dispatch) => {
 
   if (values.id) {
     dispatch({ type: 'EDIT_GATEWAY', values });
+    dispatch({ type: 'EDIT_GATEWAY_NAME', values });
   } else {
     dispatch({ type: 'ADD_GATEWAY', values });
   }

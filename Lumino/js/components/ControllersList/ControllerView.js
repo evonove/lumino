@@ -99,7 +99,7 @@ const ControllerView = (props) => {
     <View style={styles.container}>
       <TouchableOpacity style={styles.controllerName} onPress={props.onPress} >
         <Text style={styles.controllerNameText}> {props.name.toUpperCase()} </Text>
-        <Text style={styles.gatewayNameText}> {props.gateway_name} </Text>
+        <Text style={styles.gatewayNameText}> {props.gatewayName} </Text>
       </TouchableOpacity>
       {child}
     </View>
@@ -115,7 +115,7 @@ ControllerView.propTypes = {
   ]),
   onControllerChange: PropTypes.func,
   onPress: PropTypes.func.isRequired,
-  gateway_name: PropTypes.string.isRequired,
+  gatewayName: PropTypes.string.isRequired,
 };
 
 

@@ -34,12 +34,32 @@ export const changeLight = (gateway, controller) => {
 };
 
 
-export const gatewayStatus = (dispatch, gateway, controllers) => {
+const onClientData = (data, gateway, dispatch) => {
+  const stringData = data.toString();
+  if (stringData !== ack) {
+    const splitted = stringData.split("*")
+    dispatch({
+      type: 'CONTROLLER_DATA',
+      // splitted[0] is an empty string
+      // splitted[1] represents the zoneCode
+      zoneCode: splitted[1],
+      // splitted[2] represents the value, but we want it as a number
+      value: parseInt(splitted[2], 10),
+      // splitted[3] represents the zoneCode, but we need
+      // to strip the last two characters '##'
+      idCode: splitted[3].slice(0, -2),
+      gatewayId: gateway.id ,
+    });
+  }
+}
+
+
+export const gatewayStatus = (dispatch, gateway) => {
   const client = net.connect(gateway.port, gateway.ip_address);
   client.on('error', () => {
     dispatch({ type: 'GATEWAY_UNREACHABLE', gateway });
+    setTimeout(() => gatewayStatus(dispatch, gateway), 2000);
     client.end();
-    setTimeout(() => gatewayStatus(dispatch, gateway, controllers), 2000);
   });
 
   client.on('connect', () => {
@@ -47,19 +67,21 @@ export const gatewayStatus = (dispatch, gateway, controllers) => {
     client.write("*99*1##");
   });
 
-  client.on('data', (data) => {
-    const stringData = data.toString();
-    if (stringData !== ack) {
-      const splitted = stringData.split("*")
-      dispatch({
-        type: 'CONTROLLER_DATA',
-        zoneCode: splitted[1],
-        value: splitted[2],
-        idCode: splitted[3].slice(0, -2),
-        gatewayId: gateway.id ,
-      });
-    }
-  });
+  client.on('data', (data) => onClientData(data, gateway, dispatch));
 
   return client;
 };
+
+
+export const readLightStatus = (dispatch, controller, gateway) => {
+  const client = net.connect(gateway.port, gateway.ip_address);
+
+  client.on('connect', () => {
+    client.write(`*#${controller.zoneCode}*${controller.idCode}##`)
+  });
+
+  client.on('data', (data) => {
+    onClientData(data, gateway, dispatch)
+    client.end();
+  });
+}

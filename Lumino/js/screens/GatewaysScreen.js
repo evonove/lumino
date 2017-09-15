@@ -20,7 +20,7 @@ class GatewaysScreen extends React.Component {
       () => this.props.gateways.forEach(
         (g) => {
           if (g.status) {
-            gatewayStatus(this.props.dispatch, g, this.props.controllers.filter(c => c.gateway === g.id));
+            gatewayStatus(this.props.dispatch, g);
           }
         },
       ),

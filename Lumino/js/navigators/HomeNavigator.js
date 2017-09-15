@@ -22,7 +22,7 @@ const HomeNavigator = TabNavigator(
     },
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
-    // swipeEnabled: false,
+    swipeEnabled: false,
   },
 );
 

@@ -50,7 +50,7 @@ class ControllerFormComponent extends React.Component {
 
     // If there is no initialValues it means we are creating a new controller,
     // so no need to show the delete button (we hide it with css)
-    const deleteViewable = !this.props.initialValues ? { display: 'none' } : {};
+    const deleteViewable = !this.props.initialValues ? { display: 'none' } : { bottom: 0 };
 
     return (
       <ScrollView style={{ flex: 1 }}>

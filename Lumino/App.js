@@ -10,7 +10,7 @@ import AppNavigator from './js/navigators/AppNavigator';
 // Middleware applied to the store to make it possible to reducers
 // to access the global state
 const middleware = store => next => action => {
-  next({ ...action, getState: store.getState });
+  next({ ...action, getState: store.getState, dispatch: store.dispatch });
 }
 
 const store = createStore(

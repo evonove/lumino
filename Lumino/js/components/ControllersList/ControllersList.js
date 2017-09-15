@@ -28,7 +28,7 @@ const ControllersList = (
         type={controller.type}
         code={controller.code}
         gateway={controller.gateway}
-        gateway_name={controller.gateway_name}
+        gatewayName={controller.gatewayName}
         value={controller.value}
         onControllerChange={value => onControllerChange(value, controller.id)}
         onPress={() => onPress(controller)}
@@ -44,7 +44,7 @@ const ControllersList = (
         type={controller.type}
         code={controller.code}
         gateway={controller.gateway}
-        gateway_name={controller.gateway_name}
+        gatewayName={controller.gatewayName}
         value={0}
         onPress={() => onPress(controller)}
       />

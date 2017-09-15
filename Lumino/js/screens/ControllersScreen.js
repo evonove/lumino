@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import GradientHeader from '../components/GradientHeader/GradientHeader';
 import HeaderButton from '../components/HeaderButton/HeaderButton';
 import ControllersList from '../components/ControllersList/ControllersList';
-import { lightStatus } from '../openwebnet';
 
 
 /**
