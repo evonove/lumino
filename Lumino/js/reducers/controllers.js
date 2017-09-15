@@ -22,7 +22,7 @@ const controllers = (state = [], action) => {
       return [...state, newController];
 
     case 'EDIT_CONTROLLER':
-      filteredState = state.filter(g => g.id !== action.values.id);
+      filteredState = state.filter(c => c.id !== action.values.id);
 
       newController = {
         ...action.values,
@@ -33,10 +33,11 @@ const controllers = (state = [], action) => {
     case 'DELETE_CONTROLLER':
       return state.filter(c => c.id !== action.controller);
 
-    case 'READ_CONTROLLER':
-      return state.map((c) => {
-        if (c.id === action.id) {
-          c.value = action.value;
+    case 'CONTROLLER_DATA':
+      filteredState = state.filter(c => c.gateway === action.gatewayId);
+      return filteredState.map((c) => {
+        if (c.zoneCode === action.zoneCode || c.idCode === action.idCode) {
+          c.value = parseInt(action.value, 10);
         }
         return c;
       });

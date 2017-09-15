@@ -14,23 +14,6 @@ import { lightStatus } from '../openwebnet';
  * Controllers list screen
  */
 class ControllersScreen extends React.Component {
-  componentDidMount() {
-    // Add a timer that will poll lights statuses
-    this.readLights = setInterval(
-      () => this.props.controllers.map(
-        (c) => {
-          const gateway = this.props.gateways.filter(g => g.id === c.gateway)[0];
-          return lightStatus(this.props.navigation.dispatch, c, gateway);
-        },
-      ),
-      3000,
-    );
-  }
-
-  componetWillUnmount() {
-    clearInterval(this.readLights);
-  }
-
   render() {
     return (
       <View style={{ flex: 1 }}>

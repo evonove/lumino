@@ -16,16 +16,15 @@ import HeaderButton from '../components/HeaderButton/HeaderButton';
 class GatewaysScreen extends React.Component {
   componentDidMount() {
     // Add a timer that will poll gateways status
-    this.checkGateways = setInterval(
-      () => this.props.gateways.map(
+    setTimeout(
+      () => this.props.gateways.forEach(
         (g) => {
           if (g.status) {
-            gatewayStatus(this.props.dispatch, g);
+            gatewayStatus(this.props.dispatch, g, this.props.controllers.filter(c => c.gateway === g.id));
           }
-          return g;
         },
       ),
-      10000,
+      5000
     );
   }
 
@@ -69,6 +68,7 @@ GatewaysScreen.navigationOptions = ({ navigation }) => ({
 
 
 const mapStateToProps = (state, props) => ({
+  controllers: state.controllers || [],
   gateways: state.gateways || [],
   gatewayDetail: gateway => props.navigation.navigate('GatewayForm', { initialValues: gateway }),
 });

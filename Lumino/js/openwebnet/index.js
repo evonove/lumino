@@ -34,27 +34,32 @@ export const changeLight = (gateway, controller) => {
 };
 
 
-export const gatewayStatus = (dispatch, gateway) => {
+export const gatewayStatus = (dispatch, gateway, controllers) => {
   const client = net.connect(gateway.port, gateway.ip_address);
-  client.on('error', () => dispatch({ type: 'GATEWAY_UNREACHABLE', gateway }));
-  client.on('connect', () => dispatch({ type: 'GATEWAY_REACHABLE', gateway }));
-};
+  client.on('error', () => {
+    dispatch({ type: 'GATEWAY_UNREACHABLE', gateway });
+    client.end();
+    setTimeout(() => gatewayStatus(dispatch, gateway, controllers), 2000);
+  });
 
-
-export const lightStatus = (dispatch, controller, gateway) => {
-  const { ip_address, port } = gateway;
-  const { zoneCode, idCode } = controller;
-
-  const client = net.connect(port, ip_address, () => {
-    client.write(requestMessage(zoneCode, idCode));
+  client.on('connect', () => {
+    dispatch({ type: 'GATEWAY_REACHABLE', gateway })
+    client.write("*99*1##");
   });
 
   client.on('data', (data) => {
-    const dataString = data.toString();
-    if (dataString !== ack) {
-      const value = parseInt(dataString.split('*')[2], 10);
-      dispatch({ type: 'READ_CONTROLLER', id: controller.id, value });
+    const stringData = data.toString();
+    if (stringData !== ack) {
+      const splitted = stringData.split("*")
+      dispatch({
+        type: 'CONTROLLER_DATA',
+        zoneCode: splitted[1],
+        value: splitted[2],
+        idCode: splitted[3].slice(0, -2),
+        gatewayId: gateway.id ,
+      });
     }
   });
-  client.on('error', onError);
+
+  return client;
 };
