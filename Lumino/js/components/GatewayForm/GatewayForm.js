@@ -77,7 +77,7 @@ const GatewayForm = props => (
 
 
 GatewayForm.propTypes = {
-  deleteViewable: PropTypes.bool.isRequired,
+  deleteViewable: PropTypes.object.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 

@@ -5,6 +5,7 @@ import { Button, StatusBar, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import GradientHeader from '../components/GradientHeader/GradientHeader';
+import HeaderButton from '../components/HeaderButton/HeaderButton';
 import ControllersList from '../components/ControllersList/ControllersList';
 import { lightStatus } from '../openwebnet';
 
@@ -33,7 +34,11 @@ class ControllersScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar barStyle="light-content" />
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor="transparent"
+          translucent={true}
+        />
         <ControllersList
           controllers={this.props.controllers}
           disabledControllers={this.props.disabledControllers}
@@ -66,11 +71,7 @@ ControllersScreen.navigationOptions = ({ navigation }) => ({
   title: 'Controllers',
   header: props => <GradientHeader {...props} />,
   headerTintColor: 'white',
-  headerRight: <Button
-    title="Add"
-    color="white"
-    onPress={() => navigation.navigate('ControllerForm')}
-  />,
+  headerRight: <HeaderButton text={"Add"} onPress={() => navigation.navigate('ControllerForm')} />,
   tabBarIcon: ({ tintColor }) => (
     <Icon
       name={'ios-options-outline'}

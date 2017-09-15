@@ -37,7 +37,7 @@ class GatewayFormComponent extends React.Component {
 
 
 GatewayFormComponent.propTypes = {
-  initialValues: PropTypes.object.isRequired,
+  initialValues: PropTypes.object,
   navigation: PropTypes.object.isRequired,
   onDelete: PropTypes.func.isRequired,
 };

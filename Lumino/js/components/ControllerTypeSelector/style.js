@@ -48,6 +48,22 @@ const styles = StyleSheet.create({
   buttonText: {
     color: palette.primary,
   },
+
+  buttonPressed: {
+    backgroundColor: palette.primary,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderColor: palette.lines,
+    borderRadius: 5,
+    borderWidth: 0.5,
+    height: 100,
+    marginVertical: 20,
+    paddingVertical: 14,
+    width: 100,
+  },
+  buttonPressedText: {
+    color: 'white',
+  },
 });
 
 export default styles;

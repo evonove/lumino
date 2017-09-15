@@ -23,8 +23,8 @@ SwitchComponent.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.number,
-  ]).isRequired,
-  onValueChange: PropTypes.func.isRequired,
+  ]),
+  onValueChange: PropTypes.func,
 };
 
 
@@ -59,7 +59,7 @@ const DimmerComponent = (props) => {
       <Icon name={'ios-sunny'} size={28} color={'#8e8e93'} />
       <Switch
         onValueChange={props.onValueChange}
-        value={parseInt(props.value, 10) === 0}
+        value={props.value == 0 ? false : true}
       />
     </View>
   );
@@ -70,7 +70,7 @@ DimmerComponent.propTypes = {
     PropTypes.bool,
     PropTypes.number,
   ]).isRequired,
-  onValueChange: PropTypes.func.isRequired,
+  onValueChange: PropTypes.func,
 };
 
 /**
@@ -83,7 +83,7 @@ const ControllerView = (props) => {
     child = (
       <SwitchComponent
         onValueChange={props.onControllerChange}
-        value={parseInt(props.value, 10) === 0}
+        value={props.value == 0 ? false : true}
       />
     );
   } else {
@@ -113,7 +113,7 @@ ControllerView.propTypes = {
     PropTypes.bool,
     PropTypes.number,
   ]).isRequired,
-  onControllerChange: PropTypes.func.isRequired,
+  onControllerChange: PropTypes.func,
   onPress: PropTypes.func.isRequired,
   gateway_name: PropTypes.string.isRequired,
 };

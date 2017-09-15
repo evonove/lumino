@@ -6,6 +6,7 @@ import { View, Button, ScrollView, Picker, Alert } from 'react-native';
 
 import { onControllerSubmit } from './validation';
 import GradientHeader from '../components/GradientHeader/GradientHeader';
+import HeaderButton from '../components/HeaderButton/HeaderButton';
 import ControllerTypeSelector from '../components/ControllerTypeSelector/ControllerTypeSelector';
 import ControllerSettingsForm from '../components/ControllerForm/ControllerForm';
 
@@ -48,7 +49,10 @@ class ControllerFormComponent extends React.Component {
 
     return (
       <ScrollView style={{ flex: 1 }}>
-        <ControllerTypeSelector onPress={this.props.onControllerTypePress} />
+        <ControllerTypeSelector
+          onPress={this.props.onControllerTypePress}
+          type={this.props.controllerType}
+        />
         <ControllerSettingsForm gateways={gatewaysItems} />
         <View style={deleteViewable}>
           <Button title={'DELETE'} onPress={this.props.onDelete} />
@@ -67,21 +71,32 @@ ControllerFormComponent.propTypes = {
 };
 
 
-const mapStateToProps = (state, { navigation }) => ({
-  gateways: state.gateways,
-  onControllerTypePress: (controllerType) => {
-    navigation.dispatch(change('controller', 'type', controllerType));
-  },
-  onDelete: (controller) => {
-    const deleteAction = {
-      type: 'DELETE_CONTROLLER',
-      controller: controller.id,
-    };
-    navigation.dispatch(deleteAction);
-    navigation.goBack();
-  },
-  ...navigation.state.params,
-});
+const mapStateToProps = (state, { navigation, initialValues }) => {
+
+  let controllerType = "switch";
+  if (initialValues && initialValues.type) {
+    controllerType = initialValues.type;
+  } else if (state.form.controller && state.form.controller.values && state.form.controller.values.type) {
+    controllerType = state.form.controller.values.type;
+  }
+
+  return {
+    gateways: state.gateways,
+    controllerType,
+    onControllerTypePress: (controllerType) => {
+      navigation.dispatch(change('controller', 'type', controllerType));
+    },
+    onDelete: (controller) => {
+      const deleteAction = {
+        type: 'DELETE_CONTROLLER',
+        controller: controller.id,
+      };
+      navigation.dispatch(deleteAction);
+      navigation.goBack();
+    },
+    ...navigation.state.params,
+  }
+};
 
 
 // Wrap into reduxForm for form handling
@@ -114,7 +129,7 @@ ControllerForm.navigationOptions = ({ navigation }) => {
     title,
     header: props => <GradientHeader {...props} />,
     headerTintColor: 'white',
-    headerRight: <Button onPress={onPress} title="Save" color="white" />,
+    headerRight: <HeaderButton onPress={onPress} text="Save" />,
   };
 };
 

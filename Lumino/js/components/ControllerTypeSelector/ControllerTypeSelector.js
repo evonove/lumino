@@ -19,28 +19,28 @@ const ControllerTypeSelector = props => (
     <View style={styles.blockFields}>
 
       <TouchableOpacity
-        style={styles.button}
+        style={props.type === "switch" ? styles.buttonPressed : styles.button}
         onPress={() => props.onPress('switch')}
       >
         <IconFontAwesome
           name={'toggle-on'}
-          color={'#42275A'}
+          color={props.type === "switch" ? "white" : "#42275A"}
           size={40}
         />
-        <Text style={styles.buttonText}>Switch</Text>
+        <Text style={props.type === "switch" ? styles.buttonPressedText : styles.buttonText}>Switch</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.button}
+        style={props.type === "dimmer" ? styles.buttonPressed : styles.button}
         onPress={() => props.onPress('dimmer')}
       >
         <IconIonic
           style={{ bottom: 5 }}
           name={'ios-git-commit'}
-          color={'#42275A'}
+          color={props.type === "dimmer" ? "white" : "#42275A"}
           size={50}
         />
-        <Text style={styles.buttonText}>Dimmer</Text>
+        <Text style={props.type === "dimmer" ? styles.buttonPressedText : styles.buttonText}>Dimmer</Text>
       </TouchableOpacity>
     </View>
   </View>
@@ -49,6 +49,7 @@ const ControllerTypeSelector = props => (
 
 ControllerTypeSelector.propTypes = {
   onPress: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 

@@ -19,11 +19,11 @@ const GatewayView = ({ name, status, networkStatus, onPress }) => {
     text = networkStatus;
     style = styles.gatewayConnectionError;
   } else if (networkStatus === 'Reachable') {
-    text = networkStatus;
+    text = 'Active';
     style = styles.gatewayConnection;
   } else {
     text = 'Connecting';
-    style = style.gatewayConnecting;
+    style = styles.gatewayConnecting;
   }
 
   return (
@@ -35,7 +35,7 @@ const GatewayView = ({ name, status, networkStatus, onPress }) => {
 };
 
 GatewayView.propTypes = {
-  networkStatus: PropTypes.string.isRequired,
+  networkStatus: PropTypes.string,
   name: PropTypes.string.isRequired,
   status: PropTypes.bool.isRequired,
   onPress: PropTypes.func.isRequired,

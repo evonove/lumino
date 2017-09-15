@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Picker as NativePicker } from 'react-native';
 
 
-const Picker = ({ input: { onChange, value }, label, children, ...custom }) => (
+const Picker = ({ input: { onChange, value }, children, ...custom }) => (
   <NativePicker
     selectedValue={value}
     onValueChange={val => onChange(val)}
@@ -16,7 +16,6 @@ const Picker = ({ input: { onChange, value }, label, children, ...custom }) => (
 
 Picker.propTypes = {
   input: PropTypes.object.isRequired,
-  label: PropTypes.string.isRequired,
   children: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 

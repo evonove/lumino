@@ -1,4 +1,4 @@
-import { TabNavigator } from 'react-navigation';
+import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import GatewaysScreen from '../screens/GatewaysScreen';
 import ControllersScreen from '../screens/ControllersScreen';
@@ -20,6 +20,9 @@ const HomeNavigator = TabNavigator(
     tabBarOptions: {
       activeTintColor: '#42275A',
     },
+    tabBarComponent: TabBarBottom,
+    tabBarPosition: 'bottom',
+    swipeEnabled: false,
   },
 );
 
