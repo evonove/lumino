@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { gatewayStatus } from '../openwebnet';
 import GradientHeader from '../components/GradientHeader/GradientHeader';
 import GatewaysList from '../components/GatewaysList/GatewaysList';
+import HeaderButton from '../components/HeaderButton/HeaderButton';
 
 
 /**
@@ -56,11 +57,7 @@ GatewaysScreen.navigationOptions = ({ navigation }) => ({
   title: 'Gateways',
   header: props => <GradientHeader {...props} />,
   headerTintColor: 'white',
-  headerRight: <Button
-    title="Add"
-    color="white"
-    onPress={() => navigation.navigate('GatewayForm')}
-  />,
+  headerRight: <HeaderButton text={"Add"} onPress={() => navigation.navigate('GatewayForm')} />,
   tabBarIcon: ({ tintColor }) => (
     <Icon
       name={'ios-expand'}

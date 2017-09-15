@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, change, submit } from 'redux-form';
-import { Button } from 'react-native';
 
 import { onGatewaySubmit } from './validation';
 import GatewayFormFields from '../components/GatewayForm/GatewayForm';
 import GradientHeader from '../components/GradientHeader/GradientHeader';
+import HeaderButton from '../components/HeaderButton/HeaderButton';
 
 
 /**
@@ -88,7 +88,7 @@ GatewayForm.navigationOptions = ({ navigation }) => {
     title,
     header: props => <GradientHeader {...props} />,
     headerTintColor: 'white',
-    headerRight: <Button onPress={onPress} title="Save" color="white" />,
+    headerRight: <HeaderButton onPress={onPress} text="Save" />,
   };
 };
 
