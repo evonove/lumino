@@ -69,7 +69,7 @@ DimmerComponent.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.number,
-  ]).isRequired,
+  ]),
   onValueChange: PropTypes.func,
 };
 
@@ -112,7 +112,7 @@ ControllerView.propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.number,
-  ]).isRequired,
+  ]),
   onControllerChange: PropTypes.func,
   onPress: PropTypes.func.isRequired,
   gateway_name: PropTypes.string.isRequired,

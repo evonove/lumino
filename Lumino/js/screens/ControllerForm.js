@@ -28,6 +28,11 @@ class ControllerFormComponent extends React.Component {
       this.props.navigation.dispatch(
         change('controller', 'gateway', this.props.gateways[0].id),
       );
+
+      // Controller type is a custom component and needs to be initialized too
+      this.props.navigation.dispatch(
+        change('controller', 'type', 'switch')
+      );
     }
   }
 
@@ -55,7 +60,7 @@ class ControllerFormComponent extends React.Component {
         />
         <ControllerSettingsForm gateways={gatewaysItems} />
         <View style={deleteViewable}>
-          <Button title={'DELETE'} onPress={this.props.onDelete} />
+          <Button title={'DELETE'} onPress={() => this.props.onDelete(this.props.initialValues)} />
         </View>
       </ScrollView>
     );

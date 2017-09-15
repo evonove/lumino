@@ -48,11 +48,17 @@ GatewayFormComponent.propTypes = {
  */
 const mapStateToProps = (state, { navigation }) => ({
   onDelete: () => {
-    const deleteAction = {
-      type: 'DELETE_GATEWAY',
-      gateway: navigation.state.params.initialValues.id,
-    };
-    navigation.dispatch(deleteAction);
+    const gatewayId = navigation.state.params.initialValues.id
+
+    // Delete gateway
+    navigation.dispatch({ type: 'DELETE_GATEWAY', gateway: gatewayId });
+
+    // Also delete all the controllers associated to this gateway
+    state.controllers
+      .filter(c => c.gateway === gatewayId)
+      .forEach(c => navigation.dispatch({ type: 'DELETE_CONTROLLER', controller: c.id }));
+
+    // Go back to gateways page
     navigation.goBack();
   },
   gateways: state.gateways,
