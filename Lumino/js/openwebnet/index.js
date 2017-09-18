@@ -19,63 +19,8 @@ const ack = '*#*1##';
 
 
 /*
- * CONTROLLER FUNCTIONS
+ * GATEWAYS STUFF
  */
-
-// Read light status
-export const readLightStatus = (dispatch, controller, gateway) => {
-  const client = net.connect(gateway.port, gateway.ip_address);
-
-  client.on('connect', () => client.write(requestMessage(controller.zoneCode, controller.idCode)));
-
-  client.on('data', (data) => {
-    onServerData(data, gateway, dispatch)
-    client.end();
-  });
-}
-
-// Set a given light to a certain value
-export const changeLight = (gateway, controller, dispatch) => {
-  // Controller could send us a boolean, in which case
-  // we transform it into either 1 or 0
-  const { zoneCode, idCode, value } = controller;
-  let val = value;
-  if (value === true) {
-    val = 1;
-  } else if (value === false) {
-    val = 0;
-  }
-
-  const { ip_address, port } = gateway;
-  const client = net.connect(port, ip_address)
-
-  client.on('connect', () => {
-    client.write(commandStatusMessage(zoneCode, idCode, val));
-    client.destroy();
-  });
-  client.on('error', () => onGatewayError(dispatch, gateway))
-};
-
-
-const onServerData = (data, gateway, dispatch) => {
-  const stringData = data.toString();
-  if (stringData !== ack) {
-    const splitted = stringData.split("*")
-    dispatch({
-      type: 'CONTROLLER_DATA',
-      // splitted[0] is an empty string
-      // splitted[1] represents the zoneCode
-      zoneCode: splitted[1],
-      // splitted[2] represents the value, but we want it as a number
-      value: parseInt(splitted[2], 10),
-      // splitted[3] represents the zoneCode, but we need
-      // to strip the last two characters '##'
-      idCode: splitted[3].slice(0, -2),
-      gatewayId: gateway.id ,
-    });
-  }
-}
-
 
 // On gateway connection, dispatch the action and ask for status
 const onGatewayConnect = (dispatch, gateway, client) => {
@@ -116,3 +61,66 @@ export const gatewayStatus = (dispatch, gateway) => {
     gateway.client.on('close', () => onGatewayClose(dispatch, gateway));
   }
 };
+
+
+/*
+ * CONTROLLER FUNCTIONS
+ */
+
+// Read light status
+export const readLightStatus = (dispatch, controller, gateway) => {
+  const client = net.connect(gateway.port, gateway.ip_address);
+
+  client.on('connect', () => client.write(requestMessage(controller.zoneCode, controller.idCode)));
+
+  client.on('data', (data) => {
+    onServerData(data, gateway, dispatch)
+    client.end();
+  });
+  client.on('error', () => onGatewayError(dispatch, gateway));
+}
+
+// Set a given light to a certain value
+export const changeLight = (gateway, controller, dispatch) => {
+  // Controller could send us a boolean, in which case
+  // we transform it into either 1 or 0
+  const { zoneCode, idCode, value } = controller;
+  let val = value;
+  if (value === true) {
+    val = 1;
+  } else if (value === false) {
+    val = 0;
+  }
+
+  const { ip_address, port } = gateway;
+
+  const client = net.connect(port, ip_address)
+
+  client.on('connect', () => {
+    client.write(commandStatusMessage(zoneCode, idCode, val));
+    client.destroy();
+  });
+  client.on('error', () => onGatewayError(dispatch, gateway));
+};
+
+
+const onServerData = (data, gateway, dispatch) => {
+  const stringData = data.toString();
+  if (stringData !== ack) {
+    const splitted = stringData.split("*")
+    dispatch({
+      type: 'CONTROLLER_DATA',
+      // splitted[0] is an empty string
+      // splitted[1] represents the zoneCode
+      zoneCode: splitted[1],
+      // splitted[2] represents the value, but we want it as a number
+      value: parseInt(splitted[2], 10),
+      // splitted[3] represents the zoneCode, but we need
+      // to strip the last two characters '##'
+      idCode: splitted[3].slice(0, -2),
+      gatewayId: gateway.id ,
+    });
+  }
+}
+
+

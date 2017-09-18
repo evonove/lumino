@@ -27,7 +27,7 @@ const controllers = (state = [], action) => {
         id: uuid.v4(),
         gatewayName: gateway.name,
       };
-      readLightStatus(state.dispatch, newController, gateway);
+      readLightStatus(action.dispatch, newController, gateway);
       return [...state, newController];
 
     case 'EDIT_CONTROLLER':
@@ -38,7 +38,7 @@ const controllers = (state = [], action) => {
         ...action.values,
         gatewayName: getGateway(action.values, action.getState).name,
       };
-      readLightStatus(state.dispatch, newController, gateway);
+      readLightStatus(action.dispatch, newController, gateway);
       return [...filteredState, newController];
 
     case 'DELETE_CONTROLLER':
