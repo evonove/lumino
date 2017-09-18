@@ -7,6 +7,7 @@ const palette = {
   background: '#FFF',
   settings: '#8E8E93',
   lines: '#CECED2',
+  fail: '#DD3924',
 };
 
 const sizes = {
@@ -46,6 +47,15 @@ const styles = StyleSheet.create({
   },
   gatewayNameText: {
     textAlign: 'right',
+    fontSize: sizes.secondaryFontSize,
+  },
+  controllerNameTextDisabled: {
+    fontWeight: '600',
+    color: palette.fail,
+  },
+  gatewayNameTextDisabled: {
+    textAlign: 'right',
+    color: palette.fail,
     fontSize: sizes.secondaryFontSize,
   },
   controllerSwitch: {

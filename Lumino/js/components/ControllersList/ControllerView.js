@@ -98,8 +98,16 @@ const ControllerView = (props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.controllerName} onPress={props.onPress} >
-        <Text style={styles.controllerNameText}> {props.name.toUpperCase()} </Text>
-        <Text style={styles.gatewayNameText}> {props.gatewayName} </Text>
+        <Text
+          style={props.disabled ? styles.controllerNameTextDisabled : styles.controllerNameText}
+        >
+          {props.name.toUpperCase()}
+        </Text>
+        <Text
+          style={props.disabled ? styles.gatewayNameTextDisabled : styles.gatewayNameText}
+        >
+          {props.gatewayName}
+        </Text>
       </TouchableOpacity>
       {child}
     </View>
@@ -113,6 +121,7 @@ ControllerView.propTypes = {
     PropTypes.bool,
     PropTypes.number,
   ]),
+  disabled: PropTypes.bool.isRequired,
   onControllerChange: PropTypes.func,
   onPress: PropTypes.func.isRequired,
   gatewayName: PropTypes.string.isRequired,

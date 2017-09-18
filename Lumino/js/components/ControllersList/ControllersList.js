@@ -13,7 +13,6 @@ const ControllersList = (
   {
     controllers,
     disabledControllers,
-    viewDisabled,
     onControllerChange,
     onPress,
   }) => {
@@ -23,6 +22,7 @@ const ControllersList = (
     .sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
     .map(controller => (
       <ControllerView
+        disabled={false}
         key={controller.id}
         name={controller.name}
         type={controller.type}
@@ -35,10 +35,12 @@ const ControllersList = (
       />
     ));
 
+  const haveDisabled = disabledControllers.length > 0;
   const disabledControllersList = disabledControllers
     .sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
     .map(controller => (
       <ControllerView
+        disabled={true}
         key={controller.id}
         name={controller.name}
         type={controller.type}
@@ -53,11 +55,11 @@ const ControllersList = (
   return (
     <ScrollView style={{ flex: 1 }}>
       {controllersList}
-      <View style={viewDisabled ? {} : { display: 'none' }}>
+      <View style={haveDisabled ? {} : { display: 'none' } } >
         <View style={styles.blockHeading}>
           <Text style={styles.textHeading}>DISABLED CONTROLLERS</Text>
         </View>
-        { viewDisabled ? disabledControllersList : null }
+        {disabledControllersList}
       </View>
     </ScrollView>
   );
@@ -67,7 +69,6 @@ const ControllersList = (
 ControllersList.propTypes = {
   controllers: PropTypes.arrayOf(PropTypes.object).isRequired,
   disabledControllers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  viewDisabled: PropTypes.bool.isRequired,
   onControllerChange: PropTypes.func.isRequired,
   onPress: PropTypes.func.isRequired,
 };

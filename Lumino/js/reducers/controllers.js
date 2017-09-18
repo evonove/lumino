@@ -1,4 +1,5 @@
 import uuid from 'react-native-uuid';
+import { REHYDRATE } from 'redux-persist/constants'
 
 import { changeLight, readLightStatus } from '../openwebnet';
 
@@ -14,6 +15,11 @@ const controllers = (state = [], action) => {
   let gateway = {};
 
   switch (action.type) {
+    case REHYDRATE:
+      const incoming = action.payload.controllers;
+      if (incoming) return incoming;
+      return state;
+
     case 'ADD_CONTROLLER':
       gateway = getGateway(action.values, action.getState)
       newController = {
@@ -55,7 +61,7 @@ const controllers = (state = [], action) => {
         if (c.id === action.id) {
           // Update toggle value
           c.value = action.value;
-          changeLight(getGateway(c, action.getState), c);
+          changeLight(getGateway(c, action.getState), c, action.dispatch);
         }
         return c;
       });

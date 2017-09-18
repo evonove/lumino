@@ -14,22 +14,29 @@ import HeaderButton from '../components/HeaderButton/HeaderButton';
  * Gateways list screen.
  */
 class GatewaysScreen extends React.Component {
-  componentDidMount() {
-    // Add a timer that will poll gateways status
-    setTimeout(
-      () => this.props.gateways.forEach(
-        (g) => {
-          if (g.status) {
-            gatewayStatus(this.props.dispatch, g);
-          }
-        },
-      ),
-      5000
-    );
+  constructor(props) {
+    super(props);
+    this.checkGateways = this.checkGateways.bind(this);
+    this.refreshing = false;
   }
 
-  componetWillUnmount() {
-    clearInterval(this.checkGateways);
+  checkGateways() {
+    this.refreshing = true;
+    // Call the function that will poll gateways statuses
+    this.props.gateways.forEach((g) => {
+      if (g.status) {
+        gatewayStatus(this.props.dispatch, g);
+      }
+    });
+    this.refreshing = false;
+  }
+
+  componentDidMount() {
+    this.gatewaysTimer = setInterval(this.checkGateways, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.gatewaysTimer);
   }
 
   render() {
@@ -39,6 +46,8 @@ class GatewaysScreen extends React.Component {
         <GatewaysList
           gateways={this.props.gateways}
           onPress={this.props.gatewayDetail}
+          onRefresh={this.checkGateways}
+          refreshing={this.refreshing}
         />
       </View>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView } from 'react-native';
+import { ScrollView, RefreshControl } from 'react-native';
 
 import GatewayView from './GatewayView';
 
@@ -8,7 +8,7 @@ import GatewayView from './GatewayView';
  * Shows the list of gateways.
  * @param {array} [gateways]. Array of gateways data.
  */
-const GatewaysList = ({ gateways, onPress }) => {
+const GatewaysList = ({ gateways, onPress, onRefresh, refreshing }) => {
   const gatewaysList = gateways
     .sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
     .map(gateway => (
@@ -22,7 +22,11 @@ const GatewaysList = ({ gateways, onPress }) => {
     ));
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView
+      style={{ flex: 1 }}
+      keyboardDismissMode={'interactive'}
+      refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}
+    >
       {gatewaysList}
     </ScrollView>
   );

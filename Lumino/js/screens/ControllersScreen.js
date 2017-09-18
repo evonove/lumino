@@ -26,11 +26,6 @@ class ControllersScreen extends React.Component {
           disabledControllers={this.props.disabledControllers}
           onControllerChange={this.props.onControllerChange}
           onPress={this.props.controllerDetail}
-          viewDisabled={this.props.viewDisabled}
-        />
-        <Button
-          title={'Disabled controllers'}
-          onPress={this.props.onToggleDisabled}
         />
       </View>
     );
@@ -44,8 +39,6 @@ ControllersScreen.propTypes = {
   disabledControllers: PropTypes.arrayOf(PropTypes.object).isRequired,
   onControllerChange: PropTypes.func.isRequired,
   controllerDetail: PropTypes.func.isRequired,
-  viewDisabled: PropTypes.bool.isRequired,
-  onToggleDisabled: PropTypes.func.isRequired,
 };
 
 
@@ -73,12 +66,9 @@ const mapStateToProps = (state) => {
   const disabledControllers = state.controllers
     .filter(c => activeGatewaysIds.indexOf(c.gateway) === -1) || [];
 
-  const viewDisabled = state.config.viewDisabled;
-
   return {
     controllers,
     disabledControllers,
-    viewDisabled,
     gateways: state.gateways,
   };
 };
@@ -87,7 +77,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
   onControllerChange: (value, id) => dispatch({ type: 'WRITE_CONTROLLER', value, id }),
   controllerDetail: controller => ownProps.navigation.navigate('ControllerForm', { initialValues: controller }),
-  onToggleDisabled: () => dispatch({ type: 'TOGGLE_DISABLED_CONTROLLERS' }),
 });
 
 

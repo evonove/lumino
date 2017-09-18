@@ -8,20 +8,15 @@ import AppReducer from './js/reducers';
 import AppNavigator from './js/navigators/AppNavigator';
 
 // Middleware applied to the store to make it possible to reducers
-// to access the global state
+// to access the global state and the dispatch method
 const middleware = store => next => action => {
   next({ ...action, getState: store.getState, dispatch: store.dispatch });
 }
 
-const store = createStore(
-  AppReducer,
-  undefined,
-  compose(
-    applyMiddleware(middleware),
-    autoRehydrate()
-  )
-)
+// Create the store using the middleware
+const store = createStore(AppReducer, undefined, applyMiddleware(middleware))
 
+// Persist storage with redux-persist
 persistStore(store, { storage: AsyncStorage, blacklist: ['nav', 'form']});
 
 class App extends React.Component {

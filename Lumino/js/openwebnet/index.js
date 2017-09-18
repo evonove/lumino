@@ -1,6 +1,10 @@
 import net from 'net';
 
 
+/*
+ *  GENERAL UTILITIES FUNCTIONS
+ */
+
 // Method called on network errors
 const onError = err => console.log(err);
 
@@ -10,9 +14,28 @@ const commandStatusMessage = (zoneCode, idCode, value) => `*${zoneCode}*${value}
 // Method to build a 'Request/Read/Write Dimension Message'
 const requestMessage = (zoneCode, idCode) => `*#${zoneCode}*${idCode}##`;
 
+// ack message
 const ack = '*#*1##';
 
-export const changeLight = (gateway, controller) => {
+
+/*
+ * CONTROLLER FUNCTIONS
+ */
+
+// Read light status
+export const readLightStatus = (dispatch, controller, gateway) => {
+  const client = net.connect(gateway.port, gateway.ip_address);
+
+  client.on('connect', () => client.write(requestMessage(controller.zoneCode, controller.idCode)));
+
+  client.on('data', (data) => {
+    onServerData(data, gateway, dispatch)
+    client.end();
+  });
+}
+
+// Set a given light to a certain value
+export const changeLight = (gateway, controller, dispatch) => {
   // Controller could send us a boolean, in which case
   // we transform it into either 1 or 0
   const { zoneCode, idCode, value } = controller;
@@ -24,17 +47,17 @@ export const changeLight = (gateway, controller) => {
   }
 
   const { ip_address, port } = gateway;
-  const client = net.connect(port, ip_address, () => {
-    // Calling end with data is the same as calling client.write(data)
-    // first and client.end() just after
+  const client = net.connect(port, ip_address)
+
+  client.on('connect', () => {
     client.write(commandStatusMessage(zoneCode, idCode, val));
-    client.end();
+    client.destroy();
   });
-  client.on('error', onError);
+  client.on('error', () => onGatewayError(dispatch, gateway))
 };
 
 
-const onClientData = (data, gateway, dispatch) => {
+const onServerData = (data, gateway, dispatch) => {
   const stringData = data.toString();
   if (stringData !== ack) {
     const splitted = stringData.split("*")
@@ -54,34 +77,42 @@ const onClientData = (data, gateway, dispatch) => {
 }
 
 
-export const gatewayStatus = (dispatch, gateway) => {
-  const client = net.connect(gateway.port, gateway.ip_address);
-  client.on('error', () => {
-    dispatch({ type: 'GATEWAY_UNREACHABLE', gateway });
-    setTimeout(() => gatewayStatus(dispatch, gateway), 2000);
-    client.end();
+// On gateway connection, dispatch the action and ask for status
+const onGatewayConnect = (dispatch, gateway, client) => {
+  dispatch({
+    type: 'GATEWAY_REACHABLE',
+    gateway: { ...gateway, networkStatus: 'Reachable' }
   });
+  gateway.client.write("*99*1##");
+}
 
-  client.on('connect', () => {
-    dispatch({ type: 'GATEWAY_REACHABLE', gateway })
-    client.write("*99*1##");
+
+// On gateway close, dispatch the action deleting our destroyed client.
+const onGatewayClose = (dispatch, gateway) => dispatch({
+  type: 'GATEWAY_UNREACHABLE',
+  gateway: {...gateway, client: undefined, networkStatus: 'Unreachable' },
+});
+
+
+// On error, destroy the client
+const onGatewayError = (dispatch, gateway) => {
+  if (gateway.client) gateway.client.destroy();
+  dispatch({
+    type: 'GATEWAY_UNREACHABLE',
+    gateway: {...gateway, client: undefined, networkStatus: 'Unreachable' },
   });
-
-  client.on('data', (data) => onClientData(data, gateway, dispatch));
-
-  return client;
 };
 
+export const gatewayStatus = (dispatch, gateway) => {
+  if (gateway.client === undefined) {
+    gateway.client = net.connect(gateway.port, gateway.ip_address);
 
-export const readLightStatus = (dispatch, controller, gateway) => {
-  const client = net.connect(gateway.port, gateway.ip_address);
+    // On connect, asks for status
+    gateway.client.on('connect', () => onGatewayConnect(dispatch, gateway))
+    gateway.client.on('data', (data) => onServerData(data, gateway, dispatch));
 
-  client.on('connect', () => {
-    client.write(`*#${controller.zoneCode}*${controller.idCode}##`)
-  });
-
-  client.on('data', (data) => {
-    onClientData(data, gateway, dispatch)
-    client.end();
-  });
-}
+    // Error handling
+    gateway.client.on('error', () => onGatewayError(dispatch, gateway))
+    gateway.client.on('close', () => onGatewayClose(dispatch, gateway));
+  }
+};
