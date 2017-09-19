@@ -10,11 +10,13 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.3.0",
+    "generator-rn-toolbox": "^2.3.0",
     "jest-expo": "~20.0.0",
     "react-dev-tools": "^0.0.1",
     "react-devtools": "^2.5.0",
     "react-test-renderer": "16.0.0-alpha.12",
-    "rn-nodeify": "^7.0.1"
+    "rn-nodeify": "^7.0.1",
+    "yo": "^2.0.0"
   },
   "scripts": {
     "start": "react-native start",
