@@ -10,4 +10,6 @@ npm-debug.*
 
 ios/build
 android/app/build
+android/build
 android/.gradle
+*.keystore

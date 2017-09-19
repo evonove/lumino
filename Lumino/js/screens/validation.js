@@ -56,15 +56,6 @@ export const onControllerSubmit = (values, dispatch) => {
     errors.idCode = 'Required';
   }
 
-  if (!values.zoneCode) {
-    errors.zoneCode = 'Required';
-  } else {
-    const who = parseInt(values.zoneCode, 10);
-    if (!Number.isInteger(who) || who < 0) {
-      errors.zoneCode = 'Zone code should be a positive number';
-    }
-  }
-
   if (!values.gateway) {
     errors.gateway = 'Required';
   }

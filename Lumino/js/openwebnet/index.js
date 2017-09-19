@@ -71,7 +71,7 @@ export const gatewayStatus = (dispatch, gateway) => {
 export const readLightStatus = (dispatch, controller, gateway) => {
   const client = net.connect(gateway.port, gateway.ip_address);
 
-  client.on('connect', () => client.write(requestMessage(controller.zoneCode, controller.idCode)));
+  client.on('connect', () => client.write(requestMessage(1, controller.idCode)));
 
   client.on('data', (data) => {
     onServerData(data, gateway, dispatch)
@@ -84,7 +84,7 @@ export const readLightStatus = (dispatch, controller, gateway) => {
 export const changeLight = (gateway, controller, dispatch) => {
   // Controller could send us a boolean, in which case
   // we transform it into either 1 or 0
-  const { zoneCode, idCode, value } = controller;
+  const { idCode, value } = controller;
   let val = value;
   if (value === true) {
     val = 1;
@@ -97,7 +97,7 @@ export const changeLight = (gateway, controller, dispatch) => {
   const client = net.connect(port, ip_address)
 
   client.on('connect', () => {
-    client.write(commandStatusMessage(zoneCode, idCode, val));
+    client.write(commandStatusMessage(1, idCode, val));
     client.destroy();
   });
   client.on('error', () => onGatewayError(dispatch, gateway));

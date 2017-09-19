@@ -12,7 +12,7 @@ const gateways = (state = [], action) => {
   switch (action.type) {
     case REHYDRATE:
       const incoming = action.payload.gateways
-      if (incoming) return incoming.map(g => ({...g, client: undefined, networkStatus: undefined}));
+      if (incoming) return incoming;
       return state;
 
     case 'ADD_GATEWAY':

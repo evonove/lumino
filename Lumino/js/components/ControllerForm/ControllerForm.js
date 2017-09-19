@@ -26,14 +26,8 @@ const ControllerSettingsForm = props => (
       />
       <View style={styles.fieldDivider} />
       <Field
-        name="zoneCode"
-        placeholder="Zone Code"
-        component={TextInput}
-        style={styles.textInput}
-      />
-      <Field
         name="idCode"
-        placeholder="ID Code"
+        placeholder="Where code"
         component={TextInput}
         style={styles.textInput}
       />
