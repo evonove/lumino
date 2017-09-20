@@ -13,6 +13,7 @@ const commandStatusMessage = (zoneCode, idCode, value) => `*${zoneCode}*${value}
 
 // Method to build a 'Request/Read/Write Dimension Message'
 const requestMessage = (zoneCode, idCode) => `*#${zoneCode}*${idCode}##`;
+const lightRequest = idCode => requestMessage(1, idCode);
 
 // ack message
 const ack = '*#*1##';
@@ -24,31 +25,48 @@ const ack = '*#*1##';
 
 // On gateway connection, dispatch the action and ask for status
 const onGatewayConnect = (dispatch, gateway, client) => {
-  dispatch({
-    type: 'GATEWAY_REACHABLE',
-    gateway: { ...gateway, networkStatus: 'Reachable' }
-  });
+  dispatch({ type: 'GATEWAY_REACHABLE', gateway });
   gateway.client.write("*99*1##");
 }
 
 
 // On gateway close, dispatch the action deleting our destroyed client.
-const onGatewayClose = (dispatch, gateway) => dispatch({
-  type: 'GATEWAY_UNREACHABLE',
-  gateway: {...gateway, client: undefined, networkStatus: 'Unreachable' },
-});
+const onGatewayClose = (dispatch, gateway) => dispatch({ type: 'GATEWAY_UNREACHABLE', gateway });
 
 
 // On error, destroy the client
 const onGatewayError = (dispatch, gateway) => {
   if (gateway.client) gateway.client.destroy();
-  dispatch({
-    type: 'GATEWAY_UNREACHABLE',
-    gateway: {...gateway, client: undefined, networkStatus: 'Unreachable' },
-  });
+  dispatch({ type: 'GATEWAY_UNREACHABLE', gateway });
 };
 
-export const gatewayStatus = (dispatch, gateway) => {
+
+// Match any string composed like '*1*{1-2 digits}*{1-4 digits}##'
+const lightRegex = /\*1\*(\d{1,2})\*(\d{1,4})\#\#/;
+
+// Method used on data received from server
+const onServerData = (data, gateway, dispatch) => {
+  const stringData = data.toString();
+  if (stringData.match(lightRegex)) {
+    // Executing a regex will return an array
+    // The first element is the whole string, the rest
+    // are values matched inside parenthesis, so we slice
+    // to delete the first element
+    const [value, idCode] = lightRegex.exec(stringData).slice(1);
+    dispatch({ value, idCode, type: 'CONTROLLER_DATA', zoneCode: 1, gatewayId: gateway.id });
+  }
+}
+
+export const gatewayStatus = (dispatch, gateway, force=false) => {
+  if (force) {
+    // If forced update we destroy the actual client without notifying about
+    // unreachable network and force reconnection (that will instead notify
+    // any failure
+    gateway.client.on('close', () => null);
+    gateway.client.destroy();
+    gateway.client === undefined;
+  }
+
   if (gateway.client === undefined) {
     gateway.client = net.connect(gateway.port, gateway.ip_address);
 
@@ -71,7 +89,7 @@ export const gatewayStatus = (dispatch, gateway) => {
 export const readLightStatus = (dispatch, controller, gateway) => {
   const client = net.connect(gateway.port, gateway.ip_address);
 
-  client.on('connect', () => client.write(requestMessage(1, controller.idCode)));
+  client.on('connect', () => client.write(lightRequest(controller.idCode)));
 
   client.on('data', (data) => {
     onServerData(data, gateway, dispatch)
@@ -102,25 +120,3 @@ export const changeLight = (gateway, controller, dispatch) => {
   });
   client.on('error', () => onGatewayError(dispatch, gateway));
 };
-
-
-const onServerData = (data, gateway, dispatch) => {
-  const stringData = data.toString();
-  if (stringData !== ack) {
-    const splitted = stringData.split("*")
-    dispatch({
-      type: 'CONTROLLER_DATA',
-      // splitted[0] is an empty string
-      // splitted[1] represents the zoneCode
-      zoneCode: splitted[1],
-      // splitted[2] represents the value, but we want it as a number
-      value: parseInt(splitted[2], 10),
-      // splitted[3] represents the zoneCode, but we need
-      // to strip the last two characters '##'
-      idCode: splitted[3].slice(0, -2),
-      gatewayId: gateway.id ,
-    });
-  }
-}
-
-

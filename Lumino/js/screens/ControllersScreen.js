@@ -7,12 +7,39 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import GradientHeader from '../components/GradientHeader/GradientHeader';
 import HeaderButton from '../components/HeaderButton/HeaderButton';
 import ControllersList from '../components/ControllersList/ControllersList';
+import { readLightStatus } from '../openwebnet';
 
 
 /**
  * Controllers list screen
  */
 class ControllersScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.checkControllers = this.checkControllers.bind(this);
+    this.refreshing = false;
+  }
+
+  checkControllers() {
+    this.refreshing = true;
+    // Call the function that will poll gateways statuses
+    this.props.controllers.forEach((c) => {
+      readLightStatus(
+        this.props.dispatch,
+        c,
+        this.props.gateways.filter(g => g.id === c.gateway)[0])
+    });
+    this.refreshing = false;
+  }
+
+  componentDidMount() {
+    this.controllersInterval = setInterval(this.checkControllers, 2000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.controllersInterval);
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -26,6 +53,8 @@ class ControllersScreen extends React.Component {
           disabledControllers={this.props.disabledControllers}
           onControllerChange={this.props.onControllerChange}
           onPress={this.props.controllerDetail}
+          onRefresh={this.checkControllers}
+          refreshing={this.refreshing}
         />
       </View>
     );

@@ -20,12 +20,12 @@ class GatewaysScreen extends React.Component {
     this.refreshing = false;
   }
 
-  checkGateways() {
+  checkGateways(force=false) {
     this.refreshing = true;
     // Call the function that will poll gateways statuses
     this.props.gateways.forEach((g) => {
       if (g.status) {
-        gatewayStatus(this.props.dispatch, g);
+        gatewayStatus(this.props.dispatch, g, force);
       }
     });
     this.refreshing = false;
@@ -46,7 +46,7 @@ class GatewaysScreen extends React.Component {
         <GatewaysList
           gateways={this.props.gateways}
           onPress={this.props.gatewayDetail}
-          onRefresh={this.checkGateways}
+          onRefresh={() => this.checkGateways(true)}
           refreshing={this.refreshing}
         />
       </View>

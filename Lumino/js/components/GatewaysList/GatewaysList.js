@@ -24,7 +24,6 @@ const GatewaysList = ({ gateways, onPress, onRefresh, refreshing }) => {
   return (
     <ScrollView
       style={{ flex: 1 }}
-      keyboardDismissMode={'interactive'}
       refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}
     >
       {gatewaysList}

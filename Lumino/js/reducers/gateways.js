@@ -35,7 +35,12 @@ const gateways = (state = [], action) => {
       // only after the socket disconnected. Without this check
       // the deleted gateway would be added again to the list
       // once it disconnects.
-      if (filteredState.length === state.length - 1) return [...filteredState, action.gateway];
+      if (filteredState.length === state.length - 1) {
+        return [
+          ...filteredState,
+          { ...action.gateway, client: undefined, networkStatus: 'Unreachable' }
+        ];
+      }
       return state;
 
     case 'GATEWAY_REACHABLE':
@@ -46,7 +51,12 @@ const gateways = (state = [], action) => {
       // only after the socket disconnected. Without this check
       // the deleted gateway would be added again to the list
       // once it disconnects.
-      if (filteredState.length === state.length - 1) return [...filteredState, action.gateway];
+      if (filteredState.length === state.length - 1) {
+        return [
+          ...filteredState,
+          { ...action.gateway, networkStatus: 'Reachable' }
+        ];
+      }
       return state
 
     default:

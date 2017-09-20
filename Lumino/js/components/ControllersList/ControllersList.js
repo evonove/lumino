@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View, RefreshControl } from 'react-native';
 
 import ControllerView from './ControllerView';
 import styles from './style';
@@ -15,6 +15,8 @@ const ControllersList = (
     disabledControllers,
     onControllerChange,
     onPress,
+    onRefresh,
+    refreshing
   }) => {
   // Sort controllers alphabetically by name and then map the elements
   // to ControllerView components
@@ -53,7 +55,12 @@ const ControllersList = (
     ));
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView
+      style={{ flex: 1 }}
+      refreshControl={
+        <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+      }
+    >
       {controllersList}
       <View style={haveDisabled ? {} : { display: 'none' } } >
         <View style={styles.blockHeading}>
