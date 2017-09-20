@@ -24,9 +24,7 @@ class GatewaysScreen extends React.Component {
     this.refreshing = true;
     // Call the function that will poll gateways statuses
     this.props.gateways.forEach((g) => {
-      if (g.status) {
-        gatewayStatus(this.props.dispatch, g, force);
-      }
+      if (g.status) gatewayStatus(this.props.dispatch, g, force);
     });
     this.refreshing = false;
   }

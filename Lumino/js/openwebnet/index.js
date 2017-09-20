@@ -25,19 +25,23 @@ const ack = '*#*1##';
 
 // On gateway connection, dispatch the action and ask for status
 const onGatewayConnect = (dispatch, gateway, client) => {
-  dispatch({ type: 'GATEWAY_REACHABLE', gateway });
-  gateway.client.write("*99*1##");
+  if (dispatch) {
+    dispatch({ type: 'GATEWAY_REACHABLE', gateway });
+    gateway.client.write("*99*1##");
+  }
 }
 
 
 // On gateway close, dispatch the action deleting our destroyed client.
-const onGatewayClose = (dispatch, gateway) => dispatch({ type: 'GATEWAY_UNREACHABLE', gateway });
+const onGatewayClose = (dispatch, gateway) => {
+  if (dispatch) dispatch({ type: 'GATEWAY_UNREACHABLE', gateway });
+}
 
 
 // On error, destroy the client
 const onGatewayError = (dispatch, gateway) => {
   if (gateway.client) gateway.client.destroy();
-  dispatch({ type: 'GATEWAY_UNREACHABLE', gateway });
+  if (dispatch) dispatch({ type: 'GATEWAY_UNREACHABLE', gateway });
 };
 
 
@@ -47,7 +51,7 @@ const lightRegex = /\*1\*(\d{1,2})\*(\d{1,4})\#\#/;
 // Method used on data received from server
 const onServerData = (data, gateway, dispatch) => {
   const stringData = data.toString();
-  if (stringData.match(lightRegex)) {
+  if (stringData.match(lightRegex) && dispatch) {
     // Executing a regex will return an array
     // The first element is the whole string, the rest
     // are values matched inside parenthesis, so we slice
@@ -58,11 +62,10 @@ const onServerData = (data, gateway, dispatch) => {
 }
 
 export const gatewayStatus = (dispatch, gateway, force=false) => {
-  if (force) {
+  if (force && gateway.client !== undefined) {
     // If forced update we destroy the actual client without notifying about
     // unreachable network and force reconnection (that will instead notify
     // any failure
-    gateway.client.on('close', () => null);
     gateway.client.destroy();
     gateway.client === undefined;
   }

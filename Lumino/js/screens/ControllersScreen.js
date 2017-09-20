@@ -27,7 +27,8 @@ class ControllersScreen extends React.Component {
       readLightStatus(
         this.props.dispatch,
         c,
-        this.props.gateways.filter(g => g.id === c.gateway)[0])
+        this.props.gateways.filter(g => g.id === c.gateway)[0]
+      )
     });
     this.refreshing = false;
   }
