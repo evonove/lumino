@@ -18,6 +18,15 @@ const sizes = {
 };
 
 const styles = StyleSheet.create({
+  blockHeading: {
+    top: 20,
+    paddingHorizontal: 20,
+    height: sizes.fieldHeight,
+  },
+  textHeading: {
+    color: palette.settings,
+    fontSize: sizes.headingFontSize,
+  },
   gatewayContainer: {
     alignItems: 'center',
     backgroundColor: palette.background,

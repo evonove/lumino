@@ -54,6 +54,8 @@ const ControllersList = (
       />
     ));
 
+  const showTip = controllers.length === 0 && disabledControllers.length === 0;
+
   return (
     <ScrollView
       style={{ flex: 1 }}
@@ -61,6 +63,11 @@ const ControllersList = (
         <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
       }
     >
+      <View style={showTip ? {} : { display: 'none' } } >
+        <View style={styles.blockHeading}>
+          <Text style={styles.textHeading}>Press 'Add' to add your first controller</Text>
+        </View>
+      </View>
       {controllersList}
       <View style={haveDisabled ? {} : { display: 'none' } } >
         <View style={styles.blockHeading}>

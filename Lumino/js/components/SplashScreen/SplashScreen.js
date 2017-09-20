@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Image, View } from 'react-native';
+import { StatusBar, Button, Image, View } from 'react-native';
 
 import styles from './style';
+import GradientHeader from '../GradientHeader/GradientHeader';
 
 /**
  * Splash screen
@@ -11,6 +12,11 @@ import styles from './style';
  */
 const SplashScreen = props => (
   <View style={styles.container}>
+    <StatusBar
+      barStyle="light-content"
+      backgroundColor="transparent"
+      translucent={true}
+    />
     <Image
       source={require('./img/lumino.png')}
     />
@@ -23,6 +29,11 @@ const SplashScreen = props => (
     </View>
   </View>
 );
+
+SplashScreen.navigationOptions = ({ navigation }) => ({
+  header: props => <GradientHeader {...props} />,
+  headerTintColor: 'white',
+});
 
 
 SplashScreen.propTypes = {

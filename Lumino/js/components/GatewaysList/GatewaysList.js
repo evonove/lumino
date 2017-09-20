@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView, RefreshControl } from 'react-native';
+import { View, Text, ScrollView, RefreshControl } from 'react-native';
 
 import GatewayView from './GatewayView';
+import styles from './style';
 
 /**
  * Shows the list of gateways.
@@ -21,11 +22,18 @@ const GatewaysList = ({ gateways, onPress, onRefresh, refreshing }) => {
       />
     ));
 
+  const showTip = gateways.length === 0;
+
   return (
     <ScrollView
       style={{ flex: 1 }}
       refreshControl={<RefreshControl onRefresh={onRefresh} refreshing={refreshing} />}
     >
+      <View style={showTip ? {} : { display: 'none' } } >
+        <View style={styles.blockHeading}>
+          <Text style={styles.textHeading}>Press 'Add' to add your first gateway</Text>
+        </View>
+      </View>
       {gatewaysList}
     </ScrollView>
   );
