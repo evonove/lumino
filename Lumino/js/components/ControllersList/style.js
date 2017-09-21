@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     height: sizes.fieldHeight,
   },
   textHeading: {
-    color: palette.settings,
     fontSize: sizes.headingFontSize,
   },
   container: {

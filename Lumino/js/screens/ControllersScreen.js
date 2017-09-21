@@ -21,7 +21,7 @@ class ControllersScreen extends React.Component {
     this.refreshing = false;
   }
 
-  checkControllers(controllers, gateways, dispatch) {
+  checkControllers(controllers=[], gateways=[], dispatch) {
     this.refreshing = true;
     // Call the function that will poll gateways statuses
     controllers.forEach(
