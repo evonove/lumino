@@ -66,6 +66,16 @@
                ReferencedContainer = "container:Lumino.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D74DBB061F73B3F300650E5E"
+               BuildableName = "LuminoUITests.xctest"
+               BlueprintName = "LuminoUITests"
+               ReferencedContainer = "container:Lumino.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

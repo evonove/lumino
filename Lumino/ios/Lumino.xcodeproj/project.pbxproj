@@ -47,6 +47,8 @@
 		AA509230370C4F7DA9CA9C6E /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B82878890E434958843015BB /* SimpleLineIcons.ttf */; };
 		B13D125FA91C4088AD51F23C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 84AE511197BC4334AD8BA246 /* Octicons.ttf */; };
 		C92078070CEE45989C9FEEAD /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E434F3B35C6415E98E016C9 /* libTcpSockets.a */; };
+		D74DBB0A1F73B3F300650E5E /* LuminoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74DBB091F73B3F300650E5E /* LuminoUITests.swift */; };
+		D74DBB121F73BBA600650E5E /* SnapshotHelperXcode8.swift in Sources */ = {isa = PBXBuildFile; fileRef = D74DBB111F73BBA600650E5E /* SnapshotHelperXcode8.swift */; };
 		EFE3C3B06D9B44749EFBFD12 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F1BA2FDB01684695B83D5C48 /* Zocial.ttf */; };
 /* End PBXBuildFile section */
 
@@ -254,6 +256,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = TcpSockets;
 		};
+		D74DBB0C1F73B3F300650E5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
+			remoteInfo = Lumino;
+		};
 		D7FCCF0C1F72B12D00E94024 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -319,6 +328,10 @@
 		99BF95DBA537464EA4FD270A /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		B82878890E434958843015BB /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		BAC5A853E12C4E06A2BFFD1C /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		D74DBB071F73B3F300650E5E /* LuminoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LuminoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D74DBB091F73B3F300650E5E /* LuminoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LuminoUITests.swift; sourceTree = "<group>"; };
+		D74DBB0B1F73B3F300650E5E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D74DBB111F73BBA600650E5E /* SnapshotHelperXcode8.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelperXcode8.swift; path = ../../SnapshotHelperXcode8.swift; sourceTree = "<group>"; };
 		E1480FCA26F34FF9AEF29A32 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		E2498F943BDB4EE5B3D44C22 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		EAD042FBE2DE4CCE8E9B9C23 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -370,6 +383,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2D02E48D1E0B4A5D006451C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D74DBB041F73B3F300650E5E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -542,6 +562,7 @@
 				13B07FAE1A68108700A75B9A /* Lumino */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* LuminoTests */,
+				D74DBB081F73B3F300650E5E /* LuminoUITests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				E4E24BDAB6EB4DCDB3468720 /* Resources */,
 			);
@@ -556,6 +577,7 @@
 				00E356EE1AD99517003FC87E /* LuminoTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* Lumino-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* Lumino-tvOSTests.xctest */,
+				D74DBB071F73B3F300650E5E /* LuminoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -574,6 +596,16 @@
 				D74DBAFF1F72B55500650E5E /* libRNVectorIcons.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D74DBB081F73B3F300650E5E /* LuminoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D74DBB111F73BBA600650E5E /* SnapshotHelperXcode8.swift */,
+				D74DBB091F73B3F300650E5E /* LuminoUITests.swift */,
+				D74DBB0B1F73B3F300650E5E /* Info.plist */,
+			);
+			path = LuminoUITests;
 			sourceTree = "<group>";
 		};
 		E4E24BDAB6EB4DCDB3468720 /* Resources */ = {
@@ -668,12 +700,31 @@
 			productReference = 2D02E4901E0B4A5D006451C7 /* Lumino-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		D74DBB061F73B3F300650E5E /* LuminoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D74DBB0E1F73B3F300650E5E /* Build configuration list for PBXNativeTarget "LuminoUITests" */;
+			buildPhases = (
+				D74DBB031F73B3F300650E5E /* Sources */,
+				D74DBB041F73B3F300650E5E /* Frameworks */,
+				D74DBB051F73B3F300650E5E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D74DBB0D1F73B3F300650E5E /* PBXTargetDependency */,
+			);
+			name = LuminoUITests;
+			productName = LuminoUITests;
+			productReference = D74DBB071F73B3F300650E5E /* LuminoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
@@ -693,6 +744,12 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
+					};
+					D74DBB061F73B3F300650E5E = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = Q99425Z76B;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 				};
 			};
@@ -767,6 +824,7 @@
 				00E356ED1AD99517003FC87E /* LuminoTests */,
 				2D02E47A1E0B4A5D006451C7 /* Lumino-tvOS */,
 				2D02E48F1E0B4A5D006451C7 /* Lumino-tvOSTests */,
+				D74DBB061F73B3F300650E5E /* LuminoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1033,6 +1091,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D74DBB051F73B3F300650E5E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1101,6 +1166,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D74DBB031F73B3F300650E5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D74DBB121F73BBA600650E5E /* SnapshotHelperXcode8.swift in Sources */,
+				D74DBB0A1F73B3F300650E5E /* LuminoUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1113,6 +1187,11 @@
 			isa = PBXTargetDependency;
 			target = 2D02E47A1E0B4A5D006451C7 /* Lumino-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
+		};
+		D74DBB0D1F73B3F300650E5E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 13B07F861A680F5B00A75B9A /* Lumino */;
+			targetProxy = D74DBB0C1F73B3F300650E5E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1439,6 +1518,53 @@
 			};
 			name = Release;
 		};
+		D74DBB0F1F73B3F300650E5E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Q99425Z76B;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = LuminoUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.evonove.LuminoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = Lumino;
+			};
+			name = Debug;
+		};
+		D74DBB101F73B3F300650E5E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Q99425Z76B;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = LuminoUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.evonove.LuminoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = Lumino;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1486,6 +1612,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		D74DBB0E1F73B3F300650E5E /* Build configuration list for PBXNativeTarget "LuminoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D74DBB0F1F73B3F300650E5E /* Debug */,
+				D74DBB101F73B3F300650E5E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
