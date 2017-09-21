@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, StatusBar, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import isEqual from 'lodash.isequal';
 
 import { gatewayStatus } from '../openwebnet';
 import GradientHeader from '../components/GradientHeader/GradientHeader';
@@ -20,21 +21,34 @@ class GatewaysScreen extends React.Component {
     this.refreshing = false;
   }
 
-  checkGateways(force=false) {
+  checkGateways(gateways, force=false) {
     this.refreshing = true;
     // Call the function that will poll gateways statuses
-    this.props.gateways.forEach((g) => {
+    gateways.forEach((g) => {
       if (g.status) gatewayStatus(this.props.dispatch, g, force);
     });
     this.refreshing = false;
   }
 
+  // On mount start a 5 seconds timer to check gateways connections
   componentDidMount() {
-    this.gatewaysTimer = setInterval(this.checkGateways, 5000);
+    this.gatewaysTimer = setInterval(() => this.checkGateways(this.props.gateways, false), 5000);
   }
 
   componentWillUnmount() {
     clearInterval(this.gatewaysTimer);
+  }
+
+  // If the gateways are edited we clear the previous updates
+  // that brings with them gateways information
+  // and start a new one
+  componentWillReceiveProps(nextProps) {
+    // Clear the interval for old gateways if there is
+    // any different gateway
+    if (!isEqual(this.props.gateways, nextProps.gateways)) {
+      clearInterval(this.gatewaysTimer)
+      this.gatewaysTimer = setInterval(() => this.checkGateways(nextProps.gateways, false), 5000);
+    }
   }
 
   render() {
@@ -44,7 +58,7 @@ class GatewaysScreen extends React.Component {
         <GatewaysList
           gateways={this.props.gateways}
           onPress={this.props.gatewayDetail}
-          onRefresh={() => this.checkGateways(true)}
+          onRefresh={() => this.checkGateways(this.props.gateways, true)}
           refreshing={this.refreshing}
         />
       </View>

@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "lodash.get": "^4.4.2",
+    "lodash.isequal": "^4.5.0",
     "lodash.set": "^4.3.2",
     "process": "^0.11.9",
     "prop-types": "^15.5.10",

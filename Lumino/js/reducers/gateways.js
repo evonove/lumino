@@ -17,7 +17,6 @@ const gateways = (state = [], action) => {
 
     case 'ADD_GATEWAY':
       newGateway = { ...action.values, id: uuid.v4() }
-      gatewayStatus(action.dispatch, newGateway);
       return [...state, newGateway];
 
     case 'DELETE_GATEWAY':

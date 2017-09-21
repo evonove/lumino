@@ -15,6 +15,7 @@ const sizes = {
   primaryFontSize: 17,
   secondaryFontSize: 15,
   fieldHeight: 44,
+  headingFontSize: 13,
 };
 
 const styles = StyleSheet.create({

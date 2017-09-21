@@ -10,9 +10,8 @@ const getGateway = (c, getState) => getState().gateways.filter(g => g.id === c.g
 
 // Contollers reducer
 const controllers = (state = [], action) => {
-  let newController = {};
   let filteredState = [];
-  let gateway = {};
+  let gatewayName = "";
 
   switch (action.type) {
     case REHYDRATE:
@@ -21,25 +20,13 @@ const controllers = (state = [], action) => {
       return state;
 
     case 'ADD_CONTROLLER':
-      gateway = getGateway(action.values, action.getState)
-      newController = {
-        ...action.values,
-        id: uuid.v4(),
-        gatewayName: gateway.name,
-      };
-      readLightStatus(action.dispatch, newController, gateway);
-      return [...state, newController];
+      gatewayName = getGateway(action.values, action.getState).name
+      return [...state, { ...action.values, id: uuid.v4(), gatewayName }];
 
     case 'EDIT_CONTROLLER':
       filteredState = state.filter(c => c.id !== action.values.id);
-      gateway = getGateway(action.values, action.getState)
-
-      newController = {
-        ...action.values,
-        gatewayName: getGateway(action.values, action.getState).name,
-      };
-      readLightStatus(action.dispatch, newController, gateway);
-      return [...filteredState, newController];
+      gatewayName = getGateway(action.values, action.getState).name
+      return [...filteredState, { ...action.values, gatewayName }];
 
     case 'DELETE_CONTROLLER':
       return state.filter(c => c.id !== action.controller);

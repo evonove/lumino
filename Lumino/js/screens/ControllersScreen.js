@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, StatusBar, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import isEqual from 'lodash.isequal';
 
 import GradientHeader from '../components/GradientHeader/GradientHeader';
 import HeaderButton from '../components/HeaderButton/HeaderButton';
@@ -20,17 +21,29 @@ class ControllersScreen extends React.Component {
     this.refreshing = false;
   }
 
-  checkControllers() {
+  checkControllers(controllers, gateways, dispatch) {
     this.refreshing = true;
     // Call the function that will poll gateways statuses
-    this.props.controllers.forEach((c) => {
-      readLightStatus(
-        this.props.dispatch,
-        c,
-        this.props.gateways.filter(g => g.id === c.gateway)[0]
-      )
-    });
+    controllers.forEach(
+      c => readLightStatus(dispatch, c, gateways.filter(g => g.id === c.gateway)[0])
+    );
     this.refreshing = false;
+  }
+
+  // If the controllers are edited we clear the previous updates
+  // that brings with them controllers information
+  // and start a new one
+  componentWillReceiveProps(nextProps) {
+    if (
+      !isEqual(this.props.controllers, nextProps.controller) ||
+      !isEqual(this.props.gateways, nextProps.gateways)
+    ) {
+      clearInterval(this.controllersInterval)
+      this.controllersInterval = setInterval(
+        () => this.checkControllers(nextProps.controllers, nextProps.gateways, nextProps.dispatch),
+        5000
+      );
+    }
   }
 
   componentDidMount() {
