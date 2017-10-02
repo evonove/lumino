@@ -6,16 +6,16 @@ import { View, Button, ScrollView, Alert } from 'react-native';
 import { Picker } from 'native-base';
 
 import { onControllerSubmit } from './validation';
-import GradientHeader from '../components/GradientHeader/GradientHeader';
-import HeaderButton from '../components/HeaderButton/HeaderButton';
-import ControllerTypeSelector from '../components/ControllerTypeSelector/ControllerTypeSelector';
 import LightSettingsForm from '../components/ControllerForm/LightSettingsForm';
+import TempControllerForm from '../components/ControllerForm/TempControllerForm';
+import HeaderButton from '../components/HeaderButton/HeaderButton';
+import GradientHeader from '../components/GradientHeader/GradientHeader';
 
 
 /**
  * Controller settings
  */
-class ControllerFormComponent extends React.Component {
+class TemperatureFormComponent extends React.Component {
   componentDidMount() {
     // If there are no gateways, alert the user and send him back
     if (!this.props.gateways || this.props.gateways.length === 0) {
@@ -32,9 +32,10 @@ class ControllerFormComponent extends React.Component {
 
       // Controller type is a custom component and needs to be initialized too
       this.props.navigation.dispatch(
-        change('controller', 'type', 'switch')
+        change('controller', 'type', 'temp')
       );
     }
+
   }
 
   render() {
@@ -55,11 +56,7 @@ class ControllerFormComponent extends React.Component {
 
     return (
       <ScrollView style={{ flex: 1 }}>
-        <ControllerTypeSelector
-          onPress={this.props.onControllerTypePress}
-          type={this.props.controllerType}
-        />
-        <LightSettingsForm gateways={gatewaysItems} />
+        <TempControllerForm gateways={gatewaysItems} />
         <View style={deleteViewable}>
           <Button
             title={'DELETE'}
@@ -71,23 +68,15 @@ class ControllerFormComponent extends React.Component {
   }
 }
 
-ControllerFormComponent.propTypes = {
+TemperatureFormComponent.propTypes = {
   gateways: PropTypes.arrayOf(PropTypes.object).isRequired,
   navigation: PropTypes.object.isRequired,
   initialValues: PropTypes.object,
-  onControllerTypePress: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 
 
 const mapStateToProps = (state, { navigation, initialValues }) => {
-
-  let controllerType = "switch";
-  if (initialValues && initialValues.type) {
-    controllerType = initialValues.type;
-  } else if (state.form.controller && state.form.controller.values && state.form.controller.values.type) {
-    controllerType = state.form.controller.values.type;
-  }
 
   const confirmDelete = (controller) => {
     const deleteAction = {
@@ -111,10 +100,6 @@ const mapStateToProps = (state, { navigation, initialValues }) => {
 
   return {
     gateways: state.gateways,
-    controllerType,
-    onControllerTypePress: (controllerType) => {
-      navigation.dispatch(change('controller', 'type', controllerType));
-    },
     onDelete,
     ...navigation.state.params,
   }
@@ -122,18 +107,18 @@ const mapStateToProps = (state, { navigation, initialValues }) => {
 
 
 // Wrap into reduxForm for form handling
-let ControllerForm = reduxForm({
+let TempForm = reduxForm({
   form: 'controller',
   enableReinitialize: true,
   onSubmit: onControllerSubmit,
-})(ControllerFormComponent);
+})(TemperatureFormComponent);
 
-ControllerForm = connect(mapStateToProps)(ControllerForm);
+TempForm = connect(mapStateToProps)(TempForm);
 
 /**
- * StackNavigation options for ControllerForm component
+ * StackNavigation options for TempForm component
  */
-ControllerForm.navigationOptions = ({ navigation }) => {
+TempForm.navigationOptions = ({ navigation }) => {
   const { state, dispatch } = navigation;
   const { params } = state;
 
@@ -142,9 +127,9 @@ ControllerForm.navigationOptions = ({ navigation }) => {
 
   // If there are initialValues, we set the title to 'EDIT' and send the edit action
   // otherwise we create a new controller
-  let title = 'New controller';
+  let title = 'New temperature controller';
   if (params && params.initialValues && params.initialValues.id) {
-    title = 'Edit controller';
+    title = 'Edit temperature controller';
   }
 
   return {
@@ -156,4 +141,4 @@ ControllerForm.navigationOptions = ({ navigation }) => {
 };
 
 
-export default ControllerForm;
+export default TempForm;

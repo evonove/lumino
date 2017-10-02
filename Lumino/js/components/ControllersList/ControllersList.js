@@ -36,7 +36,6 @@ const ControllersList = (
         onPress={() => onPress(controller)}
       />
     ));
-
   const haveDisabled = disabledControllers.length > 0;
   const disabledControllersList = disabledControllers
     .sort((a, b) => a.name.toUpperCase().localeCompare(b.name.toUpperCase()))
@@ -68,6 +67,7 @@ const ControllersList = (
           <Text style={styles.textHeading}>Press 'Add' to add your first controller</Text>
         </View>
       </View>
+
       {controllersList}
       <View style={haveDisabled ? {} : { display: 'none' } } >
         <View style={styles.blockHeading}>

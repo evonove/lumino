@@ -34,7 +34,7 @@ const controllers = (state = [], action) => {
     case 'CONTROLLER_DATA':
       return state.map((c) => {
         if (c.gateway === action.gatewayId) {
-          if (action.zoneCode === 1 && c.idCode === action.idCode) {
+          if (c.idCode === action.idCode) {
             c.value = parseInt(action.value, 10);
           }
         }

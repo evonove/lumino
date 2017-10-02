@@ -2,6 +2,7 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import GatewaysScreen from '../screens/GatewaysScreen';
 import ControllersScreen from '../screens/ControllersScreen';
+import TemperatureScreen from '../screens/TemperatureScreen';
 
 
 /**
@@ -11,6 +12,9 @@ const HomeNavigator = TabNavigator(
   {
     ControllersScreen: {
       screen: ControllersScreen,
+    },
+    TemperatureScreen: {
+      screen: TemperatureScreen,
     },
     GatewaysScreen: {
       screen: GatewaysScreen,

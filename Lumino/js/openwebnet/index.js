@@ -14,6 +14,7 @@ const commandStatusMessage = (zoneCode, idCode, value) => `*${zoneCode}*${value}
 // Method to build a 'Request/Read/Write Dimension Message'
 const requestMessage = (zoneCode, idCode) => `*#${zoneCode}*${idCode}##`;
 const lightRequest = idCode => requestMessage(1, idCode);
+const tempRequest = idCode => requestMessage(4, idCode);
 
 // ack message
 const ack = '*#*1##';
@@ -48,16 +49,32 @@ const onGatewayError = (dispatch, gateway) => {
 // Match any string composed like '*1*{1-2 digits}*{1-4 digits}##'
 const lightRegex = /\*1\*(\d{1,2})\*(\d{1,4})\#\#/;
 
+// Match any string composed like '*1*{1-2 digits}*{1-4 digits}##'
+const tempRegex = /\*4\*(\d{1,2})\*(\d{4})\#\#/;
+
 // Method used on data received from server
 const onServerData = (data, gateway, dispatch) => {
+  let value, idCode, zoneCode;
   const stringData = data.toString();
-  if (stringData.match(lightRegex) && dispatch) {
+  if (stringData.match(lightRegex)) {
     // Executing a regex will return an array
     // The first element is the whole string, the rest
     // are values matched inside parenthesis, so we slice
     // to delete the first element
-    const [value, idCode] = lightRegex.exec(stringData).slice(1);
-    dispatch({ value, idCode, type: 'CONTROLLER_DATA', zoneCode: 1, gatewayId: gateway.id });
+    [value, idCode] = lightRegex.exec(stringData).slice(1);
+    zoneCode = 1
+  } else if (stringData.match(tempRegex)) {
+    [value, idCode] = tempRegex.exec(stringData).slice(1);
+    zoneCode = 4
+  }
+
+  if (value && zoneCode && idCode && dispatch) {
+    dispatch({
+      value,
+      idCode,
+      zoneCode,
+      type: 'CONTROLLER_DATA',
+      gatewayId: gateway.id });
   }
 }
 

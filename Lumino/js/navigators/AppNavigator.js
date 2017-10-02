@@ -6,6 +6,7 @@ import { addNavigationHelpers, StackNavigator } from 'react-navigation';
 import HomeNavigator from './HomeNavigator';
 import GatewayForm from '../screens/GatewayForm';
 import ControllerForm from '../screens/ControllerForm';
+import TemperatureForm from '../screens/TemperatureForm';
 
 
 /**
@@ -20,6 +21,9 @@ export const AppNavigator = StackNavigator({
   },
   ControllerForm: {
     screen: ControllerForm,
+  },
+  TemperatureForm: {
+    screen: TemperatureForm,
   },
 });
 

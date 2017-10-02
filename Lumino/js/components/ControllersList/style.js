@@ -80,9 +80,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
   },
+  controllerTemp: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'space-between',
+  },
   slider: {
     flex: 2,
     marginHorizontal: 10,
+    width: '100%',
   },
 });
 

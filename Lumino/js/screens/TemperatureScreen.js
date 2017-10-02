@@ -5,16 +5,16 @@ import { Button, StatusBar, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import isEqual from 'lodash.isequal';
 
-import GradientHeader from '../components/GradientHeader/GradientHeader';
-import HeaderButton from '../components/HeaderButton/HeaderButton';
 import ControllersList from '../components/ControllersList/ControllersList';
+import HeaderButton from '../components/HeaderButton/HeaderButton';
+import GradientHeader from '../components/GradientHeader/GradientHeader';
 import { readLightStatus } from '../openwebnet';
 
 
 /**
- * Controllers list screen
+ * Temperature list screen
  */
-class ControllersScreen extends React.Component {
+class TemperatureScreen extends React.Component {
   constructor(props) {
     super(props);
     this.checkControllers = this.checkControllers.bind(this);
@@ -75,7 +75,7 @@ class ControllersScreen extends React.Component {
   }
 }
 
-ControllersScreen.propTypes = {
+TemperatureScreen.propTypes = {
   controllers: PropTypes.arrayOf(PropTypes.object).isRequired,
   gateways: PropTypes.arrayOf(PropTypes.object).isRequired,
   navigation: PropTypes.object.isRequired,
@@ -85,14 +85,14 @@ ControllersScreen.propTypes = {
 };
 
 
-ControllersScreen.navigationOptions = ({ navigation }) => ({
-  title: 'Lights',
+TemperatureScreen.navigationOptions = ({ navigation }) => ({
+  title: 'Temperature',
   header: props => <GradientHeader {...props} />,
   headerTintColor: 'white',
-  headerRight: <HeaderButton text={"Add"} onPress={() => navigation.navigate('ControllerForm')} />,
+  headerRight: <HeaderButton text={"Add"} onPress={() => navigation.navigate('TemperatureForm')} />,
   tabBarIcon: ({ tintColor }) => (
     <Icon
-      name={'ios-sunny-outline'}
+      name={'ios-thermometer-outline'}
       size={26}
       color={tintColor}
     />
@@ -105,9 +105,9 @@ const mapStateToProps = (state) => {
   const activeGatewaysIds = state.gateways.filter(g => g.status && g.networkStatus === 'Reachable').map(g => g.id);
   // Filter out controllers associated to an inactive gateway
   const controllers = state.controllers
-    .filter(c => activeGatewaysIds.indexOf(c.gateway) !== -1 && c.type !== 'temp') || [];
+    .filter(c => activeGatewaysIds.indexOf(c.gateway) !== -1 && c.type === 'temp') || [];
   const disabledControllers = state.controllers
-    .filter(c => activeGatewaysIds.indexOf(c.gateway) === -1 && c.type !== 'temp') || [];
+    .filter(c => activeGatewaysIds.indexOf(c.gateway) === -1 && c.type === 'temp') || [];
 
   return {
     controllers,
@@ -123,4 +123,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ControllersScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(TemperatureScreen);

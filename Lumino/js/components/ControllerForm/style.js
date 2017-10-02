@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 /**
- * ControllerSettingsForm styles
+ * LightSettingsForm styles
  */
 const palette = {
   background: '#FFF',

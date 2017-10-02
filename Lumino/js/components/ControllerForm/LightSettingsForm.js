@@ -10,7 +10,7 @@ import Picker from '../WrappedComponents/Picker';
 /**
  * Input form component for configuring a controller.
  */
-const ControllerSettingsForm = props => (
+const LightSettingsForm = props => (
   <View style={styles.container}>
 
     <View style={styles.blockHeading}>
@@ -51,8 +51,8 @@ const ControllerSettingsForm = props => (
 
 
 
-ControllerSettingsForm.propTypes = {
+LightSettingsForm.propTypes = {
   gateways: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default ControllerSettingsForm;
+export default LightSettingsForm;

@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import isEqual from 'lodash.isequal';
 
 import { gatewayStatus } from '../openwebnet';
+
 import GradientHeader from '../components/GradientHeader/GradientHeader';
 import GatewaysList from '../components/GatewaysList/GatewaysList';
 import HeaderButton from '../components/HeaderButton/HeaderButton';
