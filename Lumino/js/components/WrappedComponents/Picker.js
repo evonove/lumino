@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Picker as NativePicker } from 'react-native';
+import { Picker as NativePicker } from 'native-base';
 
 
 const Picker = ({ input: { onChange, value }, children, ...custom }) => (

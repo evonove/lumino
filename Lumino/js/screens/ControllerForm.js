@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, change, submit } from 'redux-form';
-import { View, Button, ScrollView, Picker, Alert } from 'react-native';
+import { View, Button, ScrollView, Alert } from 'react-native';
+import { Picker } from 'native-base';
 
 import { onControllerSubmit } from './validation';
 import GradientHeader from '../components/GradientHeader/GradientHeader';

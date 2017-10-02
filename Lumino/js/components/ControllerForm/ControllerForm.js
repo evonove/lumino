@@ -47,7 +47,8 @@ const ControllerSettingsForm = props => (
       </Field>
     </View>
   </View>
-);
+)
+
 
 
 ControllerSettingsForm.propTypes = {
