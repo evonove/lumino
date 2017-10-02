@@ -7,7 +7,6 @@ import { gatewayStatus } from '../openwebnet';
 // Gateways reducer
 const gateways = (state = [], action) => {
   let filteredState = [];
-  let newGateway = {};
 
   switch (action.type) {
     case REHYDRATE:
@@ -16,15 +15,16 @@ const gateways = (state = [], action) => {
       return state;
 
     case 'ADD_GATEWAY':
-      newGateway = { ...action.values, id: uuid.v4() }
-      return [...state, newGateway];
+      return [...state, { ...action.values, id: uuid.v4() }];
 
     case 'DELETE_GATEWAY':
       return state.filter(g => g.id !== action.gateway);
 
     case 'EDIT_GATEWAY':
-      filteredState = state.filter(g => g.id !== action.values.id);
-      return [...filteredState, { ...action.values, client: undefined, networkStatus: undefined}];
+      return [
+         ...state.filter(g => g.id !== action.values.id),
+        { ...action.values, client: undefined, networkStatus: undefined }
+      ];
 
     case 'GATEWAY_UNREACHABLE':
       filteredState = state.filter(g => g.id !== action.gateway.id);
