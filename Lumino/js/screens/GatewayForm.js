@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, change, submit } from 'redux-form';
+import { Alert } from 'react-native';
 
 import { onGatewaySubmit } from './validation';
 import GatewayFormFields from '../components/GatewayForm/GatewayForm';
@@ -46,8 +47,8 @@ GatewayFormComponent.propTypes = {
 /*
  * params: state.gateways and navigation.dispatch, state and navigate
  */
-const mapStateToProps = (state, { navigation }) => ({
-  onDelete: () => {
+const mapStateToProps = (state, { navigation }) => {
+  const confirmDelete = () => {
     const gatewayId = navigation.state.params.initialValues.id
 
     // Delete gateway
@@ -60,10 +61,26 @@ const mapStateToProps = (state, { navigation }) => ({
 
     // Go back to gateways page
     navigation.goBack();
-  },
-  gateways: state.gateways,
-  ...navigation.state.params,
-});
+  }
+
+  const onDelete = (gateway) => {
+    Alert.alert(
+      'Confirm delete',
+      'This will permanently delete this gateway ' +
+      'and all associated controllers. Continue?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'DELETE', onPress: () => confirmDelete(gateway) },
+      ],
+    )
+  }
+
+  return {
+    onDelete,
+    gateways: state.gateways,
+    ...navigation.state.params,
+  }
+};
 
 
 // Form with custom submit function

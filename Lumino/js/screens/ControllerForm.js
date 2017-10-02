@@ -88,20 +88,33 @@ const mapStateToProps = (state, { navigation, initialValues }) => {
     controllerType = state.form.controller.values.type;
   }
 
+  const confirmDelete = (controller) => {
+    const deleteAction = {
+      type: 'DELETE_CONTROLLER',
+      controller: controller.id,
+    };
+    navigation.dispatch(deleteAction);
+    navigation.goBack();
+  }
+
+  const onDelete = (controller) => {
+    Alert.alert(
+      'Confirm delete',
+      'This will permanently delete this controller, confirm?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'DELETE', onPress: () => confirmDelete(controller) },
+      ],
+    )
+  }
+
   return {
     gateways: state.gateways,
     controllerType,
     onControllerTypePress: (controllerType) => {
       navigation.dispatch(change('controller', 'type', controllerType));
     },
-    onDelete: (controller) => {
-      const deleteAction = {
-        type: 'DELETE_CONTROLLER',
-        controller: controller.id,
-      };
-      navigation.dispatch(deleteAction);
-      navigation.goBack();
-    },
+    onDelete,
     ...navigation.state.params,
   }
 };
