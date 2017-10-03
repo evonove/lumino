@@ -39,7 +39,7 @@ export const onGatewaySubmit = (values, dispatch) => {
 };
 
 
-export const onControllerSubmit = (values, dispatch) => {
+export const onLightControllerSubmit = (values, dispatch) => {
   const errors = {};
   if (!values.name) {
     errors.name = 'Required';
@@ -65,9 +65,40 @@ export const onControllerSubmit = (values, dispatch) => {
   }
 
   if (values.id) {
-    dispatch({ type: 'EDIT_CONTROLLER', values });
+    dispatch({ type: 'EDIT_LIGHT_CONTROLLER', values });
   } else {
-    dispatch({ type: 'ADD_CONTROLLER', values });
+    dispatch({ type: 'ADD_LIGHT_CONTROLLER', values });
+  }
+
+  dispatch(NavigationActions.back());
+};
+
+
+export const onTempControllerSubmit = (values, dispatch) => {
+  const errors = {};
+  if (!values.name) {
+    errors.name = 'Required';
+  } else if (values.name.length > 15) {
+    // Avoid too long names that would mess with the layout
+    errors.name = 'Name should be less than 15 characters';
+  }
+
+  if (!values.idCode) {
+    errors.idCode = 'Required';
+  }
+
+  if (!values.gateway) {
+    errors.gateway = 'Required';
+  }
+
+  if (Object.keys(errors).length !== 0) {
+    throw new SubmissionError({ ...errors, _error: 'Controller creation/update failed' });
+  }
+
+  if (values.id) {
+    dispatch({ type: 'EDIT_TEMP_CONTROLLER', values });
+  } else {
+    dispatch({ type: 'ADD_TEMP_CONTROLLER', values });
   }
 
   dispatch(NavigationActions.back());

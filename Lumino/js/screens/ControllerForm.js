@@ -5,7 +5,7 @@ import { reduxForm, change, submit } from 'redux-form';
 import { View, Button, ScrollView, Alert } from 'react-native';
 import { Picker } from 'native-base';
 
-import { onControllerSubmit } from './validation';
+import { onLightControllerSubmit } from './validation';
 import GradientHeader from '../components/GradientHeader/GradientHeader';
 import HeaderButton from '../components/HeaderButton/HeaderButton';
 import ControllerTypeSelector from '../components/ControllerTypeSelector/ControllerTypeSelector';
@@ -27,12 +27,12 @@ class ControllerFormComponent extends React.Component {
       // We call redux-form `change` action to trigger the first selection
       // if we are in a new controller form
       this.props.navigation.dispatch(
-        change('controller', 'gateway', this.props.gateways[0].id),
+        change('lightController', 'gateway', this.props.gateways[0].id),
       );
 
       // Controller type is a custom component and needs to be initialized too
       this.props.navigation.dispatch(
-        change('controller', 'type', 'switch')
+        change('lightController', 'type', 'switch')
       );
     }
   }
@@ -85,13 +85,17 @@ const mapStateToProps = (state, { navigation, initialValues }) => {
   let controllerType = "switch";
   if (initialValues && initialValues.type) {
     controllerType = initialValues.type;
-  } else if (state.form.controller && state.form.controller.values && state.form.controller.values.type) {
-    controllerType = state.form.controller.values.type;
+  } else if (
+    state.form.lightController &&
+    state.form.lightController.values &&
+    state.form.lightController.values.type
+  ) {
+    controllerType = state.form.lightController.values.type;
   }
 
   const confirmDelete = (controller) => {
     const deleteAction = {
-      type: 'DELETE_CONTROLLER',
+      type: 'DELETE_LIGHT_CONTROLLER',
       controller: controller.id,
     };
     navigation.dispatch(deleteAction);
@@ -113,7 +117,7 @@ const mapStateToProps = (state, { navigation, initialValues }) => {
     gateways: state.gateways,
     controllerType,
     onControllerTypePress: (controllerType) => {
-      navigation.dispatch(change('controller', 'type', controllerType));
+      navigation.dispatch(change('lightController', 'type', controllerType));
     },
     onDelete,
     ...navigation.state.params,
@@ -123,9 +127,9 @@ const mapStateToProps = (state, { navigation, initialValues }) => {
 
 // Wrap into reduxForm for form handling
 let ControllerForm = reduxForm({
-  form: 'controller',
+  form: 'lightController',
   enableReinitialize: true,
-  onSubmit: onControllerSubmit,
+  onSubmit: onLightControllerSubmit,
 })(ControllerFormComponent);
 
 ControllerForm = connect(mapStateToProps)(ControllerForm);
@@ -138,7 +142,7 @@ ControllerForm.navigationOptions = ({ navigation }) => {
   const { params } = state;
 
   // Custom submit function
-  const onPress = () => dispatch(submit('controller'));
+  const onPress = () => dispatch(submit('lightController'));
 
   // If there are initialValues, we set the title to 'EDIT' and send the edit action
   // otherwise we create a new controller

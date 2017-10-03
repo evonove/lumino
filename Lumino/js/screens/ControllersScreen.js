@@ -104,9 +104,9 @@ const mapStateToProps = (state) => {
   // Filter out inactive gateways
   const activeGatewaysIds = state.gateways.filter(g => g.status && g.networkStatus === 'Reachable').map(g => g.id);
   // Filter out controllers associated to an inactive gateway
-  const controllers = state.controllers
+  const controllers = state.lightControllers
     .filter(c => activeGatewaysIds.indexOf(c.gateway) !== -1 && c.type !== 'temp') || [];
-  const disabledControllers = state.controllers
+  const disabledControllers = state.lightControllers
     .filter(c => activeGatewaysIds.indexOf(c.gateway) === -1 && c.type !== 'temp') || [];
 
   return {
@@ -118,7 +118,7 @@ const mapStateToProps = (state) => {
 
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onControllerChange: (value, id) => dispatch({ type: 'WRITE_CONTROLLER', value, id }),
+  onControllerChange: (value, id) => dispatch({ type: 'WRITE_LIGHT_CONTROLLER', value, id }),
   controllerDetail: controller => ownProps.navigation.navigate('ControllerForm', { initialValues: controller }),
 });
 

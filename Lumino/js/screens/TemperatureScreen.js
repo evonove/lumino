@@ -8,7 +8,7 @@ import isEqual from 'lodash.isequal';
 import ControllersList from '../components/ControllersList/ControllersList';
 import HeaderButton from '../components/HeaderButton/HeaderButton';
 import GradientHeader from '../components/GradientHeader/GradientHeader';
-import { readLightStatus } from '../openwebnet';
+import { readTempStatus } from '../openwebnet';
 
 
 /**
@@ -25,7 +25,7 @@ class TemperatureScreen extends React.Component {
     this.refreshing = true;
     // Call the function that will poll gateways statuses
     controllers.forEach(
-      c => readLightStatus(dispatch, c, gateways.filter(g => g.id === c.gateway)[0])
+      c => readTempStatus(dispatch, c, gateways.filter(g => g.id === c.gateway)[0])
     );
     this.refreshing = false;
   }
@@ -104,9 +104,9 @@ const mapStateToProps = (state) => {
   // Filter out inactive gateways
   const activeGatewaysIds = state.gateways.filter(g => g.status && g.networkStatus === 'Reachable').map(g => g.id);
   // Filter out controllers associated to an inactive gateway
-  const controllers = state.controllers
+  const controllers = state.tempControllers
     .filter(c => activeGatewaysIds.indexOf(c.gateway) !== -1 && c.type === 'temp') || [];
-  const disabledControllers = state.controllers
+  const disabledControllers = state.tempControllers
     .filter(c => activeGatewaysIds.indexOf(c.gateway) === -1 && c.type === 'temp') || [];
 
   return {
@@ -118,8 +118,8 @@ const mapStateToProps = (state) => {
 
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onControllerChange: (value, id) => dispatch({ type: 'WRITE_CONTROLLER', value, id }),
-  controllerDetail: controller => ownProps.navigation.navigate('ControllerForm', { initialValues: controller }),
+  onControllerChange: (value, id) => dispatch({ type: 'WRITE_TEMP_CONTROLLER', value, id }),
+  controllerDetail: controller => ownProps.navigation.navigate('TemperatureForm', { initialValues: controller }),
 });
 
 

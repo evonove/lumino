@@ -5,7 +5,7 @@ import { reduxForm, change, submit } from 'redux-form';
 import { View, Button, ScrollView, Alert } from 'react-native';
 import { Picker } from 'native-base';
 
-import { onControllerSubmit } from './validation';
+import { onTempControllerSubmit } from './validation';
 import LightSettingsForm from '../components/ControllerForm/LightSettingsForm';
 import TempControllerForm from '../components/ControllerForm/TempControllerForm';
 import HeaderButton from '../components/HeaderButton/HeaderButton';
@@ -27,12 +27,12 @@ class TemperatureFormComponent extends React.Component {
       // We call redux-form `change` action to trigger the first selection
       // if we are in a new controller form
       this.props.navigation.dispatch(
-        change('controller', 'gateway', this.props.gateways[0].id),
+        change('tempController', 'gateway', this.props.gateways[0].id),
       );
 
       // Controller type is a custom component and needs to be initialized too
       this.props.navigation.dispatch(
-        change('controller', 'type', 'temp')
+        change('tempController', 'type', 'temp')
       );
     }
 
@@ -80,7 +80,7 @@ const mapStateToProps = (state, { navigation, initialValues }) => {
 
   const confirmDelete = (controller) => {
     const deleteAction = {
-      type: 'DELETE_CONTROLLER',
+      type: 'DELETE_TEMP_CONTROLLER',
       controller: controller.id,
     };
     navigation.dispatch(deleteAction);
@@ -108,9 +108,9 @@ const mapStateToProps = (state, { navigation, initialValues }) => {
 
 // Wrap into reduxForm for form handling
 let TempForm = reduxForm({
-  form: 'controller',
+  form: 'tempController',
   enableReinitialize: true,
-  onSubmit: onControllerSubmit,
+  onSubmit: onTempControllerSubmit,
 })(TemperatureFormComponent);
 
 TempForm = connect(mapStateToProps)(TempForm);
@@ -123,7 +123,7 @@ TempForm.navigationOptions = ({ navigation }) => {
   const { params } = state;
 
   // Custom submit function
-  const onPress = () => dispatch(submit('controller'));
+  const onPress = () => dispatch(submit('tempController'));
 
   // If there are initialValues, we set the title to 'EDIT' and send the edit action
   // otherwise we create a new controller

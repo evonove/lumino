@@ -11,8 +11,13 @@ const gatewaysFilter = createFilter(
   ['id', 'name', 'ip_address', 'port', 'password', 'status'],
 );
 
-const controllersFilter = createFilter(
-  'controllers',
+const lightControllersFilter = createFilter(
+  'lightControllers',
+  ['id', 'name', 'idCode', 'gateway', 'gatewayName', 'type'],
+);
+
+const tempControllersFilter = createFilter(
+  'tempControllers',
   ['id', 'name', 'idCode', 'gateway', 'gatewayName', 'type'],
 );
 
@@ -37,10 +42,11 @@ const store = createStore(
 // Persist storage with redux-persist
 export const persist = () => persistStore(store, {
   storage: AsyncStorage,
-  whitelist: ['controllers', 'gateways'],
+  whitelist: ['lightControllers', 'tempControllers', 'gateways'],
   transforms: [
     gatewaysFilter,
-    controllersFilter,
+    lightControllersFilter,
+    tempControllersFilter,
   ],
 });
 

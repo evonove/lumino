@@ -55,9 +55,13 @@ const mapStateToProps = (state, { navigation }) => {
     navigation.dispatch({ type: 'DELETE_GATEWAY', gateway: gatewayId });
 
     // Also delete all the controllers associated to this gateway
-    state.controllers
+    state.lightControllers
       .filter(c => c.gateway === gatewayId)
-      .forEach(c => navigation.dispatch({ type: 'DELETE_CONTROLLER', controller: c.id }));
+      .forEach(c => navigation.dispatch({ type: 'DELETE_LIGHT_CONTROLLER', controller: c.id }));
+
+    state.tempControllers
+      .filter(c => c.gateway === gatewayId)
+      .forEach(c => navigation.dispatch({ type: 'DELETE_TEMP_CONTROLLER', controller: c.id }));
 
     // Go back to gateways page
     navigation.goBack();

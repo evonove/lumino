@@ -73,7 +73,7 @@ const onServerData = (data, gateway, dispatch) => {
       value,
       idCode,
       zoneCode,
-      type: 'CONTROLLER_DATA',
+      type: 'LIGHT_CONTROLLER_DATA',
       gatewayId: gateway.id });
   }
 }
@@ -136,6 +136,43 @@ export const changeLight = (gateway, controller, dispatch) => {
 
   client.on('connect', () => {
     client.write(commandStatusMessage(1, idCode, val));
+    client.destroy();
+  });
+  client.on('error', () => onGatewayError(dispatch, gateway));
+};
+
+
+// Read temp status
+export const readTempStatus = (dispatch, controller, gateway) => {
+  const client = net.connect(gateway.port, gateway.ip_address);
+
+  client.on('connect', () => client.write(tempRequest(controller.idCode)));
+
+  client.on('data', (data) => {
+    onServerData(data, gateway, dispatch)
+    client.end();
+  });
+  client.on('error', () => onGatewayError(dispatch, gateway));
+}
+
+// Set a given temperature controller to either conditioning or heating
+export const changeTemp = (gateway, controller, dispatch) => {
+  // Controller could send us a boolean, in which case
+  // we transform it into either 1 or 0
+  const { idCode, value } = controller;
+  let val = value;
+  if (value === true) {
+    val = 1;
+  } else if (value === false) {
+    val = 0;
+  }
+
+  const { ip_address, port } = gateway;
+
+  const client = net.connect(port, ip_address)
+
+  client.on('connect', () => {
+    client.write(commandStatusMessage(4, idCode, val));
     client.destroy();
   });
   client.on('error', () => onGatewayError(dispatch, gateway));

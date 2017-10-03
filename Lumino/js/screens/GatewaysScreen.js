@@ -90,7 +90,6 @@ GatewaysScreen.navigationOptions = ({ navigation }) => ({
 
 
 const mapStateToProps = (state, props) => ({
-  controllers: state.controllers || [],
   gateways: state.gateways || [],
   gatewayDetail: gateway => props.navigation.navigate('GatewayForm', { initialValues: gateway }),
 });

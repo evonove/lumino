@@ -9,39 +9,42 @@ import { changeLight, readLightStatus } from '../openwebnet';
 const getGateway = (c, getState) => getState().gateways.filter(g => g.id === c.gateway)[0];
 
 // Contollers reducer
-const controllers = (state = [], action) => {
+const lightControllers = (state = [], action) => {
   let filteredState = [];
   let gatewayName = "";
 
   switch (action.type) {
     case REHYDRATE:
-      const incoming = action.payload.controllers;
+      const incoming = action.payload.lightControllers;
       if (incoming) return incoming;
       return state;
 
-    case 'ADD_CONTROLLER':
+    case 'ADD_LIGHT_CONTROLLER':
       gatewayName = getGateway(action.values, action.getState).name
       return [...state, { ...action.values, id: uuid.v4(), gatewayName }];
 
-    case 'EDIT_CONTROLLER':
+    case 'EDIT_LIGHT_CONTROLLER':
       filteredState = state.filter(c => c.id !== action.values.id);
       gatewayName = getGateway(action.values, action.getState).name
       return [...filteredState, { ...action.values, gatewayName }];
 
-    case 'DELETE_CONTROLLER':
+    case 'DELETE_LIGHT_CONTROLLER':
       return state.filter(c => c.id !== action.controller);
 
-    case 'CONTROLLER_DATA':
+    case 'LIGHT_CONTROLLER_DATA':
       return state.map((c) => {
-        if (c.gateway === action.gatewayId) {
-          if (c.idCode === action.idCode) {
-            c.value = parseInt(action.value, 10);
+        if (c.gateway === action.gatewayId && c.idCode === action.idCode) {
+          c.value = parseInt(action.value, 10);
+          if (c.type === 'temp') {
+            // If it's a temperature controller, the value will include
+            // one decimal digit, represented as an integer
+            c.value /= 10;
           }
         }
         return c;
       });
 
-    case 'WRITE_CONTROLLER':
+    case 'WRITE_LIGHT_CONTROLLER':
       // Create new state with a fixed controller value
       // Also send the command
       return state.map((c) => {
@@ -68,4 +71,4 @@ const controllers = (state = [], action) => {
   }
 };
 
-export default controllers;
+export default lightControllers;

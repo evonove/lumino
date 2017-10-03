@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
-import controllers from './controllers';
+import lightControllers from './lightControllers';
+import tempControllers from './tempControllers';
 import gateways from './gateways';
 import nav from './nav';
 
@@ -10,7 +11,8 @@ import nav from './nav';
 const AppReducer = combineReducers({
   nav,
   gateways,
-  controllers,
+  lightControllers,
+  tempControllers,
   form: formReducer,
 });
 
