@@ -36,7 +36,6 @@ const TempControllerForm = props => (
     <View style={styles.blockHeading}>
       <Text style={styles.textHeading}>GATEWAY</Text>
     </View>
-
     <View style={styles.blockFields}>
       <Field
         name="gateway"

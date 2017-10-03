@@ -32,8 +32,7 @@ const ControllerView = (props) => {
   } else if (props.type === 'temp') {
     child = (
       <TempComponent
-        onValueChange={props.onControllerChange}
-        value={props.value}
+        onPointTempChange={props.onPointTempChange}
         temp={props.actualTemp}
         heatingMode={props.heatingMode}
         pointTemp={props.pointTemp}

@@ -65,7 +65,7 @@ class TemperatureScreen extends React.Component {
         <ControllersList
           controllers={this.props.controllers}
           disabledControllers={this.props.disabledControllers}
-          onControllerChange={this.props.onControllerChange}
+          onPointTempChange={this.props.onPointTempChange}
           onPress={this.props.controllerDetail}
           onRefresh={this.checkControllers}
           refreshing={this.refreshing}
@@ -80,7 +80,7 @@ TemperatureScreen.propTypes = {
   gateways: PropTypes.arrayOf(PropTypes.object).isRequired,
   navigation: PropTypes.object.isRequired,
   disabledControllers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onControllerChange: PropTypes.func.isRequired,
+  onControllerChange: PropTypes.func,
   controllerDetail: PropTypes.func.isRequired,
 };
 
@@ -118,7 +118,7 @@ const mapStateToProps = (state) => {
 
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onControllerChange: (value, id) => dispatch({ type: 'WRITE_TEMP_CONTROLLER', value, id }),
+  onPointTempChange: (value, id) => dispatch({ type: 'WRITE_POINT_TEMP', value, id }),
   controllerDetail: controller => ownProps.navigation.navigate('TemperatureForm', { initialValues: controller }),
 });
 

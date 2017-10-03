@@ -12,11 +12,13 @@ const onError = err => console.log(err);
 const commandStatusMessage = (zoneCode, idCode, value) => `*${zoneCode}*${value}*${idCode}##`;
 const tempMessage = (idCode, pointTemp, heatingMode) => `*#4*${idCode}*#14*${pointTemp}*${heatingMode}##`;
 const modeMessage = (idCode, mode) => `*4*${mode}*#${idCode}##`;
+const pointTempMessage = (idCode, pointTemp, heatingMode) => `*#4*#${idCode}*#14*${pointTemp}*${heatingMode}##`;
 
 // Methods to build 'Request/Read/Write Dimension Message'
 const lightRequest = idCode => `*#1*${idCode}##`
 const tempRequest = idCode => `*#4*${idCode}*0##`;
 const tempModeRequest = idCode => `*#4*${idCode}*12##`;
+// const tempManualRequest = idCode => `*#4*${idCode}##`;
 
 // ack message
 const ack = '*#*1##';
@@ -53,10 +55,10 @@ const lightRegex = /^\*1\*(\d{1,2})\*(\d{1,4})\#\#$/;
 
 // Match any string composed like '*#4*{1-2 digits}*0*{1-4 digits}##'
 const tempRegex = /^\*\#4\*(\d{1,2})\*0\*(\d{1,4})\#\#/;
-
-const tempModeRegex = /^\*4\*(\d{1,4})\*(\d{1,4})\#\#/;
-
+const tempModeRegex = /^\*4\*(\d{1,2})\*(\d{1,4})\#\#/;
 const pointTempRegex = /^\*\#4\*(\d{1,2})\*12\*(\d{1,4})\*3\#\#/;
+
+// const manualRegex = /^\*4\*(\d{3})\*\#(\d{1,2})\#\#/;
 
 // Method used on data received from server
 const onServerData = (data, gateway, dispatch) => {
@@ -169,18 +171,37 @@ export const readTempStatus = (dispatch, controller, gateway) => {
   client.on('error', () => onGatewayError(dispatch, gateway));
 }
 
+
 // Set a given temperature controller to either conditioning or heating
-export const changeTemp = (gateway, controller, dispatch) => {
-  // Controller could send us a boolean, in which case
-  // we transform it into either 1 or 0
-  const { idCode, pointTemp, heatingMode, manualMode } = controller;
+export const writePointTemp = (gateway, controller, dispatch) => {
+  const { idCode, pointTemp, heatingMode } = controller;
   const { ip_address, port } = gateway;
+  const parsedHeatingMode = heatingMode ? 1 : 2;
+  console.warn(parsedHeatingMode)
+  const parsedPointTemp = `0${pointTemp.toFixed(1).replace('.', '')}`;
 
   const client = net.connect(port, ip_address)
 
   client.on('connect', () => {
-    client.write(commandStatusMessage(4, idCode, val));
+    client.write(pointTempMessage(idCode, parsedPointTemp, parsedHeatingMode));
     client.destroy();
   });
   client.on('error', () => onGatewayError(dispatch, gateway));
 };
+
+
+// export const writeHeatingMode = (gateway, controller, dispatch) => {
+//   const { idCode, heatingMode, pointTemp } = controller;
+//   const { ip_address, port } = gateway;
+//   const parsedHeatingMode = heatingMode ? 1 : 2;
+//   console.warn(parsedHeatingMode)
+//   const parsedPointTemp = `0${pointTemp.toFixed(1).replace('.', '')}`;
+
+//   const client = net.connect(port, ip_address)
+
+//   client.on('connect', () => {
+//     client.write(pointTempMessage(0, parsedPointTemp, parsedHeatingMode));
+//     client.destroy();
+//   });
+//   client.on('error', () => onGatewayError(dispatch, gateway));
+// }

@@ -10,6 +10,7 @@ import styles from './style';
  * Temperature component, presenting both a switch and a dimmer
  */
 const TempComponent = (props) => {
+  const heatingIcon = props.heatingMode == 0 ? 'ios-snow' : 'ios-flame';
   return (
     <View style={styles.controllerTemp}>
       <Slider
@@ -21,20 +22,9 @@ const TempComponent = (props) => {
         minimumValue={0}
         maximumValue={40}
       />
-      <Text>Point temp: {props.pointTemp ? `${props.pointTemp}°C` : "Reading..."}</Text>
-      <Text>{props.temp ? `${props.temp}°C` : "Reading temp..."}</Text>
-      <Icon name={'ios-snow'} size={28} color={'#8e8e93'} />
-      <Switch
-        onValueChange={props.onHeatingChange}
-        value={props.heatingMode == 0 ? false : true}
-      />
-      <Icon name={'ios-flame'} size={28} color={'#8e8e93'} />
-
-      <Icon name={'ios-hand-outline'} size={28} color={'#8e8e93'} />
-      <Switch
-        onValueChange={props.onModeChange}
-        value={props.manualMode == 0 ? false : true}
-      />
+      <Text>Point temp: {props.pointTemp ? `${props.pointTemp.toFixed(1)}°C` : "Reading..."}</Text>
+      <Text>Actual temp: {props.temp ? `${props.temp.toFixed(1)}°C` : "Reading..."}</Text>
+      <Icon name={heatingIcon} size={28} color={'#8e8e93'} />
     </View>
   );
 };

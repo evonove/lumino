@@ -14,6 +14,8 @@ const ControllersList = (
     controllers,
     disabledControllers,
     onControllerChange,
+    onPointTempChange,
+    onHeatingModeChange,
     onPress,
     onRefresh,
     refreshing
@@ -36,6 +38,7 @@ const ControllersList = (
         heatingMode={controller.heatingMode}
         pointTemp={controller.pointTemp}
         onControllerChange={value => onControllerChange(value, controller.id)}
+        onPointTempChange={value => onPointTempChange(value, controller.id)}
         onPress={() => onPress(controller)}
       />
     ));

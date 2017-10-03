@@ -1,7 +1,7 @@
 import uuid from 'react-native-uuid';
 import { REHYDRATE } from 'redux-persist/constants'
 
-import { changeLight, readLightStatus } from '../openwebnet';
+import { changeLight } from '../openwebnet';
 
 
 // Helper method to extract gateway object from the global state
