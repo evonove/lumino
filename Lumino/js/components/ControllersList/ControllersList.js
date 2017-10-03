@@ -89,7 +89,7 @@ const ControllersList = (
 ControllersList.propTypes = {
   controllers: PropTypes.arrayOf(PropTypes.object).isRequired,
   disabledControllers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onControllerChange: PropTypes.func.isRequired,
+  onControllerChange: PropTypes.func,
   onPress: PropTypes.func.isRequired,
 };
 

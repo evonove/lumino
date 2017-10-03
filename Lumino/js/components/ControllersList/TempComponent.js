@@ -10,7 +10,12 @@ import styles from './style';
  * Temperature component, presenting both a switch and a dimmer
  */
 const TempComponent = (props) => {
-  const heatingIcon = props.heatingMode == 0 ? 'ios-snow' : 'ios-flame';
+  let heatingIcon = 'ios-power';
+  if (props.heatingMode == 0) {
+    heatingIcon = 'ios-snow';
+  } else if (props.heatingMode == 1){
+    heatingIcon = 'ios-flame';
+  }
   return (
     <View style={styles.controllerTemp}>
       <Slider
