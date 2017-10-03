@@ -36,6 +36,7 @@ const ControllerView = (props) => {
         value={props.value}
         temp={props.actualTemp}
         heatingMode={props.heatingMode}
+        pointTemp={props.pointTemp}
       />
     );
   }

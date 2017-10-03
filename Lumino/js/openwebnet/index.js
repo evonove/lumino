@@ -56,6 +56,8 @@ const tempRegex = /^\*\#4\*(\d{1,2})\*0\*(\d{1,4})\#\#/;
 
 const tempModeRegex = /^\*4\*(\d{1,4})\*(\d{1,4})\#\#/;
 
+const pointTempRegex = /^\*\#4\*(\d{1,2})\*12\*(\d{1,4})\*3\#\#/;
+
 // Method used on data received from server
 const onServerData = (data, gateway, dispatch) => {
   let value, idCode, zoneCode, heatingMode, action;
@@ -77,10 +79,13 @@ const onServerData = (data, gateway, dispatch) => {
   } else if (stringData.match(tempModeRegex)) {
     [heatingMode, idCode] = tempModeRegex.exec(stringData).slice(1);
     action = { value: heatingMode, idCode, zoneCode, type: 'TEMP_HEATING_MODE', gatewayId: gateway.id };
-    console.warn(JSON.stringify(action));
+
+  } else if (stringData.match(pointTempRegex)) {
+    [idCode, pointTemp] = pointTempRegex.exec(stringData).slice(1);
+    action = { value: pointTemp, idCode, zoneCode, type: 'TEMP_POINT_TEMP', gatewayId: gateway.id };
   }
 
-  if (action) {
+  if (action && dispatch) {
     dispatch(action);
   }
 }
@@ -160,7 +165,6 @@ export const readTempStatus = (dispatch, controller, gateway) => {
 
   client.on('data', (data) => {
     onServerData(data, gateway, dispatch);
-    client.end();
   });
   client.on('error', () => onGatewayError(dispatch, gateway));
 }

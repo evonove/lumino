@@ -38,10 +38,17 @@ const tempControllers = (state = [], action) => {
       });
 
     case 'TEMP_HEATING_MODE':
-      console.warn(JSON.stringify(action));
       return state.map((c) => {
         if (c.gateway === action.gatewayId && c.idCode === action.idCode) {
           c.heatingMode = parseInt(action.value, 10);
+        }
+        return c;
+      });
+
+    case 'TEMP_POINT_TEMP':
+      return state.map((c) => {
+        if (c.gateway === action.gatewayId && c.idCode === action.idCode) {
+          c.pointTemp = parseInt(action.value, 10) / 10;
         }
         return c;
       });
