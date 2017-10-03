@@ -32,6 +32,7 @@ const ControllersList = (
         gateway={controller.gateway}
         gatewayName={controller.gatewayName}
         value={controller.value}
+        actualTemp={controller.actualTemp}
         onControllerChange={value => onControllerChange(value, controller.id)}
         onPress={() => onPress(controller)}
       />

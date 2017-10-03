@@ -29,10 +29,10 @@ const tempControllers = (state = [], action) => {
     case 'DELETE_TEMP_CONTROLLER':
       return state.filter(c => c.id !== action.controller);
 
-    case 'TEMP_CONTROLLER_TEMP':
+    case 'CONTROLLER_DATA':
       return state.map((c) => {
-        if (c.gateway === action.gatewayId && c.idCode === action.idCode) {
-          c.value = parseInt(action.value, 10) / 10;
+        if (c.gateway === action.gatewayId && c.idCode === action.idCode && c.type === 'temp') {
+          c.actualTemp = parseInt(action.value, 10) / 10;
         }
         return c;
       });

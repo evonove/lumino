@@ -11,10 +11,9 @@ const onError = err => console.log(err);
 // Method to build a 'Command/Status Message'
 const commandStatusMessage = (zoneCode, idCode, value) => `*${zoneCode}*${value}*${idCode}##`;
 
-// Method to build a 'Request/Read/Write Dimension Message'
-const requestMessage = (zoneCode, idCode) => `*#${zoneCode}*${idCode}##`;
-const lightRequest = idCode => requestMessage(1, idCode);
-const tempRequest = idCode => requestMessage(4, idCode);
+// Methods to build 'Request/Read/Write Dimension Message'
+const lightRequest = idCode => `*#1*${idCode}##`
+const tempRequest = idCode => `*#4*${idCode}*0##`;
 
 // ack message
 const ack = '*#*1##';
@@ -47,10 +46,10 @@ const onGatewayError = (dispatch, gateway) => {
 
 
 // Match any string composed like '*1*{1-2 digits}*{1-4 digits}##'
-const lightRegex = /\*1\*(\d{1,2})\*(\d{1,4})\#\#/;
+const lightRegex = /^\*1\*(\d{1,2})\*(\d{1,4})\#\#$/;
 
 // Match any string composed like '*1*{1-2 digits}*{1-4 digits}##'
-const tempRegex = /\*4\*(\d{1,2})\*(\d{4})\#\#/;
+const tempRegex = /^\*\#4\*(\d{1,2})\*0\*(\d{1,4})\#\#/;
 
 // Method used on data received from server
 const onServerData = (data, gateway, dispatch) => {
@@ -64,7 +63,7 @@ const onServerData = (data, gateway, dispatch) => {
     [value, idCode] = lightRegex.exec(stringData).slice(1);
     zoneCode = 1
   } else if (stringData.match(tempRegex)) {
-    [value, idCode] = tempRegex.exec(stringData).slice(1);
+    [idCode, value] = tempRegex.exec(stringData).slice(1);
     zoneCode = 4
   }
 
@@ -73,7 +72,7 @@ const onServerData = (data, gateway, dispatch) => {
       value,
       idCode,
       zoneCode,
-      type: 'LIGHT_CONTROLLER_DATA',
+      type: 'CONTROLLER_DATA',
       gatewayId: gateway.id });
   }
 }

@@ -31,15 +31,10 @@ const lightControllers = (state = [], action) => {
     case 'DELETE_LIGHT_CONTROLLER':
       return state.filter(c => c.id !== action.controller);
 
-    case 'LIGHT_CONTROLLER_DATA':
+    case 'CONTROLLER_DATA':
       return state.map((c) => {
-        if (c.gateway === action.gatewayId && c.idCode === action.idCode) {
+        if (c.gateway === action.gatewayId && c.idCode === action.idCode && c.type !== 'temp') {
           c.value = parseInt(action.value, 10);
-          if (c.type === 'temp') {
-            // If it's a temperature controller, the value will include
-            // one decimal digit, represented as an integer
-            c.value /= 10;
-          }
         }
         return c;
       });

@@ -29,7 +29,7 @@ const TempComponent = (props) => {
         minimumValue={2}
         maximumValue={10}
       />
-      <Text>{props.temp}</Text>
+      <Text>{props.temp ? `${props.temp}°C` : "Reading temp..."}</Text>
       <Icon name={'ios-snow'} size={28} color={'#8e8e93'} />
       <Switch
         onValueChange={props.onValueChange}
@@ -37,7 +37,7 @@ const TempComponent = (props) => {
       />
       <Icon name={'ios-flame'} size={28} color={'#8e8e93'} />
 
-      <Icon name={'ios-power'} size={28} color={'#8e8e93'} />
+      <Icon name={'ios-hand-outline'} size={28} color={'#8e8e93'} />
       <Switch
         onValueChange={props.onValueChange}
         value={props.value == 0 ? false : true}

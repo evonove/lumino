@@ -34,7 +34,7 @@ const ControllerView = (props) => {
       <TempComponent
         onValueChange={props.onControllerChange}
         value={props.value}
-        temp={"15 gradi"}
+        temp={props.actualTemp}
       />
     );
   }
