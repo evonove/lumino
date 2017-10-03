@@ -8,12 +8,15 @@ import net from 'net';
 // Method called on network errors
 const onError = err => console.log(err);
 
-// Method to build a 'Command/Status Message'
+// Methods to build 'Command/Status Messages'
 const commandStatusMessage = (zoneCode, idCode, value) => `*${zoneCode}*${value}*${idCode}##`;
+const tempMessage = (idCode, pointTemp, heatingMode) => `*#4*${idCode}*#14*${pointTemp}*${heatingMode}##`;
+const modeMessage = (idCode, mode) => `*4*${mode}*#${idCode}##`;
 
 // Methods to build 'Request/Read/Write Dimension Message'
 const lightRequest = idCode => `*#1*${idCode}##`
 const tempRequest = idCode => `*#4*${idCode}*0##`;
+const tempModeRequest = idCode => `*#4*${idCode}*12##`;
 
 // ack message
 const ack = '*#*1##';
@@ -48,12 +51,14 @@ const onGatewayError = (dispatch, gateway) => {
 // Match any string composed like '*1*{1-2 digits}*{1-4 digits}##'
 const lightRegex = /^\*1\*(\d{1,2})\*(\d{1,4})\#\#$/;
 
-// Match any string composed like '*1*{1-2 digits}*{1-4 digits}##'
+// Match any string composed like '*#4*{1-2 digits}*0*{1-4 digits}##'
 const tempRegex = /^\*\#4\*(\d{1,2})\*0\*(\d{1,4})\#\#/;
+
+const tempModeRegex = /^\*4\*(\d{1,4})\*(\d{1,4})\#\#/;
 
 // Method used on data received from server
 const onServerData = (data, gateway, dispatch) => {
-  let value, idCode, zoneCode;
+  let value, idCode, zoneCode, heatingMode, action;
   const stringData = data.toString();
   if (stringData.match(lightRegex)) {
     // Executing a regex will return an array
@@ -62,18 +67,21 @@ const onServerData = (data, gateway, dispatch) => {
     // to delete the first element
     [value, idCode] = lightRegex.exec(stringData).slice(1);
     zoneCode = 1
+    action = { value, idCode, zoneCode, type: 'LIGHT_CONTROLLER_DATA', gatewayId: gateway.id };
+
   } else if (stringData.match(tempRegex)) {
     [idCode, value] = tempRegex.exec(stringData).slice(1);
     zoneCode = 4
+    action = { value, idCode, zoneCode, type: 'TEMP_ACTUAL_TEMP_DATA', gatewayId: gateway.id };
+
+  } else if (stringData.match(tempModeRegex)) {
+    [heatingMode, idCode] = tempModeRegex.exec(stringData).slice(1);
+    action = { value: heatingMode, idCode, zoneCode, type: 'TEMP_HEATING_MODE', gatewayId: gateway.id };
+    console.warn(JSON.stringify(action));
   }
 
-  if (value && zoneCode && idCode && dispatch) {
-    dispatch({
-      value,
-      idCode,
-      zoneCode,
-      type: 'CONTROLLER_DATA',
-      gatewayId: gateway.id });
+  if (action) {
+    dispatch(action);
   }
 }
 
@@ -145,10 +153,13 @@ export const changeLight = (gateway, controller, dispatch) => {
 export const readTempStatus = (dispatch, controller, gateway) => {
   const client = net.connect(gateway.port, gateway.ip_address);
 
-  client.on('connect', () => client.write(tempRequest(controller.idCode)));
+  client.on('connect', () => {
+    client.write(tempRequest(controller.idCode));
+    client.write(tempModeRequest(controller.idCode));
+  });
 
   client.on('data', (data) => {
-    onServerData(data, gateway, dispatch)
+    onServerData(data, gateway, dispatch);
     client.end();
   });
   client.on('error', () => onGatewayError(dispatch, gateway));
@@ -158,14 +169,7 @@ export const readTempStatus = (dispatch, controller, gateway) => {
 export const changeTemp = (gateway, controller, dispatch) => {
   // Controller could send us a boolean, in which case
   // we transform it into either 1 or 0
-  const { idCode, value } = controller;
-  let val = value;
-  if (value === true) {
-    val = 1;
-  } else if (value === false) {
-    val = 0;
-  }
-
+  const { idCode, pointTemp, heatingMode, manualMode } = controller;
   const { ip_address, port } = gateway;
 
   const client = net.connect(port, ip_address)

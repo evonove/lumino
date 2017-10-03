@@ -33,6 +33,7 @@ const ControllersList = (
         gatewayName={controller.gatewayName}
         value={controller.value}
         actualTemp={controller.actualTemp}
+        heatingMode={controller.heatingMode}
         onControllerChange={value => onControllerChange(value, controller.id)}
         onPress={() => onPress(controller)}
       />

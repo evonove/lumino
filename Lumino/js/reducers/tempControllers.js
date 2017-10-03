@@ -29,18 +29,19 @@ const tempControllers = (state = [], action) => {
     case 'DELETE_TEMP_CONTROLLER':
       return state.filter(c => c.id !== action.controller);
 
-    case 'CONTROLLER_DATA':
+    case 'TEMP_ACTUAL_TEMP_DATA':
       return state.map((c) => {
-        if (c.gateway === action.gatewayId && c.idCode === action.idCode && c.type === 'temp') {
+        if (c.gateway === action.gatewayId && c.idCode === action.idCode) {
           c.actualTemp = parseInt(action.value, 10) / 10;
         }
         return c;
       });
 
-    case 'TEMP_CONTROLLER_POINT':
+    case 'TEMP_HEATING_MODE':
+      console.warn(JSON.stringify(action));
       return state.map((c) => {
         if (c.gateway === action.gatewayId && c.idCode === action.idCode) {
-          c.value = parseInt(action.value, 10) / 10;
+          c.heatingMode = parseInt(action.value, 10);
         }
         return c;
       });

@@ -31,9 +31,9 @@ const lightControllers = (state = [], action) => {
     case 'DELETE_LIGHT_CONTROLLER':
       return state.filter(c => c.id !== action.controller);
 
-    case 'CONTROLLER_DATA':
+    case 'LIGHT_CONTROLLER_DATA':
       return state.map((c) => {
-        if (c.gateway === action.gatewayId && c.idCode === action.idCode && c.type !== 'temp') {
+        if (c.gateway === action.gatewayId && c.idCode === action.idCode) {
           c.value = parseInt(action.value, 10);
         }
         return c;
