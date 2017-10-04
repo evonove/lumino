@@ -44,6 +44,7 @@ const GatewayForm = props => (
           placeholder="Gateway Port"
           component={TextInput}
           style={styles.textInput}
+          keyboardType={'numeric'}
         />
         <View style={styles.fieldDivider} />
         <Field

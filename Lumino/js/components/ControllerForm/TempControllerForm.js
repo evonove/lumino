@@ -30,6 +30,7 @@ const TempControllerForm = props => (
         placeholder="Where code"
         component={TextInput}
         style={styles.textInput}
+        keyboardType={'numeric'}
       />
     </View>
 
