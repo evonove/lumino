@@ -13,6 +13,7 @@ const commandStatusMessage = (zoneCode, idCode, value) => `*${zoneCode}*${value}
 // const tempMessage = (idCode, pointTemp, heatingMode) => `*#4*${idCode}*#14*${pointTemp}*${heatingMode}##`;
 // const modeMessage = (idCode, mode) => `*4*${mode}*#${idCode}##`;
 const pointTempMessage = (idCode, pointTemp, heatingMode) => `*#4*#${idCode}*#14*${pointTemp}*3##`;
+// const pointTempMessage = (idCode, pointTemp, heatingMode) => `*#4*#${idCode}*#14*${pointTemp}*${heatingMode}##`;
 
 // Methods to build 'Request/Read/Write Dimension Message'
 const lightRequest = idCode => `*#1*${idCode}##`
@@ -20,8 +21,16 @@ const tempRequest = idCode => `*#4*${idCode}*0##`;
 const pointTempRequest = idCode => `*#4*${idCode}##`;
 const tempModeRequest = idCode => `*#4*${idCode}*12##`;
 
+const setManualMode = (idCode, mode) => `*4*${mode}*#${idCode}##`;
+
 // ack message
 const ack = '*#*1##';
+
+
+// Set everything in heating mode
+// '*4*1*#1##'
+// Set everything in cooling mode
+// '*4*0*#1##'
 
 
 /*
@@ -70,20 +79,40 @@ const onServerData = (data, gateway, dispatch) => {
     // to delete the first element
     [value, idCode] = lightRegex.exec(stringData).slice(1);
     zoneCode = 1
-    action = { value, idCode, zoneCode, type: 'LIGHT_CONTROLLER_DATA', gatewayId: gateway.id };
-
+    action = {
+      value,
+      idCode,
+      zoneCode,
+      type: 'LIGHT_CONTROLLER_DATA',
+      gatewayId: gateway.id
+    };
   } else if (stringData.match(tempRegex)) {
     [idCode, value] = tempRegex.exec(stringData).slice(1);
     zoneCode = 4
-    action = { value, idCode, zoneCode, type: 'TEMP_ACTUAL_TEMP_DATA', gatewayId: gateway.id };
-
+    action = {
+      value,
+      idCode,
+      zoneCode,
+      type: 'TEMP_ACTUAL_TEMP_DATA',
+      gatewayId: gateway.id
+    };
   } else if (stringData.match(tempModeRegex)) {
     [heatingMode, idCode] = tempModeRegex.exec(stringData).slice(1);
-    action = { value: heatingMode, idCode, zoneCode, type: 'TEMP_HEATING_MODE', gatewayId: gateway.id };
-
+    action = {
+      value: heatingMode,
+      idCode, zoneCode,
+      type: 'TEMP_HEATING_MODE',
+      gatewayId: gateway.id
+    };
   } else if (stringData.match(pointTempRegex)) {
     [idCode, pointTemp] = pointTempRegex.exec(stringData).slice(1);
-    action = { value: pointTemp, idCode, zoneCode, type: 'TEMP_POINT_TEMP', gatewayId: gateway.id };
+    action = {
+      value: pointTemp,
+      idCode,
+      zoneCode,
+      type: 'TEMP_POINT_TEMP',
+      gatewayId: gateway.id
+    };
   }
 
   if (action && dispatch) {
@@ -176,15 +205,33 @@ export const readTempStatus = (dispatch, controller, gateway) => {
 
 // Set a given temperature controller to either conditioning or heating
 export const writePointTemp = (gateway, controller, dispatch) => {
-  const { idCode, pointTemp, heatingMode } = controller;
+  const { idCode, pointTemp, heatingMode, manual } = controller;
+
+  if (manual) {
+    const { ip_address, port } = gateway;
+    const parsedHeatingMode = heatingMode ? 1 : 0;
+    const parsedPointTemp = `0${pointTemp.toFixed(1).replace('.', '')}`;
+
+    const client = net.connect(port, ip_address)
+
+    client.on('connect', () => {
+      client.write(pointTempMessage(idCode, parsedPointTemp, parsedHeatingMode));
+      client.destroy();
+    });
+    client.on('error', () => onGatewayError(dispatch, gateway));
+  }
+};
+
+
+export const writeManualMode = (gateway, controller, dispatch) => {
+  const { idCode, manualMode } = controller;
   const { ip_address, port } = gateway;
-  const parsedHeatingMode = heatingMode ? 1 : 2;
-  const parsedPointTemp = `0${pointTemp.toFixed(1).replace('.', '')}`;
+  const parsedMode = manualMode ? 303 : 302;
 
   const client = net.connect(port, ip_address)
 
   client.on('connect', () => {
-    client.write(pointTempMessage(idCode, parsedPointTemp, parsedHeatingMode));
+    client.write(setManualMode(idCode, parsedMode));
     client.destroy();
   });
   client.on('error', () => onGatewayError(dispatch, gateway));
