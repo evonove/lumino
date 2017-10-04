@@ -10,14 +10,15 @@ const onError = err => console.log(err);
 
 // Methods to build 'Command/Status Messages'
 const commandStatusMessage = (zoneCode, idCode, value) => `*${zoneCode}*${value}*${idCode}##`;
-const tempMessage = (idCode, pointTemp, heatingMode) => `*#4*${idCode}*#14*${pointTemp}*${heatingMode}##`;
-const modeMessage = (idCode, mode) => `*4*${mode}*#${idCode}##`;
-const pointTempMessage = (idCode, pointTemp, heatingMode) => `*#4*#${idCode}*#14*${pointTemp}*${heatingMode}##`;
+// const tempMessage = (idCode, pointTemp, heatingMode) => `*#4*${idCode}*#14*${pointTemp}*${heatingMode}##`;
+// const modeMessage = (idCode, mode) => `*4*${mode}*#${idCode}##`;
+const pointTempMessage = (idCode, pointTemp, heatingMode) => `*#4*#${idCode}*#14*${pointTemp}*3##`;
 
 // Methods to build 'Request/Read/Write Dimension Message'
 const lightRequest = idCode => `*#1*${idCode}##`
 const tempRequest = idCode => `*#4*${idCode}*0##`;
-const tempModeRequest = idCode => `*#4*${idCode}##`;
+const pointTempRequest = idCode => `*#4*${idCode}##`;
+const tempModeRequest = idCode => `*#4*${idCode}*12##`;
 
 // ack message
 const ack = '*#*1##';
@@ -54,8 +55,9 @@ const lightRegex = /^\*1\*(\d{1,2})\*(\d{1,4})\#\#$/;
 
 // Match any string composed like '*#4*{1-2 digits}*0*{1-4 digits}##'
 const tempRegex = /^\*\#4\*(\d{1,2})\*0\*(\d{1,4})\#\#/;
-const tempModeRegex = /^\*4\*(\d{1,2})\*(\d{1,4})\#\#/;
-const pointTempRegex = /^\*\#4\*(\d{1,2})\*12\*(\d{1,4})\*3\#\#/;
+
+const tempModeRegex = /^\*4\*(\d{1,3})\*(\d{1,4})\#\#/;
+const pointTempRegex = /^\*\#4\*(\d{1,3})\*12\*(\d{1,4})\*3\#\#/;
 
 // Method used on data received from server
 const onServerData = (data, gateway, dispatch) => {
@@ -159,6 +161,7 @@ export const readTempStatus = (dispatch, controller, gateway) => {
 
   client.on('connect', () => {
     client.write(tempRequest(controller.idCode));
+    client.write(pointTempRequest(controller.idCode));
     client.write(tempModeRequest(controller.idCode));
     // Give some time to read data and then end the socket
     client.setTimeout(2000, client.end);
