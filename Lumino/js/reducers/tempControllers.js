@@ -1,7 +1,7 @@
 import uuid from 'react-native-uuid';
 import { REHYDRATE } from 'redux-persist/constants'
 
-import { writeManualMode, writePointTemp } from '../openwebnet';
+import { writeMode, writePointTemp } from '../openwebnet';
 
 
 // Helper method to extract gateway object from the global state
@@ -39,13 +39,13 @@ const tempControllers = (state = [], action) => {
         return c;
       });
 
-    case 'TEMP_HEATING_MODE':
-      return state.map((c) => {
-        if (c.gateway === action.gatewayId && c.idCode === action.idCode) {
-          c.heatingMode = parseInt(action.value, 10);
-        }
-        return c;
-      });
+    // case 'TEMP_HEATING_MODE':
+    //   return state.map((c) => {
+    //     if (c.gateway === action.gatewayId && c.idCode === action.idCode) {
+    //       c.heatingMode = parseInt(action.value, 10);
+    //     }
+    //     return c;
+    //   });
 
     case 'TEMP_POINT_TEMP':
       return state.map((c) => {
@@ -77,14 +77,15 @@ const tempControllers = (state = [], action) => {
         return c;
       });
 
-    case 'WRITE_MANUAL_MODE':
+    case 'WRITE_TEMP_MODE':
       // Create new state with a fixed controller value
       // Also send the command
       return state.map((c) => {
         if (c.id === action.id) {
           // Update toggle value
-          c.manual = action.value;
-          writeManualMode(getGateway(c, action.getState), c, action.dispatch);
+          c.mode = action.value;
+          c.heatingMode = action.value;
+          writeMode(getGateway(c, action.getState), c, action.dispatch);
         }
         return c;
       });

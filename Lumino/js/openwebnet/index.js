@@ -21,7 +21,7 @@ const tempRequest = idCode => `*#4*${idCode}*0##`;
 const pointTempRequest = idCode => `*#4*${idCode}##`;
 const tempModeRequest = idCode => `*#4*${idCode}*12##`;
 
-const setManualMode = (idCode, mode) => `*4*${mode}*#${idCode}##`;
+const setMode = (idCode, mode) => `*4*${mode}*#${idCode}##`;
 
 // ack message
 const ack = '*#*1##';
@@ -205,9 +205,9 @@ export const readTempStatus = (dispatch, controller, gateway) => {
 
 // Set a given temperature controller to either conditioning or heating
 export const writePointTemp = (gateway, controller, dispatch) => {
-  const { idCode, pointTemp, heatingMode, manual } = controller;
+  const { idCode, pointTemp, heatingMode, mode } = controller;
 
-  if (manual) {
+  if (mode) {
     const { ip_address, port } = gateway;
     const parsedHeatingMode = heatingMode ? 1 : 0;
     const parsedPointTemp = `0${pointTemp.toFixed(1).replace('.', '')}`;
@@ -223,15 +223,14 @@ export const writePointTemp = (gateway, controller, dispatch) => {
 };
 
 
-export const writeManualMode = (gateway, controller, dispatch) => {
-  const { idCode, manualMode } = controller;
+export const writeMode = (gateway, controller, dispatch) => {
+  const { idCode, mode } = controller;
   const { ip_address, port } = gateway;
-  const parsedMode = manualMode ? 303 : 302;
 
   const client = net.connect(port, ip_address)
 
   client.on('connect', () => {
-    client.write(setManualMode(idCode, parsedMode));
+    client.write(setMode(idCode, mode));
     client.destroy();
   });
   client.on('error', () => onGatewayError(dispatch, gateway));

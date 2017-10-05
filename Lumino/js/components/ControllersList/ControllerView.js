@@ -33,8 +33,8 @@ const ControllerView = (props) => {
     child = (
       <TempComponent
         onPointTempChange={props.onPointTempChange}
-        onManualChange={props.onManualChange}
-        manual={props.manual}
+        onModeChange={props.onModeChange}
+        mode={props.mode}
         temp={props.actualTemp}
         heatingMode={props.heatingMode}
         pointTemp={props.pointTemp}
