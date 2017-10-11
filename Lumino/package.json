@@ -15,7 +15,7 @@
     "react-dev-tools": "^0.0.1",
     "react-devtools": "^2.5.0",
     "react-test-renderer": "16.0.0-alpha.12",
-    "rn-nodeify": "^7.0.1",
+    "rn-nodeify": "github:mvayngrib/rn-nodeify",
     "yo": "^2.0.0"
   },
   "scripts": {
@@ -64,6 +64,7 @@
     "redux": "^3.7.2",
     "redux-form": "^7.0.4",
     "redux-persist": "^4.9.1",
-    "stream-browserify": "^1.0.0"
+    "stream-browserify": "^1.0.0",
+    "util": "^0.10.3"
   }
 }
