@@ -46,14 +46,6 @@ const GatewayForm = props => (
           style={styles.textInput}
           keyboardType={'numeric'}
         />
-        <View style={styles.fieldDivider} />
-        <Field
-          name="password"
-          placeholder="Password"
-          component={TextInput}
-          style={styles.textInput}
-          secureTextEntry
-        />
       </View>
     </View>
 
