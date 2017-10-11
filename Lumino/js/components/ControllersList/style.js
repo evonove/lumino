@@ -35,27 +35,32 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   controllerName: {
+    alignItems: 'center',
     borderBottomWidth: 0.5,
     borderColor: 'silver',
+    flexDirection: 'row',
     height: sizes.fieldHeight,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 20,
   },
   controllerNameText: {
+    fontSize: sizes.primaryFontSize,
     fontWeight: '600',
   },
+  gatewayNameContainer: {
+    flexDirection: 'row',
+  },
   gatewayNameText: {
-    textAlign: 'right',
-    fontSize: sizes.secondaryFontSize,
+    color: '#8E8E93',
+    fontSize: sizes.primaryFontSize,
   },
   controllerNameTextDisabled: {
     fontWeight: '600',
     color: palette.fail,
   },
   gatewayNameTextDisabled: {
-    textAlign: 'right',
     color: palette.fail,
-    fontSize: sizes.secondaryFontSize,
+    fontSize: sizes.primaryFontSize,
   },
   controllerSwitch: {
     alignItems: 'center',
@@ -72,12 +77,17 @@ const styles = StyleSheet.create({
     height: 0.5,
     marginLeft: 20,
   },
-  controllerDimmer: {
+  dimmerSwitchContainer: {
     alignItems: 'center',
-    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: sizes.fieldHeight,
+    paddingHorizontal: 20,
+  },
+  dimmerContainer: {
+    alignItems: 'center',
     flexDirection: 'row',
     height: sizes.fieldHeight,
-    justifyContent: 'space-between',
     paddingHorizontal: 20,
   },
   controllerTemp: {

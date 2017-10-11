@@ -48,7 +48,7 @@ const ControllerView = (props) => {
         <Text
           style={props.disabled ? styles.controllerNameTextDisabled : styles.controllerNameText}
         >
-          {props.name.toUpperCase()}
+          {props.name}
         </Text>
         <Text
           style={props.disabled ? styles.gatewayNameTextDisabled : styles.gatewayNameText}

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Slider, Switch, View } from 'react-native';
+import { Slider, Switch, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import styles from './style';
@@ -19,26 +19,32 @@ const DimmerComponent = (props) => {
   }
 
   return (
-    <View style={styles.controllerDimmer}>
-      <Icon
-        name={'ios-sunny'}
-        size={18}
-        color={'#8e8e93'}
-      />
-      <Slider
-        style={styles.slider}
-        minimumTrackTintColor="#42275A"
-        onValueChange={props.onValueChange}
-        value={value}
-        step={1}
-        minimumValue={2}
-        maximumValue={10}
-      />
-      <Icon name={'ios-sunny'} size={28} color={'#8e8e93'} />
-      <Switch
-        onValueChange={props.onValueChange}
-        value={props.value == 0 ? false : true}
-      />
+    <View>
+      <View style={styles.dimmerSwitchContainer}>
+        <Text style={styles.switchLabel}>Switch</Text>
+        <Switch
+          onValueChange={props.onValueChange}
+          value={props.value == 0 ? false : true}
+        />
+      </View>
+      <View style={styles.fieldDivider} />
+      <View style={styles.dimmerContainer}>
+        <Icon
+          name={'ios-sunny-outline'}
+          size={28}
+          color={'#8e8e93'}
+        />
+        <Slider
+          style={styles.slider}
+          minimumTrackTintColor="#42275A"
+          onValueChange={props.onValueChange}
+          value={value}
+          step={1}
+          minimumValue={2}
+          maximumValue={10}
+        />
+        <Icon name={'ios-sunny'} size={28} color={'#8e8e93'} />
+      </View>
     </View>
   );
 };
