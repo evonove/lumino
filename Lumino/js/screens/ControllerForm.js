@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm, change, submit } from 'redux-form';
-import { View, Button, ScrollView, Alert } from 'react-native';
+import { View, Button, Alert } from 'react-native';
 import { Picker } from 'native-base';
 
+import styles from './style';
 import { onLightControllerSubmit } from './validation';
 import GradientHeader from '../components/GradientHeader/GradientHeader';
 import HeaderButton from '../components/HeaderButton/HeaderButton';
@@ -51,10 +52,10 @@ class ControllerFormComponent extends React.Component {
 
     // If there is no initialValues it means we are creating a new controller,
     // so no need to show the delete button (we hide it with css)
-    const deleteViewable = !this.props.initialValues ? { display: 'none' } : {};
+    const deleteViewable = !this.props.initialValues ? { display: 'none' } : styles.deleteController;
 
     return (
-      <ScrollView style={{ flex: 1 }}>
+      <View style={styles.container}>
         <ControllerTypeSelector
           onPress={this.props.onControllerTypePress}
           type={this.props.controllerType}
@@ -62,11 +63,13 @@ class ControllerFormComponent extends React.Component {
         <LightSettingsForm gateways={gatewaysItems} />
         <View style={deleteViewable}>
           <Button
-            title={'DELETE'}
             onPress={() => this.props.onDelete(this.props.initialValues)}
+            color="#DD3924"
+            title="Delete controller"
+            accessibilityLabel="Delete light controller"
           />
         </View>
-      </ScrollView>
+      </View>
     );
   }
 }
@@ -108,7 +111,7 @@ const mapStateToProps = (state, { navigation, initialValues }) => {
       'This will permanently delete this controller, confirm?',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'DELETE', onPress: () => confirmDelete(controller) },
+        { text: 'Delete', onPress: () => confirmDelete(controller), style: 'destructive' },
       ],
     )
   }

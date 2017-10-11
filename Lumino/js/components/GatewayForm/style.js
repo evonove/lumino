@@ -42,6 +42,10 @@ const styles = StyleSheet.create({
     height: 0.5,
     marginLeft: 20,
   },
+  deleteGateway: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  }
 });
 
 export default styles;

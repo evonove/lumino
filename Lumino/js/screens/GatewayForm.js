@@ -25,7 +25,7 @@ class GatewayFormComponent extends React.Component {
 
   render() {
     // Do not show the delete button if we are creating a new Gateway
-    const deleteViewable = !this.props.initialValues ? { display: 'none' } : {};
+    const deleteViewable = !this.props.initialValues;
 
     return (
       <GatewayFormFields
@@ -74,7 +74,7 @@ const mapStateToProps = (state, { navigation }) => {
       'and all associated controllers. Continue?',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'DELETE', onPress: () => confirmDelete(gateway) },
+        { text: 'Delete',  onPress: () => confirmDelete(gateway), style: 'destructive' },
       ],
     )
   }

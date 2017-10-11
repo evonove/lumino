@@ -58,10 +58,12 @@ const GatewayForm = props => (
       />
     </View>
 
-    <View style={props.deleteViewable}>
+    <View style={props.deleteViewable ? { display: 'none' } : styles.deleteGateway}>
       <Button
-        title={'DELETE'}
         onPress={props.onDelete}
+        color="#DD3924"
+        title="Delete Gateway"
+        accessibilityLabel="Delete Gateway"
       />
     </View>
 
@@ -70,7 +72,7 @@ const GatewayForm = props => (
 
 
 GatewayForm.propTypes = {
-  deleteViewable: PropTypes.object.isRequired,
+  deleteViewable: PropTypes.bool.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 
