@@ -42,6 +42,16 @@ const styles = StyleSheet.create({
     height: 0.5,
     marginLeft: 20,
   },
+  switchContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: sizes.fieldHeight,
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+  },
+  textLabel: {
+    fontSize: 17,
+  },
   deleteGateway: {
     flex: 1,
     justifyContent: 'flex-end',

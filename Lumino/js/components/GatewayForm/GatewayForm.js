@@ -46,17 +46,18 @@ const GatewayForm = props => (
           style={styles.textInput}
           keyboardType={'numeric'}
         />
+        <View style={styles.fieldDivider} />
+        <View style={styles.switchContainer}>
+          <Text style={styles.textLabel}>Enabled</Text>
+          <Field
+            name="status"
+            component={Switch}
+            defaultValue
+          />
+        </View>
       </View>
     </View>
 
-    <View style={styles.blockFields}>
-      <Text>Enabled</Text>
-      <Field
-        name="status"
-        component={Switch}
-        defaultValue
-      />
-    </View>
 
     <View style={props.deleteViewable ? { display: 'none' } : styles.deleteGateway}>
       <Button
