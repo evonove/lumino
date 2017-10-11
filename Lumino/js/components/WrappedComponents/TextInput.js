@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from './style';
 import { TextInput as NativeTextInput, Text, View } from 'react-native';
 
 /**
@@ -16,7 +17,7 @@ const TextInput = (props) => {
         onFocus={input.onFocus}
         value={input.value}
       />
-      {touched && error && <Text> {error} </Text>}
+      {touched && error && <Text style={styles.error}> {error} </Text>}
     </View>
   );
 };
