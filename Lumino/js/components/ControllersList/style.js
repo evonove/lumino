@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
  * ControllerView styles
  */
 const palette = {
+  primary: '#42275A',
   background: '#FFF',
   settings: '#8E8E93',
   lines: '#CECED2',
@@ -91,9 +92,63 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   controllerTemp: {
-    alignItems: 'center',
     flex: 1,
+  },
+  temperatureDimmerContainer: {
+    paddingHorizontal: 20,
+    paddingBottom: 10,
+  },
+  temperatureDimmer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: sizes.fieldHeight,
+  },
+  pointTemp: {
+    color: palette.settings,
+    textAlign: 'center',
+  },
+  temperatureSignal: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: sizes.fieldHeight,
     justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    width: '100%',
+  },
+  temperatureSignalText: {
+    fontSize: sizes.primaryFontSize,
+  },
+  temperatureOptionsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+  },
+  temperatureOption: {
+    alignItems: 'center',
+    backgroundColor: palette.background,
+    justifyContent: 'center',
+    borderColor: palette.lines,
+    borderRadius: 5,
+    borderWidth: 0.5,
+    height: 65,
+    width: 65,
+  },
+  temperatureOptionSelected: {
+    alignItems: 'center',
+    backgroundColor: palette.primary,
+    justifyContent: 'center',
+    borderColor: palette.lines,
+    borderRadius: 5,
+    borderWidth: 0.5,
+    height: 65,
+    width: 65,
+  },
+  temperatureOptionText: {
+    color: palette.primary,
+  },
+  temperatureOptionTextSelected: {
+    color: palette.background,
   },
   slider: {
     flex: 2,
