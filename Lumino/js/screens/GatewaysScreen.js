@@ -81,7 +81,7 @@ GatewaysScreen.navigationOptions = ({ navigation }) => ({
   headerRight: <HeaderButton text={"Add"} onPress={() => navigation.navigate('GatewayForm')} />,
   tabBarIcon: ({ tintColor }) => (
     <Icon
-      name={'ios-expand'}
+      name={'ios-options'}
       size={26}
       color={tintColor}
     />

@@ -92,7 +92,7 @@ ControllersScreen.navigationOptions = ({ navigation }) => ({
   headerRight: <HeaderButton text={"Add"} onPress={() => navigation.navigate('ControllerForm')} />,
   tabBarIcon: ({ tintColor }) => (
     <Icon
-      name={'ios-sunny-outline'}
+      name={'ios-bulb'}
       size={26}
       color={tintColor}
     />

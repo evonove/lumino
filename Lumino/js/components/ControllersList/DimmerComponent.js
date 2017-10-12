@@ -30,7 +30,7 @@ const DimmerComponent = (props) => {
       <View style={styles.fieldDivider} />
       <View style={styles.dimmerContainer}>
         <Icon
-          name={'ios-sunny-outline'}
+          name={'ios-bulb-outline'}
           size={28}
           color={'#8e8e93'}
         />
@@ -43,7 +43,7 @@ const DimmerComponent = (props) => {
           minimumValue={2}
           maximumValue={10}
         />
-        <Icon name={'ios-sunny'} size={28} color={'#8e8e93'} />
+        <Icon name={'ios-bulb'} size={28} color={'#8e8e93'} />
       </View>
     </View>
   );
