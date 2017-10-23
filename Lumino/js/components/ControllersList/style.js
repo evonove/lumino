@@ -146,9 +146,11 @@ const styles = StyleSheet.create({
   },
   temperatureOptionText: {
     color: palette.primary,
+    fontSize: 12,
   },
   temperatureOptionTextSelected: {
     color: palette.background,
+    fontSize: 12,
   },
   slider: {
     flex: 2,

@@ -12,7 +12,8 @@ import styles from './style';
  * Temperature component, presenting both a switch and a dimmer
  */
 const TempComponent = (props) => {
-  let heatingIcon = 'ios-power-outline';
+  let activeMode = 'automatic';
+  let heatingIcon = 'ios-snow-outline';
   let heatingModeSelection = 0;
   if (props.heatingMode == 1 || props.heatingMode == 102 || props.heatingMode == 110 || props.heatingMode == 103){
     heatingModeSelection = 1;
@@ -20,20 +21,22 @@ const TempComponent = (props) => {
 
   if (props.mode == 0) {
     heatingIcon = 'ios-snow-outline';
+    activeMode = 'automatic';
   } else if (props.heatingMode == 1) {
     heatingIcon = 'ios-flame-outline';
+    activeMode = 'automatic';
   } else if (props.heatingMode == 102 || props.heatingMode == 202) {
-    heatingIcon = 'ios-alert-outline';
+    activeMode = 'protection';
   } else if (props.heatingMode == 210 || props.heatingMode == 110) {
-    heatingIcon = 'ios-hand-outline';
+    activeMode = 'manual';
   } else if (props.heatingMode == 103 || props.heatingMode == 203) {
-    heatingIcon = 'ios-power-outline';
+    activeMode = 'off';
   }
 
   return (
     <View>
       <View style={styles.temperatureSignal}>
-        <Text style={styles.temperatureSignalText}>Actual temp:</Text>
+        <Text style={styles.temperatureSignalText}>Actual temperature:</Text>
         <Text style={styles.temperatureSignalText}>{props.temp ? `${props.temp.toFixed(1)}°C` : "Reading..."}</Text>
       </View>
       <View style={styles.fieldDivider} />
@@ -68,59 +71,70 @@ const TempComponent = (props) => {
 
       <View style={styles.temperatureOptionsContainer}>
         <TouchableOpacity
-          style={styles.temperatureOption}
-          onPress={() => { Alert.alert('You tapped the button!')}}
-        >
-          <Icon
-            name={'ios-flame-outline'}
-            color={'#42275A'}
-            size={28}
-          />
-          <Text style={styles.temperatureOptionText}>Locked</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.temperatureOptionSelected}
-          onPress={() => { Alert.alert('You tapped the button!')}}
+          style={activeMode === 'protection' ? styles.temperatureOptionSelected : styles.temperatureOption}
+          onPress={() => props.onModeChange(props.heatingModeSelection == 0 ? 202 : 102)}
         >
           <Icon
             name={'ios-alert-outline'}
-            color={'white'}
+            color={activeMode === 'protection' ? 'white' : '#42275A'}
             size={28}
           />
-          <Text style={styles.temperatureOptionTextSelected}>Auto</Text>
+          <Text
+            style={activeMode === 'protection' ? styles.temperatureOptionTextSelected : styles.temperatureOptionText}
+          >
+            Protection
+          </Text>
         </TouchableOpacity>
+
         <TouchableOpacity
-          style={styles.temperatureOption}
-          onPress={() => { Alert.alert('You tapped the button!')}}
+          style={activeMode === 'automatic' ? styles.temperatureOptionSelected : styles.temperatureOption}
+          onPress={() => props.onModeChange(props.heatingModeSelection == 0 ? 1 : 0)}
+        >
+          <Icon
+            name={heatingIcon}
+            color={activeMode === 'automatic' ? 'white' : '#42275A'}
+            size={28}
+          />
+          <Text
+            style={activeMode === 'automatic' ? styles.temperatureOptionTextSelected : styles.temperatureOptionText}
+          >
+            Auto
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={activeMode === 'manual' ? styles.temperatureOptionSelected : styles.temperatureOption}
+          onPress={() => props.onModeChange(props.heatingModeSelection == 0 ? 210 : 110)}
         >
           <Icon
             name={'ios-hand-outline'}
-            color={'#42275A'}
+            color={activeMode === 'manual' ? 'white' : '#42275A'}
             size={28}
           />
-          <Text style={styles.temperatureOptionText}>Manual</Text>
+          <Text
+            style={activeMode === 'manual' ? styles.temperatureOptionTextSelected : styles.temperatureOptionText}
+          >
+            Manual
+          </Text>
         </TouchableOpacity>
+
         <TouchableOpacity
-          style={styles.temperatureOption}
-          onPress={() => { Alert.alert('You tapped the button!')}}
+          style={activeMode === 'off' ? styles.temperatureOptionSelected : styles.temperatureOption}
+          onPress={() => props.onModeChange(props.heatingModeSelection == 0 ? 203 : 103)}
         >
           <Icon
             name={'ios-power-outline'}
-            color={'#42275A'}
+            color={activeMode === 'off' ? 'white' : '#42275A'}
             size={28}
           />
-          <Text style={styles.temperatureOptionText}>Off</Text>
+          <Text
+            style={activeMode === 'off' ? styles.temperatureOptionTextSelected : styles.temperatureOptionText}
+          >
+            Off
+          </Text>
         </TouchableOpacity>
+
       </View>
-
-      {/* TODO: Remove native picker */}
-      <Picker mode="dropdown" selectedValue={props.mode} onValueChange={props.onModeChange}>
-        <Picker.Item label={"Protection"} value={props.heatingModeSelection == 0 ? 202 : 102} />
-        <Picker.Item label={"Automatic"} value={props.heatingModeSelection == 0 ? 1 : 0} />
-        <Picker.Item label={"Manual"} value={props.heatingModeSelection == 0 ? 210 : 110} />
-        <Picker.Item label={"Off"} value={props.heatingModeSelection == 0 ? 203 : 103} />
-      </Picker>
-
     </View>
   );
 };
